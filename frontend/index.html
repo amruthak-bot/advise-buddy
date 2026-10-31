@@ -1,76 +1,21 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>GapScope — Blueprint-First Information Gap Investigator</title>
-<script src="https://cdn.tailwindcss.com"></script>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<style>
-:root{--ink:#1d1822;--plum:#211c29;--plum2:#322739;--paper:#f5f0e7;--surface:#fffcf6;--line:#e4dbcf;--muted:#776c75;--copper:#c86c49;--jade:#387f6a;--gold:#a67832}
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{background:var(--paper)!important;color:var(--ink)!important;font-family:'DM Sans',sans-serif!important;min-height:100vh}h1,h2,h3,.display{font-family:'Manrope',sans-serif;letter-spacing:-.045em}button,input,textarea,select{font:inherit}button{transition:transform .16s ease,box-shadow .16s ease,filter .16s ease}button:hover{filter:brightness(1.06);transform:translateY(-1px)}button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,.cell:focus-visible{outline:3px solid #c86c49!important;outline-offset:2px}input,textarea,select{background:#fffdf8!important;color:var(--ink)!important;border:1px solid #d8cfc5!important;border-radius:11px!important;min-height:39px}textarea{line-height:1.5}input:focus,textarea:focus,select:focus{border-color:var(--copper)!important;box-shadow:0 0 0 3px #c86c491c;outline:0}input::placeholder,textarea::placeholder{color:#998f96}#question{font-size:1.04rem;font-weight:600;padding:15px!important}#question:focus{outline:0}a{color:var(--copper)!important}.shell{max-width:1480px;margin:auto;display:grid;grid-template-columns:235px minmax(0,1fr);min-height:100vh}.rail{background:var(--plum);color:#f9eee0;padding:28px 20px;position:sticky;top:0;height:100vh;display:flex;flex-direction:column;gap:28px;border-right:1px solid #45354a}.brand{display:flex;gap:12px;align-items:center;font-weight:800;font-family:Manrope;font-size:1.25rem;letter-spacing:-.06em}.brand-mark{display:grid;place-items:center;width:40px;height:40px;background:#c86c49;color:#261a26;border-radius:13px;font-size:26px;box-shadow:0 6px 20px #c86c4930}.rail-kicker{font-size:10px;letter-spacing:.19em;color:#c4a8ae;font-weight:800;margin-bottom:12px}.rail a{display:flex;gap:12px;align-items:center;padding:12px 13px;color:#d4c7d0!important;text-decoration:none;border-radius:12px;font-size:13px;font-weight:600}.rail a:hover,.rail a.active{background:#3c3042;color:#fff7eb!important}.rail .num{font-size:10px;color:#bd9c9f;min-width:18px}.rail-bottom{margin-top:auto;padding:17px;background:#352b3a;border:1px solid #4a394c;border-radius:16px}.rail-bottom p{font-size:11px;line-height:1.7;color:#d6c4c9}.workspace{min-width:0;padding:34px clamp(18px,4vw,64px) 65px}.eyebrow{font-size:11px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:#aa5f47}.hero{display:grid;grid-template-columns:1fr auto;gap:24px;align-items:center;margin-bottom:26px}.hero h1{font-size:clamp(34px,4vw,55px);font-weight:800;line-height:1.05;margin:8px 0 13px}.hero p{max-width:670px;color:#766c74;font-size:14px;line-height:1.75}.hero-orbit{width:125px;height:125px;border:1px solid #cdbbb1;border-radius:50%;position:relative;display:grid;place-items:center}.hero-orbit:before{content:'';position:absolute;inset:17px;border:1px dashed #c86c49;border-radius:50%}.hero-orbit:after{content:'';width:24px;height:24px;background:#c86c49;border-radius:50%;box-shadow:38px -34px 0 -7px #387f6a,-33px 29px 0 -7px #a67832}.microbar{display:flex;flex-wrap:wrap;gap:8px;margin-top:15px}.microbar span{background:#eae0d5;color:#6e5c5e;padding:6px 11px;border-radius:50px;font-size:11px;font-weight:700}.panel{background:var(--surface)!important;border:1px solid var(--line)!important;border-radius:19px!important;box-shadow:0 10px 34px #34262c08!important;padding:25px!important;margin-bottom:18px!important}.panel h2{font-size:19px;font-weight:800;margin-bottom:14px;color:#27202b}.panel h2:before{content:'';display:inline-block;width:7px;height:7px;border-radius:2px;background:var(--copper);margin-right:10px;vertical-align:3px}.section-sub{font-size:12px;color:#8a7b81;margin:-8px 0 19px 18px}.btn-primary{background:var(--copper)!important;color:white!important;border:0!important;border-radius:11px!important;box-shadow:0 5px 14px #c86c4928}.btn-dark{background:#302638!important;color:#fff!important;border-radius:11px!important}.btn-muted{background:#ece4d9!important;color:#3a2c33!important;border-radius:11px!important}.top-actions{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.top-actions button{min-height:43px;font-weight:700}.summary-hero{background:#2b2232;border-radius:16px;color:#fff8ef;padding:24px;display:grid;grid-template-columns:auto 1fr;align-items:center;gap:18px;margin-bottom:17px}.summary-hero .metric{font-size:45px;font-weight:800;color:#f4bb87;line-height:1}.summary-hero .metric-label{font-size:11px;color:#d8c6d0;letter-spacing:.07em;text-transform:uppercase}.summary-hero p{font-size:13px;color:#f1e5e6;line-height:1.6}.cell{cursor:pointer;transition:box-shadow .18s ease,transform .18s ease;min-width:115px;text-align:center!important;font-size:11px;font-weight:700;border:5px solid #fffcf6!important;border-radius:11px!important;line-height:1.5}.cell:hover{transform:translateY(-2px);box-shadow:0 5px 15px #2d222b18}.cell.changed{outline:3px solid var(--copper);outline-offset:-3px}.bg-emerald-100{background:#d8eee2!important;color:#246e55!important}.bg-stone-200{background:#ede7e0!important;color:#756e70!important}.bg-red-100{background:#f7ded9!important;color:#a24b42!important}.bg-amber-100{background:#f5e7c8!important;color:#966c2b!important}.bg-orange-100{background:#f5dfd1!important;color:#a35837!important}#heatmap{border-collapse:separate!important;border-spacing:0 7px;width:100%;min-width:650px}#heatmap th{background:#f0e9e1;color:#65565e;font-size:11px;text-transform:uppercase;letter-spacing:.04em}#heatmap th,#heatmap td{border:0!important;padding:13px!important}#heatmap tr td:first-child{font-weight:700;color:#443742;border-radius:9px 0 0 9px;background:#f6f1eb}#heatmap tr th:first-child{border-radius:10px 0 0 10px}#heatmap tr th:last-child{border-radius:0 10px 10px 0}#drawer{border-left:5px solid var(--copper)!important}#drawer blockquote{border-color:var(--copper)!important;background:#f6efe5;padding:15px 18px;border-radius:0 10px 10px 0;font-size:14px;line-height:1.7}#flagsBox p{padding:11px 14px;margin-top:8px;border-radius:10px;background:#f8edda;color:#805c35}#checklist li{padding:12px 14px;margin:8px 0;background:#f6f0e8;border-radius:11px}#checklist li::marker{color:var(--copper);font-weight:800}#proposals>div,#gapQuestions>div,#sourceEditor>div{border:1px solid #e8ddd0!important;border-radius:14px!important;padding:17px!important;background:#fdfaf5}#proposals>div p,#gapQuestions>div p{margin-bottom:8px}#sampleBanner{background:#f8e9ce!important;color:#78512d!important;border-color:#ebcf99!important;border-radius:12px!important;padding:13px!important}#status{font-size:12px!important;color:#7b6c74!important}.trust{margin:22px 0;padding:14px 16px;border:1px solid #e2d7cb;border-radius:12px;color:#81727b;font-size:11px;line-height:1.7;background:#f1e9df}.footnote{font-size:11px;color:#8d7d84;text-align:center;padding:10px}#dashboard{animation:reveal .4s ease}@keyframes reveal{from{opacity:.3;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}@media(max-width:920px){.shell{grid-template-columns:1fr}.rail{position:static;height:auto;padding:16px 20px;gap:8px}.rail nav{display:flex;overflow:auto;gap:5px}.rail .rail-kicker,.rail-bottom{display:none}.rail a{white-space:nowrap;padding:9px}.workspace{padding:24px 16px}.hero-orbit{width:78px;height:78px}.hero-orbit:before{inset:10px}.hero h1{font-size:35px}}@media(max-width:580px){.hero{grid-template-columns:1fr}.hero-orbit{display:none}.panel{padding:17px!important}.summary-hero{grid-template-columns:1fr}.top-actions{flex-direction:column;align-items:stretch}.top-actions button{width:100%}#sourceEditor .flex,#gapQuestions .flex{flex-wrap:wrap}#sourceEditor input{min-width:100%}}
-@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
-</style>
-</head>
-<body>
-<div class="shell">
-  <aside class="rail">
-    <div class="brand"><div class="brand-mark">◈</div><span>gap<span style="color:#d18b68">scope</span><span style="color:#8b7e8e;font-size:10px;vertical-align:top;margin-left:3px">/ LAB</span></span></div>
-    <nav aria-label="Research navigation"><div class="rail-kicker">RESEARCH WORKSPACE</div>
-      <a class="active" href="#setup"><span class="num">01</span> ◫ &nbsp; Blueprint</a>
-      <a href="#sources"><span class="num">02</span> ◉ &nbsp; Evidence sources</a>
-      <a href="#dashboard"><span class="num">03</span> ▦ &nbsp; Analysis board</a>
-      <a href="#verification"><span class="num">04</span> ◇ &nbsp; Verify & close</a>
-    </nav>
-    <div class="rail-bottom"><div class="rail-kicker" style="margin-bottom:8px">THE GAP PRINCIPLE</div><p>"You can't find what's missing until you define what complete looks like."</p><div style="margin-top:12px;color:#e5a17c;font-size:11px;font-weight:700">EVIDENCE FIRST. ALWAYS.</div></div>
-  </aside>
-  <main class="workspace">
-    <header class="hero"><div><div class="eyebrow">The intelligence of what's missing / Research studio 01</div><h1>See beyond<br><span style="color:var(--copper)">the answer.</span></h1><p>Build a blueprint of what matters. Compare what sources actually say. Reveal the missing pieces — with evidence you can inspect, not claims you have to trust.</p><div class="microbar"><span>◈ Blueprint-first</span><span>◎ Source-grounded</span><span>◇ Human-verified</span></div></div><div class="hero-orbit" aria-hidden="true"></div></header>
-    <div id="sampleBanner" class="hidden mb-4">Demo investigation loaded: genuine excerpts retrieved 2026-10-31, plus one clearly-marked illustrative 2024 source. Review each source label before presenting findings as factual.</div>
-    <section id="setup" class="panel">
-      <div class="eyebrow mb-2">Phase 01 / Define the investigation</div>
-      <h2>Build your expectation blueprint</h2>
-      <p class="section-sub">Define completeness before evaluating evidence. You control the requirements.</p>
-      <label for="question" class="block text-xs font-bold mb-2" style="color:#75646e">YOUR RESEARCH QUESTION</label>
-      <input id="question" class="w-full p-3 mb-4" value="What should I verify before applying for an Indian passport?">
-      <div class="flex flex-wrap gap-3 mb-4 items-center">
-        <select id="templateSelect" class="p-2"></select>
-        <button id="loadTemplate" class="btn-dark px-4 py-2">↻ &nbsp; Load blueprint</button>
-        <label class="flex items-center gap-2 text-sm" style="color:#71636d">Current cycle/year <input id="currentCycle" class="p-2 w-24" value="2026"></label>
-      </div>
-      <div class="text-xs font-bold mb-3" style="color:#75646e;letter-spacing:.08em">WHAT A COMPLETE ANSWER SHOULD COVER</div>
-      <div id="blueprintEditor" class="space-y-2"></div>
-      <button id="addItem" class="mt-4 text-sm font-bold" style="color:var(--copper)">＋ Add a requirement</button>
-    </section>
-    <section id="sources" class="panel">
-      <div class="eyebrow mb-2">Phase 02 / Bring the evidence</div>
-      <h2>Source library</h2>
-      <p class="section-sub">Type your question and GapScope researches the web for you — no uploads needed. You can also paste excerpts. Fetched text is checked, not trusted: remove any source that looks wrong and re-analyze.</p>
-      <div id="sourceEditor" class="space-y-3"></div>
-      <div class="top-actions mt-4">
-        <button id="addSource" class="btn-muted px-4 py-2">＋ Add source</button>
-        <button id="discoverBtn" class="btn-muted px-4 py-2">⌖ &nbsp; Find sources on the web</button>
-        <button id="loadDemo" class="btn-dark px-4 py-2">◈ &nbsp; Load demo investigation</button>
-        <button id="analyzeBtn" class="btn-primary px-6 py-2 font-bold">Analyze evidence &nbsp; ↗</button>
-      </div>
-      <p id="status" role="status" aria-live="polite" class="mt-3"></p>
-      <p id="discoverStatus" class="mt-2 text-sm"></p>
-    </section>
-    <section id="dashboard" class="hidden">
-      <div class="panel"><div class="eyebrow mb-2">Phase 03 / Research intelligence</div><h2>Investigation overview</h2><div class="summary-hero"><div><div id="debtNumber" class="metric">—</div><div class="metric-label">Evidence debt</div></div><p id="debtLine"></p></div><p id="scoreLine" class="font-semibold text-sm" style="margin-bottom:6px"></p><p id="officialLine" class="text-sm" style="margin-bottom:14px"></p><div class="text-xs font-bold mb-2" style="color:#786c73">WHAT THE EVIDENCE SAYS</div><ul id="summaryList" class="list-disc ml-5 text-sm space-y-2" style="line-height:1.65"></ul><div id="flagsBox" class="mt-4 text-sm"></div><p id="changedLine" class="text-sm mt-2"></p></div>
-      <div class="panel overflow-x-auto"><div class="eyebrow mb-2">The evidence atlas</div><h2>Coverage heatmap</h2><p class="section-sub">Requirements × sources. Select any cell to inspect the original evidence. Multiple warnings can coexist.</p><table id="heatmap" class="text-sm"></table><div class="microbar"><span style="background:#d8eee2;color:#246e55">✓ Stated</span><span style="background:#f7ded9;color:#a24b42">⚠ Possible conflict</span><span style="background:#ede7e0">— Silent</span><span style="background:#f5e7c8;color:#966c2b">◷ Freshness warning</span></div></div>
-      <div id="drawer" class="hidden panel" aria-live="polite"></div>
-      <div class="panel"><div class="eyebrow mb-2">Priority intelligence</div><h2>What to verify next</h2><p class="section-sub">Potential gaps, ranked by importance and evidence risk.</p><ol id="checklist" class="list-decimal ml-5 space-y-1 text-sm"></ol></div>
-      <div class="panel"><div class="eyebrow mb-2">Blueprint challenge mode</div><h2>Did we overlook a requirement?</h2><p class="section-sub">Suggested additions never modify your blueprint without your approval.</p><div id="proposals" class="space-y-3 text-sm"></div></div>
-      <div id="verification" class="panel"><div class="eyebrow mb-2">Phase 04 / Close the loop</div><h2>Verification studio</h2><p class="section-sub">Ask a better question, add new evidence, and watch the coverage change.</p><div id="gapQuestions" class="space-y-3 text-sm mb-4"></div><label for="newEvidence" class="block text-xs font-bold mb-2" style="color:#75646e">NEW EVIDENCE / OFFICIAL RESPONSE</label><textarea id="newEvidence" class="w-full p-3" rows="4" placeholder="Paste an official reply or a new source excerpt..."></textarea><div class="flex flex-wrap gap-2 mt-3"><input id="newEvidenceTitle" class="p-2 flex-1" placeholder="New source title"><select id="newEvidenceType" class="p-2"><option value="official">Official</option><option value="third_party" selected>Third-party</option></select><button id="addEvidenceBtn" class="btn-primary px-4 py-2 font-bold">＋ Add & re-analyze</button></div><div id="closedBox" class="mt-4 text-sm"></div></div>
-    </section>
-    <div class="trust">◈ <b>Evidence integrity:</b> Sourced = exact original quote verified in reviewed text. Uncertain = evidence could not be fully confirmed. AI-suggested = proposal requiring approval. A potential gap is not proof of absence; official silence is not falsity.</div>
-    <div class="footnote">GAPSCOPE / THE EVIDENCE INVESTIGATION STUDIO &nbsp; • &nbsp; BUILT FOR CLARITY, NOT CONFIDENCE THEATER</div>
-  </main>
-</div>
-<script>
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>GapScope — Find what’s missing</title><style>
+:root{--ink:#26232d;--muted:#706b78;--accent:#7b4335;--line:#e5dfd8;--paper:#f7f5f1}*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:15px/1.6 system-ui,sans-serif}button,input,textarea,select{font:inherit}button,summary,a{ -webkit-tap-highlight-color:transparent}button,summary{cursor:pointer}button{border:0;border-radius:10px;padding:11px 18px;font-weight:650}.btn-primary{background:var(--accent);color:white}.btn-dark{background:#332b3e;color:white}.btn-muted{background:#ede8e2;color:var(--ink)}button:disabled{opacity:.55;cursor:wait}button:hover:not(:disabled){filter:brightness(.94)}:focus-visible{outline:3px solid #ae694c;outline-offset:3px}input,textarea,select{border:1px solid #cfc7c0;border-radius:9px;padding:10px;background:white;color:var(--ink);max-width:100%}input{min-width:0}textarea{width:100%}a{color:var(--accent)}h1,h2,h3,p{margin-top:0}h1{font-size:clamp(32px,5vw,52px);line-height:1.1;letter-spacing:-.045em;margin-bottom:16px}h2{font-size:23px;letter-spacing:-.025em;margin-bottom:8px}h3{font-size:17px;margin-bottom:8px}header{max-width:1120px;margin:auto;padding:23px 24px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line)}.brand{font-weight:800;font-size:23px;letter-spacing:-.04em}.brand span{color:var(--accent)}header small,.muted,.section-sub{color:var(--muted)}main{max-width:1050px;margin:auto;padding:44px 24px 60px}.hero{max-width:700px;margin-bottom:26px}.eyebrow{font-size:12px;text-transform:uppercase;letter-spacing:.13em;color:var(--accent);font-weight:750}.hero p{font-size:17px;color:var(--muted)}.panel{background:#fff;border:1px solid var(--line);border-radius:17px;padding:26px;margin-bottom:20px;box-shadow:0 5px 20px #30252b04}.question-label{display:block;font-weight:700;margin-bottom:9px}#question{width:100%;font-size:18px;padding:16px;margin-bottom:15px}.actions{display:flex;flex-wrap:wrap;gap:10px;align-items:center}.helper{font-size:13px;color:var(--muted);margin:12px 0 0}details{border:1px solid var(--line);border-radius:12px;padding:16px;margin:16px 0}details.panel{padding:22px}summary{font-weight:700}details[open]>summary{margin-bottom:18px}summary small{font-weight:400;color:var(--muted);margin-left:8px}.settings{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:14px 0}.settings label{font-size:13px}.source-card{margin-top:12px}.source-card summary{overflow-wrap:anywhere}.source-meta{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}.source-meta input{flex:1;min-width:160px}.notice{border-radius:10px;padding:13px 16px;background:#fff3d9;color:#705028;margin-bottom:18px;font-size:13px}.status:empty{display:none}.status{padding:12px 0 0;margin:0;color:var(--accent);font-size:14px}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:20px 0}.stat{background:#f7f4ef;padding:17px;border-radius:12px}.stat strong{display:block;font-size:29px;line-height:1.3}.stat span{font-size:13px;color:var(--muted)}.result-heading{display:flex;justify-content:space-between;gap:12px;align-items:center}.result-heading .eyebrow{margin-bottom:4px}.issue{border:1px solid var(--line);border-radius:12px;padding:18px;margin:12px 0}.issue h3{margin:8px 0}.issue p{color:var(--muted);font-size:14px}.badge{font-size:11px;font-weight:750;text-transform:uppercase;letter-spacing:.06em;color:#9b443a}.issue-actions{display:flex;gap:15px;align-items:center;flex-wrap:wrap}.issue-actions button{font-size:13px;padding:8px 12px}.matrix-scroll{overflow:auto}#heatmap{border-spacing:4px;width:100%;min-width:700px;font-size:12px}#heatmap th{max-width:190px;text-align:left;padding:10px;background:#f4f0eb}#heatmap td{padding:12px}#heatmap td:first-child{min-width:180px;font-weight:650}.cell{border:0;border-radius:7px;text-align:center;cursor:pointer}.cell.changed{outline:3px solid var(--accent)}.bg-emerald-100{background:#dceee3;color:#246448}.bg-stone-200{background:#ece9e5;color:#68646b}.bg-red-100{background:#f8dfdc;color:#9a3934}.bg-amber-100,.bg-yellow-100{background:#fff0ce;color:#805b16}.bg-orange-100{background:#f7e2d0;color:#8c5120}#drawer{background:#f8f4ed;padding:20px;border-radius:12px;margin:15px 0;overflow-wrap:anywhere}blockquote{border-left:3px solid var(--accent);padding:8px 16px;margin:15px 0}#checklist{padding:0;list-style:none}#flagsBox p{background:#fff4dd;padding:12px;border-radius:8px;font-size:13px}#gapQuestions>div,#proposals>div{padding:16px;border:1px solid var(--line);border-radius:10px;margin:12px 0}#blueprintEditor>div{display:flex;gap:8px;margin:8px 0}#blueprintEditor input{flex:1}.flex{display:flex;gap:8px;flex-wrap:wrap}.flex-1{flex:1}.w-full{width:100%}.mt-3,.mt-4{margin-top:14px}.mb-4{margin-bottom:16px}.hidden,[hidden]{display:none!important}.trust{font-size:12px;color:var(--muted);padding:14px 0;border-top:1px solid var(--line)}section,details,#newEvidence{scroll-margin-top:25px}#newEvidence{min-height:130px}.legend{font-size:12px;color:var(--muted);margin:12px 0}.empty{padding:18px;background:#f5f8f3;border-radius:10px}footer{font-size:12px;color:var(--muted);text-align:center}@media(max-width:600px){main{padding:28px 15px}.panel{padding:19px}header{padding:18px 16px}header small{display:none}.stats{grid-template-columns:1fr}.stat{display:flex;gap:12px;align-items:center}.stat strong{font-size:24px}.actions>*{width:100%}#blueprintEditor>div{flex-wrap:wrap}#blueprintEditor input{flex-basis:100%}.result-heading{align-items:start}.source-meta input{width:100%}}@media(prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+</style></head>
+<body><header><div class="brand">gap<span>scope</span></div><small>A clearer next step for your research</small></header><main>
+<div class="hero"><p class="eyebrow">Research with fewer blind spots</p><h1>What do you still<br>need to know?</h1><p>Ask a question. We’ll compare sources and show what’s missing, what disagrees, and what to check next.</p></div>
+<div id="sampleBanner" class="hidden notice">Demo investigation loaded: genuine excerpts retrieved 2026-10-31, plus one clearly-marked illustrative 2024 source. Review each source label before presenting findings as factual.</div>
+<section id="setup" class="panel"><label for="question" class="question-label">What are you trying to find out?</label><input id="question" placeholder="For example: What should I check before applying for a passport?" value="">
+<div class="settings"><label for="templateSelect">Checklist for</label><select id="templateSelect" aria-label="Research checklist"></select></div><div class="actions"><button id="analyzeBtn" class="btn-primary" disabled>Find what’s missing →</button><button id="loadDemo" class="btn-muted" disabled>Try the passport demo</button></div><p class="helper">No sources needed to start. We’ll search the web for you.</p>
+<p id="status" class="status" role="status" aria-live="polite">Getting ready…</p><p id="discoverStatus" class="status" role="status" aria-live="polite"></p>
+<details id="checkSettings"><summary>Choose what to check <small>Optional</small></summary><p class="section-sub">Start with a checklist that fits your question. Edit it to match your situation before searching.</p><div class="settings"><button id="loadTemplate" class="btn-muted">Use this checklist</button><label>Year <input id="currentCycle" size="5" value="2026"></label></div><div id="blueprintEditor"></div><button id="addItem" class="btn-muted">+ Add a question</button></details>
+<p id="activeChecklist" class="helper"></p></section>
+<details id="sources" class="panel"><summary>Review or add sources <small id="sourceCount">Optional</small></summary><p class="section-sub">Check the location, applicant category, and date. Remove sources that don’t fit. Web labels are suggestions you can change. A URL alone isn’t reviewed evidence.</p><div id="sourceEditor"></div><div class="actions mt-4"><button id="addSource" class="btn-muted">+ Paste a source</button><button id="discoverBtn" class="btn-muted">Search for more sources</button></div></details>
+<section id="dashboard" class="hidden"><div class="panel"><div class="result-heading"><div><p class="eyebrow">Your research check</p><h2 id="resultTitle">Here’s what to check next</h2></div><a href="#setup">Edit question ↑</a></div><p id="resultQuestion" class="muted"></p><div class="stats"><div class="stat"><strong id="conflictNumber">—</strong><span>questions with conflicting information</span></div><div class="stat"><strong id="debtNumber">—</strong><span>questions with no matched evidence</span></div><div class="stat"><strong id="officialNumber">—</strong><span>questions with an official text match</span></div></div><p id="debtLine" class="hidden"></p><div class="notice">A text match is a lead, not a verified answer. Check the original quote and whether it applies to you. Navigation text and headings can produce weak matches.</div><ol id="checklist"></ol><p id="changedLine" role="status"></p></div>
+<details id="evidenceDetails" class="panel"><summary>Inspect evidence <small>Source-by-source heatmap and quotes</small></summary><p class="section-sub">Each row is a question; each column is a source. Select a cell to read its evidence.</p><div class="matrix-scroll"><table id="heatmap"></table></div><p class="legend">✓ Text found · ⚠ Possible conflict · — Not found · ◷ Check the date</p><div id="drawer" class="hidden" aria-live="polite" tabindex="-1"></div><details><summary>Coverage and source notes</summary><p id="scoreLine"></p><p id="officialLine"></p><p class="helper">Coverage measures matched text across the checklist. It does not measure truth, relevance, or readiness to apply.</p><div id="flagsBox"></div><h3>Matched passages</h3><ul id="summaryList"></ul></details></details>
+<details class="panel" id="suggestions"><summary>Anything else to check? <small>Suggested checklist additions</small></summary><p class="section-sub">Nothing is added without your approval.</p><div id="proposals"></div></details>
+<details id="verification" class="panel"><summary>Add evidence or resolve a question</summary><p class="section-sub">Paste a relevant excerpt to update the results, or record how you checked an issue.</p><label for="newEvidence" class="question-label">New evidence</label><textarea id="newEvidence" placeholder="Paste the exact excerpt or official reply…"></textarea><div class="settings"><input id="newEvidenceTitle" placeholder="Source title" aria-label="New source title"><select id="newEvidenceType" aria-label="New source type"><option value="official">Official</option><option value="third_party" selected>Third-party</option></select><button id="addEvidenceBtn" class="btn-primary">Add evidence & update results</button></div><h3>Record a check</h3><div id="gapQuestions"></div><div id="closedBox"></div></details></section>
+<div class="trust">Quotes are checked against reviewed text. “Not found” means missing from these sources, not missing everywhere. A claim absent from official text may still be true. You make the final call.</div><footer>GapScope · Know what to verify next.</footer></main><script>
 let blueprint = [];
 let sources = [{id:'s1', title:'', url:'', text:'', type:'third_party'}];
 let lastResult = null, prevFindings = {};
@@ -85,7 +30,7 @@ const CELL = {
 };
 let manualClosed = {};   // itemId -> user note
 let lastAutoClosed = []; // itemLabels with official evidence found (applicability still needs the user's eye)
-const esc = s => (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;');
+const esc = s => String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;');
 
 async function api(path, body) {
   const r = await fetch(path, {method: body ? 'POST' : 'GET',
@@ -98,11 +43,11 @@ async function api(path, body) {
 function renderBlueprint() {
   document.getElementById('blueprintEditor').innerHTML = blueprint.map((it, i) => `
     <div class="flex gap-2">
-      <input data-i="${i}" data-f="label" class="border rounded p-1 flex-1" value="${esc(it.label)}">
-      <select data-i="${i}" data-f="priority" class="border rounded p-1">
+      <input data-i="${i}" data-f="label" class="border rounded p-1 flex-1" aria-label="Checklist question ${i+1}" value="${esc(it.label)}">
+      <select data-i="${i}" data-f="priority" aria-label="Question priority" class="border rounded p-1">
         ${['critical','important','optional'].map(p => `<option ${p===it.priority?'selected':''}>${p}</option>`).join('')}
       </select>
-      <button data-del="${i}" class="text-red-600">✕</button>
+      <button aria-label="Remove question ${i+1}" data-del="${i}" class="text-red-600">✕</button>
     </div>`).join('');
   document.querySelectorAll('#blueprintEditor [data-i]').forEach(el =>
     el.addEventListener('change', e => {
@@ -113,18 +58,23 @@ function renderBlueprint() {
 }
 
 function renderSources() {
+  document.getElementById('sourceCount').textContent = `${sources.filter(s => s.text.trim() || s.url.trim()).length} added`;
   document.getElementById('sourceEditor').innerHTML = sources.map((s, i) => `
-    <div class="border rounded p-2">
-      <div class="flex gap-2 mb-1">
-        <input data-i="${i}" data-f="title" class="border rounded p-1 flex-1" placeholder="Source title" value="${esc(s.title)}">
-        <input data-i="${i}" data-f="url" class="border rounded p-1 flex-1" placeholder="URL (optional)" value="${esc(s.url||'')}">
-        <select data-i="${i}" data-f="type" class="border rounded p-1">
+    <details class="source-card" ${!s.text && !s.url ? 'open' : ''}><summary>${esc(s.title || 'New source')} <small>${s.type === 'official' ? 'Official' : 'Third-party'}</small></summary>
+      <div class="source-meta">
+        <input data-i="${i}" data-f="title" class="border rounded p-1 flex-1" aria-label="Source title" placeholder="Source title" value="${esc(s.title)}">
+        <input data-i="${i}" data-f="url" class="border rounded p-1 flex-1" aria-label="Source URL" placeholder="URL (optional)" value="${esc(s.url||'')}">
+        <select data-i="${i}" data-f="type" aria-label="Source type" class="border rounded p-1">
           <option value="official" ${s.type==='official'?'selected':''}>Official</option>
           <option value="third_party" ${s.type==='third_party'?'selected':''}>Third-party</option>
         </select>
       </div>
-      <textarea data-i="${i}" data-f="text" class="w-full border rounded p-1" rows="4" placeholder="Paste the information you want GapScope to check. You can also add its URL for reference.">${esc(s.text)}</textarea>
-    </div>`).join('');
+      <textarea data-i="${i}" data-f="text" aria-label="Source excerpt" class="w-full border rounded p-1" rows="4" placeholder="Paste the information you want GapScope to check. You can also add its URL for reference.">${esc(s.text)}</textarea>
+      <button class="btn-muted mt-3" data-remove-source="${i}">Remove this source</button></details>`).join('');
+  document.querySelectorAll('[data-remove-source]').forEach(b => b.addEventListener('click', () => {
+    sources.splice(+b.dataset.removeSource, 1); renderSources();
+    document.getElementById('status').textContent = 'Source removed. Select “Find what’s missing” to update the results.';
+  }));
   document.querySelectorAll('#sourceEditor [data-i]').forEach(el =>
     el.addEventListener('change', e => { sources[+el.dataset.i][el.dataset.f] = el.value; }));
 }
@@ -133,14 +83,15 @@ function findingKey(f) { return f.itemId + '|' + f.sourceId; }
 
 function renderResult(res, changedKeys) {
   lastResult = res;
+  document.getElementById('drawer').classList.add('hidden');
   document.getElementById('dashboard').classList.remove('hidden');
   document.getElementById('debtNumber').textContent = res.evidenceDebtCount;
   document.getElementById('debtLine').textContent =
-    `Evidence Debt: ${res.evidenceDebtCount} of ${res.blueprint.items.length} items have no sourced confirmation.`;
+    `Missing evidence: ${res.evidenceDebtCount} of ${res.blueprint.items.length} items have no sourced confirmation.`;
   document.getElementById('scoreLine').textContent =
-    `Completeness: ${res.completenessScore}% of your blueprint is covered by evidence in the sources reviewed.`;
+    `Text coverage: ${res.completenessScore}% of the checklist has matched evidence.`;
   document.getElementById('officialLine').textContent =
-    `Confirmed by an official source: ${res.officialConfirmedCount} of ${res.blueprint.items.length}.`;
+    `Official text matches: ${res.officialConfirmedCount} of ${res.blueprint.items.length}.`;
   document.getElementById('summaryList').innerHTML =
     res.summary.map(s => `<li>${esc(s)}</li>`).join('') || '<li>No sourced findings yet.</li>';
   let flags = '';
@@ -153,7 +104,7 @@ function renderResult(res, changedKeys) {
 
   const fmap = {};
   res.findings.forEach(f => fmap[findingKey(f)] = f);
-  let html = '<tr><th class="border p-2 text-left">Blueprint item</th>' +
+  let html = '<tr><th class="border p-2 text-left">Question to check</th>' +
     res.sources.map(s => `<th class="border p-2 text-left">${esc(s.title)}<br><span class="font-normal text-xs">${s.type==='official'?'Official':'Third-party'} &middot; ${(res.sourceFreshness||{})[s.id]||''}</span></th>`).join('') + '</tr>';
   res.blueprint.items.forEach(it => {
     html += `<tr><td class="border p-2 font-medium">${esc(it.label)}</td>`;
@@ -167,29 +118,48 @@ function renderResult(res, changedKeys) {
       if (f && fresh === 'possibly_outdated' && f.status === 'conflicting') extra = ' 🕐 Outdated';
       if (f && fresh === 'undated' && (f.status === 'stated' || f.status === 'conflicting')) extra = ' (undated)';
       const changed = changedKeys && changedKeys.has(it.id + '|' + s.id) ? ' changed' : '';
-      html += `<td class="border p-2 cell ${cls}${changed}" data-item="${it.id}" data-source="${s.id}">${label}${extra}</td>`;
+      html += `<td role="button" tabindex="0" aria-label="${esc(it.label)} — ${esc(s.title)}: ${label}${extra}" class="border p-2 cell ${cls}${changed}" data-item="${it.id}" data-source="${s.id}">${label}${extra}</td>`;
     });
     html += '</tr>';
   });
   document.getElementById('heatmap').innerHTML = html;
   document.querySelectorAll('#heatmap .cell').forEach(td =>
-    td.addEventListener('click', () => showDrawer(td.dataset.item, td.dataset.source)));
+    { td.addEventListener('click', () => showDrawer(td.dataset.item, td.dataset.source)); td.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); showDrawer(td.dataset.item, td.dataset.source); } }); });
 
-  document.getElementById('checklist').innerHTML = res.checklist.map(c =>
-    `<li>${esc(c.action)}</li>`).join('') || '<li>Nothing to verify — every item has sourced confirmation.</li>';
+  const kinds = {conflicting:'Sources disagree', official_silence:'Not confirmed in official text', silent:'Missing from reviewed sources', uncertain:'Evidence needs checking', possibly_outdated:'Check the date', undated:'No date found'};
+  document.getElementById('conflictNumber').textContent = new Set(res.findings.filter(f => f.status === 'conflicting').map(f => f.itemId)).size;
+  document.getElementById('officialNumber').textContent = `${res.officialConfirmedCount} / ${res.blueprint.items.length}`;
+  const openChecklist = res.checklist.filter(c => !(c.itemId in manualClosed));
+  document.getElementById('resultTitle').textContent = openChecklist.length ? `${openChecklist.length} things to check next` : 'Review the evidence before deciding';
+  document.getElementById('resultQuestion').textContent = res.question;
+  document.getElementById('checklist').innerHTML = openChecklist.map(c =>
+    `<li class="issue"><span class="badge">${esc(kinds[c.kind] || 'Needs review')}</span><h3>${esc(c.itemLabel)}</h3><p>${esc(c.action)}</p><div class="issue-actions"><button class="btn-muted" data-inspect="${esc(c.itemId)}">See evidence</button><button class="btn-muted" data-add-evidence="${esc(c.itemId)}">Add evidence</button></div></li>`).join('') || '<li class="empty">No remaining checks in this list. Review the evidence and any resolution notes before deciding.</li>';
+  document.querySelectorAll('[data-inspect]').forEach(b => b.addEventListener('click', () => {
+    document.getElementById('evidenceDetails').open = true;
+    const finding = res.findings.find(f => f.itemId === b.dataset.inspect && f.status === 'conflicting' && f.quote) || res.findings.find(f => f.itemId === b.dataset.inspect && f.quote) || res.findings.find(f => f.itemId === b.dataset.inspect);
+    if (finding) showDrawer(finding.itemId, finding.sourceId);
+    else document.getElementById('evidenceDetails').scrollIntoView();
+  }));
+  document.querySelectorAll('[data-add-evidence]').forEach(b => b.addEventListener('click', () => {
+    document.getElementById('verification').open = true;
+    const item = res.blueprint.items.find(it => it.id === b.dataset.addEvidence);
+    document.getElementById('newEvidence').placeholder = `Paste evidence for: ${item.label}`;
+    document.getElementById('newEvidence').focus();
+    document.getElementById('newEvidence').scrollIntoView({block:'center'});
+  }));
 
   document.getElementById('proposals').innerHTML = res.proposals.map(p => `
     <div class="border rounded p-2" data-prop="${p.id}">
-      <p>Source mentions <b>${esc(p.label)}</b>. Add to blueprint?</p>
+      <p>Source mentions <b>${esc(p.label)}</b>. Add to your checklist?</p>
       <p class="text-stone-600">Reason: ${esc(p.reason)}</p>
       <p class="italic">"${esc(p.quote)}"</p>
       <button class="btn-primary px-3 py-2 mr-2" data-accept="${p.id}">Accept</button>
       <button class="btn-muted px-3 py-2" data-reject="${p.id}">Dismiss</button>
-    </div>`).join('') || '<p class="text-stone-500">No new requirements suggested.</p>';
+    </div>`).join('') || '<p class="text-stone-500">No extra questions suggested.</p>';
   document.querySelectorAll('[data-accept]').forEach(b => b.addEventListener('click', async () => {
     const p = res.proposals.find(x => x.id === b.dataset.accept);
     blueprint.push({id: 'i' + Date.now(), label: p.label, priority: 'important', origin: 'challenge_accepted'});
-    renderBlueprint(); await runAnalysis();
+    renderBlueprint(); await perform(runAnalysis);
   }));
   document.querySelectorAll('[data-reject]').forEach(b => b.addEventListener('click', () => {
     document.querySelector(`[data-prop="${b.dataset.reject}"]`).remove();
@@ -213,7 +183,7 @@ function renderGapSection(res) {
     const note = document.querySelector(`[data-note="${b.dataset.close}"]`).value.trim();
     if (!note) { alert('Add a short note saying how it was resolved.'); return; }
     manualClosed[b.dataset.close] = note;
-    renderGapSection(res);
+    renderResult(res, new Set());
   }));
   const manualLines = Object.entries(manualClosed).map(([id, note]) => {
     const it = res.blueprint.items.find(x => x.id === id);
@@ -227,20 +197,23 @@ function renderGapSection(res) {
 function showDrawer(itemId, sourceId) {
   const f = lastResult.findings.find(x => x.itemId === itemId && x.sourceId === sourceId);
   const src = lastResult.sources.find(x => x.id === sourceId);
+  const item = lastResult.blueprint.items.find(x => x.id === itemId);
   const box = document.getElementById('drawer');
   box.classList.remove('hidden');
+  box.scrollIntoView({block:'center'});
+  box.focus({preventScroll:true});
   if (f && f.status === 'error') {
     box.innerHTML = `<p><b>Not fetched:</b> this source could not be retrieved, so no evidence was reviewed. This is <b>not</b> counted as silent — unreviewed evidence must not be reported as a gap.</p>`;
     return;
   }
   if (!f || f.status === 'silent') {
-    box.innerHTML = `<p><b>Silent:</b> this source does not cover this blueprint item. That silence itself is the finding — a potential gap.</p>`;
+    box.innerHTML = `<p><b>Silent:</b> no matching text was found for this checklist question in this source. That silence itself is the finding — a potential gap.</p>`;
     return;
   }
-  box.innerHTML = `<p><b>Status:</b> ${f.status} &middot; <b>Label:</b> ${f.label} &middot; <b>Quote verified:</b> ${f.quoteVerified ? 'yes (exact substring)' : (f.quote ? 'no — evidence located, exact quote not confirmed' : 'no — no matching passage found, treat as unconfirmed')}</p>
+  box.innerHTML = `<h3>${esc(item.label)}</h3><p>${esc(src.title)}</p><p><b>Finding:</b> ${CELL[f.status][1]} &middot; <b>Quote checked:</b> ${f.quoteVerified ? 'yes (exact substring)' : (f.quote ? 'no — evidence located, exact quote not confirmed' : 'no — no matching passage found, treat as unconfirmed')}</p>
     ${f.quote ? `<blockquote class="border-l-4 pl-3 my-2 italic">"${esc(f.quote)}"</blockquote>` : ''}
     ${f.claimSummary ? `<p>${esc(f.claimSummary)}</p>` : ''}
-    ${src && src.url ? `<p><a class="underline" href="${esc(src.url)}" target="_blank" rel="noopener">Open source</a></p>` : ''}`;
+    ${src && src.url ? `<p><a class="underline" href="${esc(/^https?:\/\//i.test(src.url) ? src.url : "#")}" target="_blank" rel="noopener">Open source</a></p>` : ''}`;
 }
 
 async function runAnalysis() {
@@ -254,7 +227,7 @@ async function runAnalysis() {
   if (lastResult) lastResult.findings.forEach(f => prev[findingKey(f)] = f.status);
   const res = await api('/api/analyze', req);
   const changed = new Set();
-  res.findings.forEach(f => { if (prev[findingKey(f)] !== undefined && prev[findingKey(f)] !== f.status) changed.add(findingKey(f)); });
+  res.findings.forEach(f => { if (lastResult && (prev[findingKey(f)] !== undefined ? prev[findingKey(f)] !== f.status : !['silent','error'].includes(f.status))) changed.add(findingKey(f)); });
   // Gap-closing rule, tightened: a gap closes automatically ONLY on
   // evidence that is (1) a verified exact quote for that item
   // (label "sourced"), (2) from a source the user labelled Official,
@@ -280,8 +253,8 @@ async function runAnalysis() {
     return it ? it.label : null;
   }).filter(Boolean))];
   document.getElementById('changedLine').textContent = changedLabels.length ?
-    `Changed in this re-run: ${changedLabels.join('; ')} (outlined in purple).` : '';
-  document.getElementById('status').textContent = 'Analysis complete. Open the evidence atlas below.';
+    `Changed in this re-run: ${changedLabels.join('; ')} (outlined in brown).` : '';
+  document.getElementById('status').textContent = 'Results ready. Start with the questions below.';
   document.getElementById('dashboard').scrollIntoView({behavior:'smooth',block:'start'});
 }
 
@@ -307,52 +280,88 @@ async function runDiscovery() {
     }
     found.forEach((s, i) => sources.push({...s, id: 'web-' + Date.now() + '-' + i}));
     renderSources();
-    st.textContent = `Found ${found.length} sources (${res.fetched} fetched, ${res.failed} could not be fetched). Review them, remove any that look wrong — analysis runs next.`;
+    st.textContent = `Found ${found.length} sources (${res.fetched} fetched, ${res.failed} could not be fetched). Check their relevance under “Review or add sources”.`;
     await runAnalysis();
   } catch (e) {
     let msg = e.message || '';
     try { msg = JSON.parse(msg).detail || msg; } catch (_) {}
+    document.getElementById('status').textContent = 'Search could not finish. You can try again or paste a source.';
     st.textContent = 'Web search failed: ' + msg + ' You can still paste source text.';
   }
 }
-document.getElementById('discoverBtn').addEventListener('click', runDiscovery);
+document.getElementById('discoverBtn').addEventListener('click', () => perform(runDiscovery));
 // AI-first flow: the user never has to add a source by hand. If
 // Analyze is clicked with no sources at all, research the web first
 // instead of analyzing nothing.
-document.getElementById('analyzeBtn').addEventListener('click', () => {
+let busy = false;
+async function perform(task, needsQuestion = true) {
+  if (busy) return;
+  const question = document.getElementById('question');
+  if (needsQuestion && !question.value.trim()) { document.getElementById('status').textContent = 'Enter a question to get started, or try the demo.'; question.focus(); return; }
+  if (needsQuestion && !blueprint.length) { document.getElementById('status').textContent = 'Add at least one checklist question first.'; document.getElementById('checkSettings').open = true; return; }
+  busy = true;
+  const controls = ['analyzeBtn','loadDemo','discoverBtn','addEvidenceBtn','addItem','loadTemplate','addSource'];
+  controls.forEach(id => document.getElementById(id).disabled = true);
+  document.getElementById('setup').setAttribute('aria-busy','true');
+  document.getElementById('analyzeBtn').textContent = 'Checking sources…';
+  document.getElementById('status').textContent = 'Working on your question. Web searches can take up to a minute.';
+  document.getElementById('discoverStatus').textContent = '';
+  try { await task(); } catch (e) { document.getElementById('status').textContent = 'We couldn’t finish the check. Try again, or add a source excerpt and retry.'; }
+  finally {
+    busy = false;
+    controls.forEach(id => document.getElementById(id).disabled = false);
+    document.getElementById('setup').removeAttribute('aria-busy');
+    document.getElementById('analyzeBtn').textContent = 'Find what’s missing →';
+  }
+}
+document.getElementById('analyzeBtn').addEventListener('click', () => perform(async () => {
+  const question = document.getElementById('question').value.trim();
+  // A different question starts a fresh search rather than reusing old evidence.
+  if (lastResult && lastResult.question !== question) { document.getElementById('sampleBanner').classList.add('hidden'); sources = []; lastResult = null; manualClosed = {}; lastAutoClosed = []; renderSources(); document.getElementById('dashboard').classList.add('hidden'); }
   const hasAny = sources.some(s => (s.text || '').trim() || (s.url || '').trim());
-  if (!hasAny) { runDiscovery(); return; }
-  runAnalysis();
-});
-document.getElementById('loadDemo').addEventListener('click', async () => {
+  if (!hasAny) await runDiscovery(); else await runAnalysis();
+}));
+document.getElementById('question').addEventListener('keydown', e => { if (e.key === 'Enter') document.getElementById('analyzeBtn').click(); });
+
+document.getElementById('loadDemo').addEventListener('click', () => perform(async () => {
+  lastResult = null; manualClosed = {}; lastAutoClosed = [];
   const demo = await api('/api/demo-session');
   document.getElementById('question').value = demo.question;
   document.getElementById('currentCycle').value = demo.currentCycle || '2026';
   blueprint = demo.blueprint.items;
   sources = demo.sources;
+  document.getElementById('templateSelect').value = 'passport';
+  document.getElementById('activeChecklist').textContent = `Checking ${blueprint.length} questions using the passport checklist.`;
   document.getElementById('sampleBanner').classList.remove('hidden');
   renderBlueprint(); renderSources();
   await runAnalysis();
-});
-document.getElementById('addEvidenceBtn').addEventListener('click', async () => {
+}, false));
+document.getElementById('addEvidenceBtn').addEventListener('click', () => perform(async () => {
   const text = document.getElementById('newEvidence').value.trim();
-  if (!text) return;
+  if (!text) { document.getElementById('status').textContent = 'Paste an excerpt before adding evidence.'; document.getElementById('newEvidence').focus(); return; }
   sources.push({id: 's' + Date.now(), title: document.getElementById('newEvidenceTitle').value || 'New evidence',
     url: '', text, type: document.getElementById('newEvidenceType').value});
   renderSources(); await runAnalysis();
-});
+  document.getElementById('newEvidence').value = '';
+}));
 (async () => {
+  try {
   const templates = await api('/api/templates');
   const sel = document.getElementById('templateSelect');
   sel.innerHTML = Object.entries(templates).map(([k, v]) => `<option value="${k}">${v.title}</option>`).join('');
   document.getElementById('loadTemplate').addEventListener('click', () => {
     const t = templates[sel.value];
+    manualClosed = {}; lastAutoClosed = [];
     blueprint = t.items.map(it => ({...it}));
     renderBlueprint();
+    document.getElementById('activeChecklist').textContent = `Checking ${blueprint.length} questions using: ${t.title}. Change this above if needed.`;
   });
+  sel.addEventListener('change', () => document.getElementById('loadTemplate').click());
   blueprint = templates.passport.items.map(it => ({...it}));
   renderBlueprint(); renderSources();
+  document.getElementById('activeChecklist').textContent = `Checking ${blueprint.length} questions using: ${templates.passport.title}. Change this above if needed.`;
+  document.getElementById('status').textContent = '';
+  document.getElementById('analyzeBtn').disabled = false; document.getElementById('loadDemo').disabled = false;
+  } catch (e) { document.getElementById('status').textContent = 'Couldn’t load the checklists. Refresh the page to try again.'; }
 })();
-</script>
-</body>
-</html>
+</script></body></html>
