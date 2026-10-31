@@ -59,7 +59,7 @@ def discover_endpoint(req: DiscoverRequest):
 def demo_session():
     path = BASE / "demo_session.json"
     if path.exists():
-        return JSONResponse(json.loads(path.read_text()))
+        return JSONResponse(json.loads(path.read_text(encoding="utf-8")))
     return JSONResponse({"detail": "no demo session yet"}, status_code=404)
 
 

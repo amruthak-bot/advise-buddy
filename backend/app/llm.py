@@ -127,28 +127,42 @@ def llm_compare(claim_a: str, claim_b: str, question: str) -> str:
         v = str(out.get("verdict", "unclear")).lower()
         return v if v in ("same", "different", "unclear") else "unclear"
     except Exception:
-        return rule_compare(claim_a, claim_b)
+        return rule_compare(claim_a, claim_b, question)
 
 
 def _norm_value(s: str) -> str:
     return re.sub(r"[^a-z0-9]", "", (s or "").lower())
 
 
-def rule_compare(claim_a: str, claim_b: str) -> str:
-    """Conservative fallback: equal after normalisation -> same;
-    both claims carry numbers and the number sets differ -> different
-    (e.g. two different fees); else unclear. Never upgrades 'unclear'
-    to 'different' on a wording guess."""
+def rule_compare(claim_a: str, claim_b: str, question: str = "") -> str:
+    """Compare explicit amounts or durations for the question, not dates
+    or arbitrary numbers. Differently labelled applicant categories stay
+    unclear. A numeric difference is a reason to check, not proof that
+    either source is wrong or that the claims apply to the same case.
+    """
     a, b = _norm_value(claim_a), _norm_value(claim_b)
     if not a or not b:
         return "unclear"
     if a == b:
         return "same"
-    nums_a = set(re.findall(r"\d[\d,]*", claim_a or ""))
-    nums_b = set(re.findall(r"\d[\d,]*", claim_b or ""))
-    if nums_a and nums_b and nums_a != nums_b:
-        return "different"
-    return "unclear"
+    if re.search(r"\b(?:fee|fees|cost)\b", question, re.I):
+        pattern = r"(?:₹|\bRs\.?|\bINR|\$)\s*(\d[\d,]*(?:\.\d+)?)"
+    elif re.search(r"\b(?:processing|long|duration)\b", question, re.I):
+        pattern = r"(\d+(?:\s*[-–—]\s*\d+)?\s*(?:working\s+|business\s+)?(?:days?|weeks?|months?))\b"
+    else:
+        # Numbers in a documents or police-verification paragraph do not
+        # establish a disagreement about requirements.
+        return "unclear"
+    values_a = {_norm_value(v) for v in re.findall(pattern, claim_a, re.I)}
+    values_b = {_norm_value(v) for v in re.findall(pattern, claim_b, re.I)}
+    if not values_a or not values_b:
+        return "unclear"
+    categories = r"\b(?:normal|tatkaal|tatkal|minor|adult|36\s*pages?|60\s*pages?)\b"
+    context_a = set(re.findall(categories, claim_a.lower()))
+    context_b = set(re.findall(categories, claim_b.lower()))
+    if context_a and context_b and context_a != context_b:
+        return "unclear"
+    return "same" if values_a == values_b else "different"
 
 
 # --- Rule-based fallback extractor (no key needed) -------------------------
@@ -163,7 +177,48 @@ def _keywords(label: str) -> List[str]:
 
 
 def _sentences(text: str) -> List[str]:
-    return [s.strip() for s in re.split(r"(?<=[.!?])\s+", text) if s.strip()]
+    return [s.strip() for s in re.split(r"\n+|(?<=[.!?])\s+", text) if s.strip()]
+
+
+def is_answer_text(text: str, label: str = "") -> bool:
+    """Reject questions, headings and navigation lists, even if verbatim.
+
+    This is a conservative quality floor, not proof of relevance or truth.
+    A short statement or a labelled amount/duration can pass; a bare topic
+    cannot. Keep the original text untouched for quote verification.
+    """
+    text = (text or "").strip()
+    if len(text) < 12 or len(text) > 450 or text.endswith("?"):
+        return False
+    if re.match(r"^(?:#+\s*|(?:q[:.]\s*)?(?:what|who|how|when|where|why)\b)",
+                text, re.I):
+        return False
+    if re.search(r"\b(?:skip to|sitemap|privacy policy|all rights reserved|"
+                 r"cookie settings|table of contents)\b", text, re.I):
+        return False
+    # Mentioning a fee, portal or contact topic is not an answer to
+    # a question asking for the amount, address or contact channel.
+    if re.search(r"\b(?:fee|fees|cost)\b", label, re.I):
+        if not re.search(r"(?:₹|\bRs\.?|\bINR|\$)\s*\d|\d[\d,]*\s*rupees", text, re.I):
+            return False
+    if re.search(r"\b(?:processing|how long)\b", label, re.I):
+        if not re.search(r"\d+(?:\s*[-–—]\s*\d+)?\s*(?:working\s+|business\s+)?(?:days?|weeks?|months?)\b", text, re.I):
+            return False
+    if re.search(r"\b(?:portal|application link)\b", label, re.I):
+        if not re.search(r"https?://|\b[a-z0-9-]+\.(?:gov|in|com|org|edu)\b", text, re.I):
+            return False
+    if re.search(r"\b(?:contact|help channel)\b", label, re.I):
+        if not re.search(r"https?://|[\w.+-]+@[\w.-]+\.[a-z]+|\b\d[\d ()-]{6,}\d\b", text, re.I):
+            return False
+    statement = re.search(
+        r"\b(?:is|are|must|shall|requires?|involves?|takes?|costs?|"
+        r"submit|provide|carry|visit|apply|book|schedule|pay|contact|call|email|"
+        r"has|have|can|will|may|should)\b", text, re.I)
+    labelled_value = re.search(
+        r"(?:\b(?:fee|fees|cost|processing time|duration)\b[^.!?]{0,40}"
+        r"(?:₹|\bRs\.?|\bINR|\d+\s*(?:working\s+)?(?:days?|weeks?|months?)))",
+        text, re.I)
+    return bool(statement or labelled_value)
 
 
 def rule_extract(source_text: str, passages, blueprint_items) -> dict:
@@ -182,9 +237,11 @@ def rule_extract(source_text: str, passages, blueprint_items) -> dict:
         found = None
         for p in passages:
             for sent in _sentences(p.text):
+                if not is_answer_text(sent, label):
+                    continue
                 low = sent.lower()
-                hits = sum(1 for k in kws if k in low)
-                if (anchor and anchor in low) or hits >= 2:
+                hits = sum(1 for k in set(kws) if re.search(r"\b" + re.escape(k) + r"\b", low))
+                if (anchor and re.search(r"\b" + re.escape(anchor) + r"s?\b", low)) or hits >= 2:
                     found = (p.id, sent)
                     break
             if found:
@@ -193,7 +250,7 @@ def rule_extract(source_text: str, passages, blueprint_items) -> dict:
             items_out.append({"itemId": it.id, "status": "stated",
                               "passageId": found[0],
                               "exactQuote": found[1],
-                              "claimSummary": found[1][:200]})
+                              "claimSummary": found[1]})
         else:
             items_out.append({"itemId": it.id, "status": "silent",
                               "passageId": None, "exactQuote": None,

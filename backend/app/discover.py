@@ -66,10 +66,14 @@ class _TextExtractor(HTMLParser):
     def handle_starttag(self, tag, attrs):
         if tag in _SKIP_TAGS:
             self._skip += 1
+        elif not self._skip and tag in {"p", "div", "li", "tr", "h1", "h2", "h3", "br"}:
+            self._parts.append("\n")
 
     def handle_endtag(self, tag):
         if tag in _SKIP_TAGS and self._skip:
             self._skip -= 1
+        elif not self._skip and tag in {"p", "div", "li", "tr", "h1", "h2", "h3"}:
+            self._parts.append("\n")
 
     def handle_data(self, data):
         if not self._skip:
@@ -78,7 +82,9 @@ class _TextExtractor(HTMLParser):
                 self._parts.append(text)
 
     def text(self) -> str:
-        return re.sub(r"\s+", " ", " ".join(self._parts)).strip()
+        lines = " ".join(self._parts).splitlines()
+        return "\n".join(re.sub(r"\s+", " ", line).strip()
+                         for line in lines if line.strip())
 
 
 def extract_text(html_text: str) -> str:

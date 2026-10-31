@@ -48,6 +48,9 @@ def analyze(req: AnalysisRequest) -> AnalysisResult:
         by_id = {p.id: p for p in passages}
         for entry in raw.get("items", []):
             item_id = entry.get("itemId")
+            item = next((it for it in req.blueprint.items if it.id == item_id), None)
+            if item is None:
+                continue
             if entry.get("status") != "stated":
                 findings.append(Finding(itemId=item_id, sourceId=src.id,
                                         status="silent", label="uncertain"))
@@ -55,6 +58,10 @@ def analyze(req: AnalysisRequest) -> AnalysisResult:
             quote = entry.get("exactQuote")
             passage = by_id.get(entry.get("passageId") or "")
             if quote and passage and verify_quote(quote, passage.text):
+                if not llm.is_answer_text(quote, item.label):
+                    findings.append(Finding(itemId=item_id, sourceId=src.id,
+                                            status="silent", label="uncertain"))
+                    continue
                 findings.append(Finding(
                     itemId=item_id, sourceId=src.id, status="stated",
                     claimSummary=entry.get("claimSummary"),
@@ -105,7 +112,8 @@ def analyze(req: AnalysisRequest) -> AnalysisResult:
                                                item.label)
                 except Exception:
                     verdict = llm.rule_compare(base.claimSummary or "",
-                                                other.claimSummary or "")
+                                                other.claimSummary or "",
+                                                item.label)
                 if verdict == "different":
                     base.status = "conflicting"
                     other.status = "conflicting"

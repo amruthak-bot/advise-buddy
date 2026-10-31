@@ -125,8 +125,17 @@ def test_official_confirmed_count_rules():
 def test_demo_score_and_official_pair():
     demo = json.loads(
         (Path(__file__).resolve().parents[1] / "demo_session.json")
-        .read_text())
+        .read_text(encoding="utf-8"))
     res = analyze(AnalysisRequest(**demo))
-    assert res.completenessScore == 86
-    assert res.officialConfirmedCount == 2
-    assert res.evidenceDebtCount == 2
+    # Headings and a claim that an unnamed portal is valid do not
+    # answer eligibility, appointment or application-link questions.
+    # The original 86 / 2-of-9 pair counted these weak matches.
+    assert res.completenessScore == 57
+    assert res.officialConfirmedCount == 1
+    assert res.evidenceDebtCount == 4
+    assert not any(f.itemId == "i1" and f.label == "sourced"
+                   for f in res.findings)
+    assert next(f for f in res.findings
+                if f.itemId == "i5" and f.sourceId == "sA").status == "silent"
+    assert not any(f.itemId == "i4" and f.label == "sourced"
+                   for f in res.findings)
