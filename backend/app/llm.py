@@ -134,35 +134,77 @@ def _norm_value(s: str) -> str:
     return re.sub(r"[^a-z0-9]", "", (s or "").lower())
 
 
-def rule_compare(claim_a: str, claim_b: str, question: str = "") -> str:
-    """Compare explicit amounts or durations for the question, not dates
-    or arbitrary numbers. Differently labelled applicant categories stay
-    unclear. A numeric difference is a reason to check, not proof that
-    either source is wrong or that the claims apply to the same case.
-    """
-    a, b = _norm_value(claim_a), _norm_value(claim_b)
-    if not a or not b:
-        return "unclear"
-    if a == b:
-        return "same"
-    if re.search(r"\b(?:fee|fees|cost)\b", question, re.I):
-        pattern = r"(?:₹|\bRs\.?|\bINR|\$)\s*(\d[\d,]*(?:\.\d+)?)"
-    elif re.search(r"\b(?:processing|long|duration)\b", question, re.I):
-        pattern = r"(\d+(?:\s*[-–—]\s*\d+)?\s*(?:working\s+|business\s+)?(?:days?|weeks?|months?))\b"
+def _comparison_values(text: str, kind: str):
+    """Extract explicit ranges with their units; never compare bare dates."""
+    from decimal import Decimal
+    if kind == "fee":
+        pattern = (r"(?P<unit>₹|\bRs\.?|\bINR|\bUSD|\$)\s*"
+                   r"(?P<low>\d[\d,]*(?:\.\d+)?)"
+                   r"(?:\s*(?:[-–—]|to)\s*(?P<high_unit>₹|Rs\.?|INR|USD|\$)?\s*"
+                   r"(?P<high>\d[\d,]*(?:\.\d+)?))?")
     else:
-        # Numbers in a documents or police-verification paragraph do not
-        # establish a disagreement about requirements.
-        return "unclear"
-    values_a = {_norm_value(v) for v in re.findall(pattern, claim_a, re.I)}
-    values_b = {_norm_value(v) for v in re.findall(pattern, claim_b, re.I)}
-    if not values_a or not values_b:
-        return "unclear"
-    categories = r"\b(?:normal|tatkaal|tatkal|minor|adult|36\s*pages?|60\s*pages?)\b"
-    context_a = set(re.findall(categories, claim_a.lower()))
-    context_b = set(re.findall(categories, claim_b.lower()))
-    if context_a and context_b and context_a != context_b:
-        return "unclear"
-    return "same" if values_a == values_b else "different"
+        pattern = (r"(?P<low>\d+)(?:\s*(?:[-–—]|to)\s*(?P<high>\d+))?"
+                   r"\s*(?P<unit>(?:working\s+|business\s+)?(?:days?|weeks?|months?))\b")
+    values = []
+    for match in re.finditer(pattern, text, re.I):
+        low = Decimal(match['low'].replace(',', ''))
+        high = Decimal((match['high'] or match['low']).replace(',', ''))
+        unit = match['unit'].lower().replace('business', 'working')
+        if kind == "fee":
+            unit = "USD" if unit in ("$", "usd") else "INR"
+            high_unit = (match['high_unit'] or match['unit']).lower()
+            high_unit = "USD" if high_unit in ("$", "usd") else "INR"
+            if high_unit != unit:
+                return []
+        else:
+            unit = re.sub(r"\s+", " ", unit).rstrip('s')
+        if high >= low:
+            values.append((unit, low, high))
+    return values
+
+
+def compare_evidence(claim_a: str, claim_b: str, question: str):
+    """Return a verdict, reason code and inspectable explanation.
+
+    Only single explicit figures/ranges with matching units and explicit
+    category labels can be contrasted. Multiple prices, different cases,
+    and overlapping ranges require context rather than a conflict badge.
+    """
+    if re.search(r"\b(?:fee|fees|cost)\b", question, re.I):
+        kind = "fee"
+    elif re.search(r"\b(?:processing|long|duration)\b", question, re.I):
+        kind = "duration"
+    else:
+        return "unclear", "not_numeric", "These statements need human review; numbers alone cannot compare their requirements."
+    a, b = _comparison_values(claim_a, kind), _comparison_values(claim_b, kind)
+    if not a or not b:
+        return "unclear", "no_value", "At least one quote has no explicit comparable amount or duration."
+    if len(a) != 1 or len(b) != 1:
+        return "unclear", "multiple_values", "A quote lists several amounts or timelines. Match the application type before comparing them."
+    unit_a, low_a, high_a = a[0]
+    unit_b, low_b, high_b = b[0]
+    if unit_a != unit_b:
+        return "unclear", "different_units", "The quotes use different currencies or time units, such as calendar days and working days."
+    labels = {
+        "age": r"\b(adult|minor|child|children)\b",
+        "service": r"\b(normal|tatkaal|tatkal)\b",
+        "booklet": r"\b(36|60)\s*pages?\b",
+        "location": r"\b(india|usa|united states|uk|united kingdom|canada|australia)\b",
+    }
+    for pattern in labels.values():
+        scope_a = {x.lower().replace('tatkaal','tatkal').replace('children','child') for x in re.findall(pattern, claim_a, re.I)}
+        scope_b = {x.lower().replace('tatkaal','tatkal').replace('children','child') for x in re.findall(pattern, claim_b, re.I)}
+        if scope_a != scope_b:
+            return "unclear", "different_scope", "The quotes name different application categories or only one specifies a category. Confirm they apply to the same case."
+    if low_a == low_b and high_a == high_b:
+        return "same", "same_value", "The explicit figures match. This does not confirm that either source is current or correct."
+    if max(low_a, low_b) <= min(high_a, high_b):
+        return "unclear", "overlapping_range", "The quoted ranges overlap. Different wording or figures alone do not establish a contradiction."
+    return "different", "different_values", "The quotes give non-overlapping figures in the same units. Confirm the applicant category, dates and official guidance."
+
+
+def rule_compare(claim_a: str, claim_b: str, question: str = "") -> str:
+    return compare_evidence(claim_a, claim_b, question)[0]
 
 
 # --- Rule-based fallback extractor (no key needed) -------------------------

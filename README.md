@@ -1,137 +1,68 @@
-# GapScope — Blueprint-First Information Gap Investigator
+# GapScope — know what to verify next
 
-Locked concept (2026-10-31): a blueprint-first, evidence-driven
-information gap investigator. "You cannot identify what's missing
-until you define what complete looks like."
+**Search gives you information. GapScope shows the questions that information still doesn't answer.**
 
-## Stack (decided 2026-10-31)
+[Open the live app](https://gapscope-qdmr.onrender.com/) · [Demo script](DEMO_SCRIPT.md) · [Submission description](SUBMISSION_DESCRIPTION.md) · [Hackathon readiness](HACKATHON_READINESS.md)
 
-- **Backend:** Python + FastAPI (NOT Next.js — see below).
-- **Frontend:** vanilla JS + Tailwind, served by the same FastAPI
-  service, so one repo = one deploy (Render, single web service).
-- **LLM:** Google Gemini 2.5 Flash, free tier via AI Studio, behind a
-  thin wrapper (`backend/app/llm.py`). Key from `GEMINI_API_KEY`
-  env var only, server-side. Never commit a key, never put one in
-  frontend code or chat.
-- **No key, no problem:** without `GEMINI_API_KEY`, the rule-based
-  fallback extractor runs, so the app and the demo work end-to-end
-  with zero live LLM calls.
+Built for **Digital Dark Spot**, the Shinchan Online Hackathon 2026 information-gap challenge. The focused demonstration is an Indian passport investigation. An editable checklist defines what the sources should cover.
 
-Why FastAPI over the spec's Next.js default: the builder's proven
-stack is FastAPI + vanilla JS (VALIDRIFT); Render is already familiar;
-Vercel (Next.js's natural host) is blocked on OAuth for this user;
-and learning React/TypeScript/Next.js on deadline day is unnecessary
-risk. FastAPI serving static files matches the "one repo, one deploy"
-goal.
+## Try it in a minute
 
-## Hard rules (locked)
+1. Select **See an example**, or edit the question and select **Check passport information** to research the web.
+2. Read the first three checks. Each explains the concern, the next step and the sources behind it. Open **What we found** for original supporting quotes.
+3. Add evidence, record a resolution note, or select **Save my checklist** to download the results and references.
 
-- Official silence means "Not confirmed in the official sources
-  reviewed" — never "false". Silence is not disproof.
-- Quotes are displayed verbatim only (exact substring after
-  whitespace/quote normalisation). Fuzzy matching only LOCATES a
-  candidate passage; if verification fails, the passage's original
-  text is shown as "uncertain", never a rewritten quote.
-- Undated sources are labelled "undated", never given a guessed date.
-- The LLM never invents dates and never produces a displayed quote
-  without passing the substring check.
+The free Render service can take around a minute to wake up. Pages that cannot be fetched are shown as unread and contribute no evidence.
 
-## Run
+## Why it goes beyond a summary
 
-```bash
-python3 -m venv .venv && .venv/bin/pip install -r backend/requirements.txt
-GEMINI_API_KEY=... .venv/bin/uvicorn backend.app.main:app --reload --port 8000
-# open http://localhost:8000
+- Starts from expected questions and reveals what the reviewed sources do not answer.
+- Records the specific pair of original verified quotes behind each numeric comparison; considers all pairs, not just the first source.
+- Treats different currencies, time units, explicit categories, multiple prices and overlapping ranges as needing context rather than automatic contradictions.
+- Rejects common weak matches: headings, navigation and topic mentions without the requested detail.
+- Shows original quotes separately from potential issues and proposed checklist additions.
+- Lets users add evidence and retain a checklist with quotes, URLs, comparison reasons, fetch status and resolution notes.
+
+## Evidence and limits
+
+**A verified quote means it occurs in reviewed text. It does not mean the statement is true, current or applicable.**
+
+Missing information is scoped to the pages actually reviewed. Absence from official excerpts does not make a third-party claim false. Domain-based official labels are editable suggestions. Date detection finds dates in text, not necessarily publication dates. The deterministic fallback may miss indirect answers and unsupported formats; it does not resolve jurisdiction, eligibility or arbitrary contradictions in document requirements. Confirm important details on the official website.
+
+The original cached demo excerpts are preserved, including a source clearly labelled **illustrative**. The example is reproducible, not a claim about current passport fees or rules.
+
+## Architecture
+
+Question + editable checklist → web search or pasted text → passages → extraction → quote/quality checks → source-pair comparisons → prioritized checks → evidence update and export.
+
+Python/FastAPI serves a buildless HTML/CSS/JavaScript interface. Tavily discovers pages; fetching uses a bounded worker pool. Optional Gemini extraction is followed by deterministic checks. Without a Gemini key, deterministic extraction runs. Numeric comparisons use original verified quotes, not generated summaries.
+
+No account or database is required. Investigations stay in the open page; export before leaving. The app does not save investigations server-side.
+
+## Local setup — Windows
+
+Python 3.11 or newer:
+
+```powershell
+python -m venv .venv
+.\.venv\Scripts\python -m pip install -r backend\requirements.txt pytest
+.\.venv\Scripts\python -m pytest tests -q
+.\.venv\Scripts\python -m uvicorn backend.app.main:app --reload --port 8000
 ```
 
-Tests: `.venv/bin/pytest tests/ -q`
+Open `http://127.0.0.1:8000`. For macOS/Linux use `.venv/bin/python` instead of `.venv\Scripts\python`.
 
-## Deploy on Render (one web service, no separate frontend)
+The example and pasted-source flow work without keys. Set `TAVILY_API_KEY` in the server environment for live discovery; `GEMINI_API_KEY` is optional. Never commit keys, put them in frontend code or paste them into source excerpts.
 
-1. Push this repo to GitHub. On Render: New → Web Service → connect
-   the repo. (Render dashboard steps need the repo owner's login.)
-2. Build command: `pip install -r backend/requirements.txt`
-   Start command: `uvicorn backend.app.main:app --host 0.0.0.0 --port $PORT`
-   (FastAPI serves the frontend itself, so no static-site service.)
-3. Environment (optional): `GEMINI_API_KEY` — without it the app runs
-   fully on the rule-based fallback, which is what the demo uses.
-   `TAVILY_API_KEY` — without it, "Find sources on the web" reports
-   that web search is not configured; paste still works. With a free
-   Tavily key, typing a question and clicking "Find sources on the
-   web" searches the web, fetches the result pages, fills the source
-   editor, and runs the analysis. Fetched text goes through the same
-   quote verification as pasted text; pages that cannot be fetched
-   show as "Not fetched", never invented. Official labels on
-   discovered sources are domain-heuristic suggestions the user can
-   change in the editor.
-4. After deploy, open the public URL and click "Load demo session",
-   then "Run analysis": expect the fee conflict, processing conflict,
-   Official Silence flags, renewal + contact gaps, and the Tatkaal
-   proposal (see Demo session below). If any of those are missing on
-   the public URL, the deploy is not the same build — do not submit
-   that URL.
+## Render deployment
 
-## Demo session
+- Python web service, repository root, branch `main`.
+- Build: `pip install -r backend/requirements.txt`
+- Start: `uvicorn backend.app.main:app --host 0.0.0.0 --port $PORT`
+- Enter `TAVILY_API_KEY` privately in Render. Gemini is optional.
 
-`demo_session.json` now holds GENUINE passport excerpts, retrieved
-2026-10-31 (short verbatim passages per source, each with its URL;
-full pages at those URLs). One explicitly-titled "Sample source
-(illustrative)" — an older-cycle 2024 guide, authored for the demo —
-is included only to show the possibly-outdated state.
+## Validation and next steps
 
-Sources: Passport Seva official portal homepage (official, undated
-excerpt); Bharat Seva Guide (Feb 2026, pre-July fees); TripFactory
-guide (undated, pre-July fees); Daily Jagran (19 Sep 2026, post-July
-fees); InfoBits (July 2026 fee hike). Verified demo outcome:
-Completeness 86% of the blueprint covered by evidence in the sources
-reviewed (coverage of the blueprint, not factual certainty);
-confirmed by an official source: 2 of 9; fee
-conflict (pre-July Rs 1,500 vs post-July Rs 2,500 — the real 1 July
-2026 revision) and processing conflict, both labelled as possibly
-changed over time because their sources carry different dates;
-Official Silence flags on eligibility, fee, portal, processing and
-police verification (none confirmed in the official homepage excerpt
-reviewed); renewal and contact gaps (Evidence Debt 2); Tatkaal
-Challenge proposal; and all three freshness states (current /
-undated / possibly_outdated). "Load demo session" runs the analysis
-by itself, and re-runs print a one-line "Changed in this re-run"
-summary. Known limit, stated honestly: a verified quote proves the
-words appear in the source and the source is current — it does NOT
-prove the claim applies to the user's applicant category,
-jurisdiction, or time period. The drawer shows the exact quote so
-the user can judge applicability before acting on it.
+Run `python -m pytest tests -q` in the environment. Tests cover extraction, quotes, missing/unread sources, dates, official-source flags, discovery and context-aware comparison. Browser verification covers the example, a fresh question, source evidence, additional evidence, report download and phone-width layout.
 
-Honesty notes: excerpts are curated passages, not full pages —
-renewal and contact sections were not included in the pasted
-excerpts, so those gaps are relative to the sources reviewed, which
-is exactly what the product reports. No contradiction was forced:
-the fee and processing conflicts come from the genuine sources.
-
-Fee-conflict verification (checked 2026-10-31): the Rs 1,500 vs
-Rs 2,500 figures are the SAME category, not a category mix-up —
-ordinary fresh passport or reissue, 36 pages, Normal scheme,
-10-year validity. The Gazette of India (Extraordinary, Part II,
-Section 3(i), No. 465, 25 June 2026; MEA Notification G.S.R. 516(E)
-dated 20 June 2026, in force 1 July 2026, substituting Schedule IV
-of the Passports Rules, 1980) sets the new Normal fee at Rs 2,500
-(Tatkaal Rs 5,000 inclusive). The Rs 1,500 figure is the pre-revision
-fee for the identical category, still carried by pre-July guides.
-Demo narration should say exactly that: the guides disagree
-because the fee changed on 1 July 2026, and the older guides were
-never updated — that is the conflict GapScope surfaces.
-
-## What is built (scaffold)
-
-- `backend/app/models.py` — data model (spec section 3)
-- `backend/app/templates.py` — passport / scholarship / college /
-  job-offer templates (questions only, no factual claims)
-- `backend/app/llm.py` — Gemini wrapper, extraction prompt + JSON
-  schema, comparison, rule-based fallback extractor
-- `backend/app/verify.py` — quote verification + fuzzy locate
-- `backend/app/rules.py` — date/cycle regex, freshness, Official
-  Silence, Evidence Debt, checklist ranking
-- `backend/app/engine.py` — the pipeline (spec section 4)
-- `backend/app/main.py` — FastAPI app + endpoints
-- `frontend/index.html` — setup, sources, heatmap + evidence drawer,
-  checklist, proposals tray, verification loop
-- `tests/` — quote verification, date regex, silence rule, ranking
+Next priorities: real-user usability testing, stronger jurisdiction matching, document formats and multilingual research. No user-study results, universal accuracy or win probability are claimed.

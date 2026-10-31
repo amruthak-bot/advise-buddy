@@ -1,19 +1,19 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>GapScope — Check before you apply</title><style>
 :root{--ink:#26232d;--muted:#706b78;--accent:#7b4335;--line:#e5dfd8;--paper:#f7f5f1}*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:15px/1.6 system-ui,sans-serif}button,input,textarea,select{font:inherit}button,summary,a{ -webkit-tap-highlight-color:transparent}button,summary{cursor:pointer}button{border:0;border-radius:10px;padding:11px 18px;font-weight:650}.btn-primary{background:var(--accent);color:white}.btn-dark{background:#332b3e;color:white}.btn-muted{background:#ede8e2;color:var(--ink)}button:disabled{opacity:.55;cursor:wait}button:hover:not(:disabled){filter:brightness(.94)}:focus-visible{outline:3px solid #ae694c;outline-offset:3px}input,textarea,select{border:1px solid #cfc7c0;border-radius:9px;padding:10px;background:white;color:var(--ink);max-width:100%}input{min-width:0}textarea{width:100%}a{color:var(--accent)}h1,h2,h3,p{margin-top:0}h1{font-size:clamp(32px,5vw,52px);line-height:1.1;letter-spacing:-.045em;margin-bottom:16px}h2{font-size:23px;letter-spacing:-.025em;margin-bottom:8px}h3{font-size:17px;margin-bottom:8px}header{max-width:1120px;margin:auto;padding:23px 24px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line)}.brand{font-weight:800;font-size:23px;letter-spacing:-.04em}.brand span{color:var(--accent)}header small,.muted,.section-sub{color:var(--muted)}main{max-width:1050px;margin:auto;padding:44px 24px 60px}.hero{max-width:700px;margin-bottom:26px}.eyebrow{font-size:12px;text-transform:uppercase;letter-spacing:.13em;color:var(--accent);font-weight:750}.hero p{font-size:17px;color:var(--muted)}.panel{background:#fff;border:1px solid var(--line);border-radius:17px;padding:26px;margin-bottom:20px;box-shadow:0 5px 20px #30252b04}.question-label{display:block;font-weight:700;margin-bottom:9px}#question{width:100%;font-size:18px;padding:16px;margin-bottom:15px}.actions{display:flex;flex-wrap:wrap;gap:10px;align-items:center}.helper{font-size:13px;color:var(--muted);margin:12px 0 0}details{border:1px solid var(--line);border-radius:12px;padding:16px;margin:16px 0}details.panel{padding:22px}summary{font-weight:700}details[open]>summary{margin-bottom:18px}summary small{font-weight:400;color:var(--muted);margin-left:8px}.settings{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:14px 0}.settings label{font-size:13px}.source-card{margin-top:12px}.source-card summary{overflow-wrap:anywhere}.source-meta{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}.source-meta input{flex:1;min-width:160px}.notice{border-radius:10px;padding:13px 16px;background:#fff3d9;color:#705028;margin-bottom:18px;font-size:13px}.status:empty{display:none}.status{padding:12px 0 0;margin:0;color:var(--accent);font-size:14px}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:20px 0}.stat{background:#f7f4ef;padding:17px;border-radius:12px}.stat strong{display:block;font-size:29px;line-height:1.3}.stat span{font-size:13px;color:var(--muted)}.result-heading{display:flex;justify-content:space-between;gap:12px;align-items:center}.result-heading .eyebrow{margin-bottom:4px}.issue{border:1px solid var(--line);border-radius:12px;padding:18px;margin:12px 0}.issue h3{margin:8px 0}.issue p{color:var(--muted);font-size:14px}.badge{font-size:11px;font-weight:750;text-transform:uppercase;letter-spacing:.06em;color:#9b443a}.issue-actions{display:flex;gap:15px;align-items:center;flex-wrap:wrap}.issue-actions button{font-size:13px;padding:8px 12px}.matrix-scroll{overflow:auto}#heatmap{border-spacing:4px;width:100%;min-width:700px;font-size:12px}#heatmap th{max-width:190px;text-align:left;padding:10px;background:#f4f0eb}#heatmap td{padding:12px}#heatmap td:first-child{min-width:180px;font-weight:650}.cell{border:0;border-radius:7px;text-align:center;cursor:pointer}.cell.changed{outline:3px solid var(--accent)}.bg-emerald-100{background:#dceee3;color:#246448}.bg-stone-200{background:#ece9e5;color:#68646b}.bg-red-100{background:#f8dfdc;color:#9a3934}.bg-amber-100,.bg-yellow-100{background:#fff0ce;color:#805b16}.bg-orange-100{background:#f7e2d0;color:#8c5120}#drawer{background:#f8f4ed;padding:20px;border-radius:12px;margin:15px 0;overflow-wrap:anywhere}blockquote{border-left:3px solid var(--accent);padding:8px 16px;margin:15px 0}#checklist{padding:0;list-style:none}#flagsBox p{background:#fff4dd;padding:12px;border-radius:8px;font-size:13px}#gapQuestions>div,#proposals>div{padding:16px;border:1px solid var(--line);border-radius:10px;margin:12px 0}#blueprintEditor>div{display:flex;gap:8px;margin:8px 0}#blueprintEditor input{flex:1}.flex{display:flex;gap:8px;flex-wrap:wrap}.flex-1{flex:1}.w-full{width:100%}.mt-3,.mt-4{margin-top:14px}.mb-4{margin-bottom:16px}.hidden,[hidden]{display:none!important}.trust{font-size:12px;color:var(--muted);padding:14px 0;border-top:1px solid var(--line)}section,details,#newEvidence{scroll-margin-top:25px}#newEvidence{min-height:130px}.legend{font-size:12px;color:var(--muted);margin:12px 0}.empty{padding:18px;background:#f5f8f3;border-radius:10px}footer{font-size:12px;color:var(--muted);text-align:center}@media(max-width:600px){main{padding:28px 15px}.panel{padding:19px}header{padding:18px 16px}header small{display:none}.stats{grid-template-columns:1fr}.stat{display:flex;gap:12px;align-items:center}.stat strong{font-size:24px}.actions>*{width:100%}#blueprintEditor>div{flex-wrap:wrap}#blueprintEditor input{flex-basis:100%}.result-heading{align-items:start}.source-meta input{width:100%}}@media(prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
-.quote-source{background:#faf8f4;padding:15px;border-radius:10px;margin:12px 0}.quote-source p{font-size:12px}.quote-source blockquote{font-size:14px;line-height:1.7}.next-step{color:var(--ink)!important}.official-action{display:inline-block;font-size:14px;font-weight:650;margin-top:5px}.issue>details{margin:14px 0;font-size:14px}.issue h3{font-size:21px}.issue>p{max-width:780px}#reviewScope{margin:0 0 18px}.issue{padding:22px}.hero{max-width:720px}@media(max-width:600px){.issue{padding:16px}.issue h3{font-size:19px}} </style></head>
+.quote-source{background:#faf8f4;padding:15px;border-radius:10px;margin:12px 0}.quote-source p{font-size:12px}.quote-source blockquote{font-size:14px;line-height:1.7}.next-step{color:var(--ink)!important}.official-action{display:inline-block;font-size:14px;font-weight:650;margin-top:5px}.issue>details{margin:14px 0;font-size:14px}.issue h3{font-size:21px}.issue>p{max-width:780px}#reviewScope{margin:0 0 18px}.issue{padding:22px}.hero{max-width:720px}@media(max-width:600px){.issue{padding:16px}.issue h3{font-size:19px}} .result-tools{display:flex;align-items:center;gap:14px;flex-wrap:wrap}.result-tools button{font-size:13px;padding:8px 12px}.result-tools a{font-size:13px}#foundSummary h3{margin-top:8px}@media(max-width:600px){.result-heading{flex-direction:column}.result-tools{margin-bottom:12px}} </style></head>
 <body><header><div class="brand">gap<span>scope</span></div><small>Know what to check before you apply</small></header><main>
 <div class="hero"><p class="eyebrow">Indian passport applications</p><h1>Check passport advice<br>before you apply.</h1><p>Not sure which passport advice to trust? Find the fees, documents and other details you should double-check before applying.</p></div>
-<div id="sampleBanner" class="hidden notice">Demo investigation loaded: genuine excerpts retrieved 2026-10-31, plus one clearly-marked illustrative 2024 source. Review each source label before presenting findings as factual.</div>
+<div id="sampleBanner" class="hidden notice">Example investigation: cached source excerpts supplied with the project, including one clearly marked illustrative older source. These are not current passport instructions.</div>
 <section id="setup" class="panel"><label for="question" class="question-label">What do you want to check?</label><input id="question" placeholder="For example: Documents and fees for passport renewal in India" value="Documents, fees and processing times for an adult passport application in India.">
 <div class="actions"><button id="analyzeBtn" class="btn-primary" disabled>Check passport information →</button><button id="loadDemo" class="btn-muted" disabled>See an example</button></div><p class="helper">We’ll search the web. You’ll get a short list of what to verify and links to the sources.</p>
 <p id="status" class="status" role="status" aria-live="polite">Getting ready…</p><p id="discoverStatus" class="status" role="status" aria-live="polite"></p>
 <details id="checkSettings"><summary>Customize this check <small>Optional</small></summary><p class="section-sub">Start with a checklist that fits your question. Edit it to match your situation before searching.</p><div class="settings"><select id="templateSelect" aria-label="Research checklist"></select><button id="loadTemplate" class="btn-muted">Use this checklist</button><label>Year <input id="currentCycle" size="5" value="2026"></label></div><div id="blueprintEditor"></div><button id="addItem" class="btn-muted">+ Add a question</button></details>
 <p id="activeChecklist" class="hidden"></p></section>
 <details id="sources" class="panel"><summary>Review or add sources <small id="sourceCount">Optional</small></summary><p class="section-sub">Check the location, applicant category, and date. Remove sources that don’t fit. Web labels are suggestions you can change. A URL alone isn’t reviewed evidence.</p><div id="sourceEditor"></div><div class="actions mt-4"><button id="addSource" class="btn-muted">+ Paste a source</button><button id="discoverBtn" class="btn-muted">Search for more sources</button></div></details>
-<section id="dashboard" class="hidden"><div class="panel"><div class="result-heading"><div><p class="eyebrow">Your research check</p><h2 id="resultTitle">Here’s what to check next</h2></div><a href="#setup">Edit question ↑</a></div><p id="resultQuestion" class="muted"></p><div class="stats hidden"><div class="stat"><strong id="conflictNumber">—</strong><span>questions with conflicting information</span></div><div class="stat"><strong id="debtNumber">—</strong><span>questions with no matched evidence</span></div><div class="stat"><strong id="officialNumber">—</strong><span>questions with an official text match</span></div></div><p id="debtLine" class="hidden"></p><p id="reviewScope" class="helper"></p><ol id="checklist"></ol><button id="showMoreChecks" class="btn-muted hidden" aria-expanded="false">Show more checks</button><p id="changedLine" role="status"></p></div>
-<details id="evidenceDetails" class="panel"><summary>Detailed comparison <small>Optional</small></summary><p class="section-sub">Each row is a question; each column is a source. Select a cell to read its evidence.</p><div class="matrix-scroll"><table id="heatmap"></table></div><p class="legend">✓ Text found · ⚠ Possible conflict · — Not found · ◷ Check the date</p><div id="drawer" class="hidden" aria-live="polite" tabindex="-1"></div><details><summary>Coverage and source notes</summary><p id="scoreLine"></p><p id="officialLine"></p><p class="helper">Coverage measures matched text across the checklist. It does not measure truth, relevance, or readiness to apply.</p><div id="flagsBox"></div><h3>Matched passages</h3><ul id="summaryList"></ul></details></details>
-<details class="panel" id="suggestions"><summary>Other questions the sources mention <small>Optional</small></summary><p class="section-sub">Nothing is added without your approval.</p><div id="proposals"></div></details>
+<section id="dashboard" class="hidden"><div class="panel"><div class="result-heading"><div><p class="eyebrow">Your research check</p><h2 id="resultTitle">Here’s what to check next</h2></div><div class="result-tools"><button id="exportReport" class="btn-muted">Save my checklist ↓</button><a href="#setup">Edit question ↑</a></div></div><p id="resultQuestion" class="muted"></p><div class="stats hidden"><div class="stat"><strong id="conflictNumber">—</strong><span>questions with conflicting information</span></div><div class="stat"><strong id="debtNumber">—</strong><span>questions with no matched evidence</span></div><div class="stat"><strong id="officialNumber">—</strong><span>questions with an official text match</span></div></div><p id="debtLine" class="hidden"></p><p id="reviewScope" class="helper"></p><ol id="checklist"></ol><button id="showMoreChecks" class="btn-muted hidden" aria-expanded="false">Show more checks</button><p id="changedLine" role="status"></p></div>
+<details id="foundFacts" class="panel"><summary>What we found <small id="foundCount">Source quotes</small></summary><p class="helper">These are original quotes from reviewed text. A quoted statement can still be wrong, old or inapplicable to your situation.</p><div id="foundSummary"></div></details><details id="evidenceDetails" class="panel"><summary>Detailed comparison <small>Optional</small></summary><p class="section-sub">Each row is a question; each column is a source. Select a cell to read its evidence.</p><div class="matrix-scroll"><table id="heatmap"></table></div><p class="legend">✓ Text found · ⚠ Possible conflict · — Not found · ◷ Check the date</p><div id="drawer" class="hidden" aria-live="polite" tabindex="-1"></div><details><summary>Coverage and source notes</summary><p id="scoreLine"></p><p id="officialLine"></p><p class="helper">Coverage measures matched text across the checklist. It does not measure truth, relevance, or readiness to apply.</p><div id="flagsBox"></div><h3>Matched passages</h3><ul id="summaryList"></ul></details></details>
+<details class="panel" id="suggestions"><summary>Suggested questions <small>Require your approval</small></summary><p class="section-sub">These are proposed additions to your checklist, not verified facts. Nothing is added without your approval.</p><div id="proposals"></div></details>
 <details id="verification" class="panel"><summary>Already checked something? Add a note or source</summary><p class="section-sub">Paste a relevant excerpt to update the results, or record how you checked an issue.</p><label for="newEvidence" class="question-label">New evidence</label><textarea id="newEvidence" placeholder="Paste the exact excerpt or official reply…"></textarea><div class="settings"><input id="newEvidenceTitle" placeholder="Source title" aria-label="New source title"><select id="newEvidenceType" aria-label="New source type"><option value="official">Official</option><option value="third_party" selected>Third-party</option></select><button id="addEvidenceBtn" class="btn-primary">Add evidence & update results</button></div><h3>Record a check</h3><div id="gapQuestions"></div><div id="closedBox"></div></details></section>
 <div class="trust">This is a list of things to verify, not passport advice. “Not found” means we did not find an answer in the sources we could read. Always confirm details for your situation with Passport Seva.</div><footer>GapScope · Know what to verify next.</footer></main><script>
 let blueprint = [];
@@ -96,6 +96,11 @@ function checkTopic(label) {
   return {title:label, action:'Confirm this detail with the official source for your situation.'};
 }
 
+function openChecks(res) {
+  const order = {conflicting:0, context:1, silent:2, official_silence:3, uncertain:4, possibly_outdated:5, undated:6};
+  return res.checklist.filter(c => !(c.itemId in manualClosed)).sort((a,b) => (order[a.kind] ?? 6) - (order[b.kind] ?? 6));
+}
+
 function renderResult(res, changedKeys) {
   lastResult = res;
   document.getElementById('drawer').classList.add('hidden');
@@ -141,8 +146,7 @@ function renderResult(res, changedKeys) {
   document.querySelectorAll('#heatmap .cell').forEach(td =>
     { td.addEventListener('click', () => showDrawer(td.dataset.item, td.dataset.source)); td.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); showDrawer(td.dataset.item, td.dataset.source); } }); });
 
-  const order = {conflicting:0, silent:1, official_silence:2, uncertain:3, possibly_outdated:4, undated:5};
-  const openChecklist = res.checklist.filter(c => !(c.itemId in manualClosed)).sort((a,b) => (order[a.kind] ?? 6) - (order[b.kind] ?? 6));
+  const openChecklist = openChecks(res);
   const readable = res.sources.filter(s => s.text.trim()).length;
   document.getElementById('resultTitle').textContent = readable ? 'Before you apply, check these' : 'We couldn’t read the sources';
   document.getElementById('resultQuestion').textContent = res.question;
@@ -151,7 +155,8 @@ function renderResult(res, changedKeys) {
     : 'Try searching again, or paste an excerpt under “Review or add sources”. Unread pages are not evidence of missing information.';
   document.getElementById('checklist').innerHTML = openChecklist.map((c, i) => {
     const topic = checkTopic(c.itemLabel);
-    const reason = c.kind === 'conflicting'
+    const pair = (res.comparisons || []).find(p => p.itemId === c.itemId && p.verdict === (c.kind === 'conflicting' ? 'different' : 'unclear'));
+    const reason = c.kind === 'context' && pair ? pair.reason : c.kind === 'conflicting'
       ? 'These sources give different figures. They may cover different passport types, applicants or dates.'
       : c.kind === 'official_silence'
       ? 'We found information in other guides, but not an answer in the official text we reviewed.'
@@ -161,9 +166,9 @@ function renderResult(res, changedKeys) {
       ? 'The supporting information is old or has no clear date. Check whether it still applies.'
       : 'We couldn’t confirm the supporting quote. Don’t rely on it yet.';
     const findings = res.findings.filter(f => f.itemId === c.itemId && f.quote && f.quoteVerified &&
-      (c.kind !== 'conflicting' || f.status === 'conflicting'));
+      (pair ? [pair.sourceA, pair.sourceB].includes(f.sourceId) : (c.kind !== 'conflicting' || f.status === 'conflicting')));
     const freshnessOrder = {current:0, undated:1, possibly_outdated:2};
-    findings.sort((a,b) => (freshnessOrder[res.sourceFreshness[a.sourceId]] ?? 2) - (freshnessOrder[res.sourceFreshness[b.sourceId]] ?? 2));
+    if (!pair) findings.sort((a,b) => (freshnessOrder[res.sourceFreshness[a.sourceId]] ?? 2) - (freshnessOrder[res.sourceFreshness[b.sourceId]] ?? 2));
     const quotes = findings.slice(0, 2).map(f => {
       const source = res.sources.find(s => s.id === f.sourceId);
       return `<div class="quote-source"><p><strong>${esc(source.title)}</strong></p><blockquote>${esc(f.quote)}</blockquote>${source.url && /^https?:\/\//i.test(source.url) ? `<a href="${esc(source.url)}" target="_blank" rel="noopener">Read this source ↗</a>` : '<span class="helper">No source link supplied.</span>'}</div>`;
@@ -171,7 +176,7 @@ function renderResult(res, changedKeys) {
     const official = res.sources.find(s => s.type === 'official' && s.url && /^https?:\/\//i.test(s.url));
     const officialUrl = document.getElementById('templateSelect').value === 'passport'
       ? 'https://passportindia.gov.in/' : (official ? official.url : '');
-    return `<li class="issue${i >= 3 ? ' hidden extra-check' : ''}"><span class="badge">${c.kind === 'conflicting' ? 'Different figures to verify' : c.kind === 'silent' ? 'Answer not found' : 'Needs confirmation'}</span><h3>${esc(topic.title)}</h3><p>${esc(reason)}</p><p class="next-step"><strong>What to do:</strong> ${esc(topic.action)}</p><details><summary>${quotes ? 'See the source evidence' : 'What we checked'}</summary>${quotes || `<p>No usable answer was found for “${esc(c.itemLabel)}” in the ${readable} sources we could read.</p>`}<div class="issue-actions"><button class="btn-muted" data-inspect="${esc(c.itemId)}">View full comparison</button><button class="btn-muted" data-add-evidence="${esc(c.itemId)}">Add information you found</button></div></details>${officialUrl ? `<a class="official-action" href="${esc(officialUrl)}" target="_blank" rel="noopener">${document.getElementById('templateSelect').value === 'passport' ? 'Open official Passport Seva website' : 'Open official source'} ↗</a>` : ''}</li>`;
+    return `<li class="issue${i >= 3 ? ' hidden extra-check' : ''}"><span class="badge">${c.kind === 'conflicting' ? 'Different figures to verify' : c.kind === 'context' ? 'Compare the same case' : c.kind === 'silent' ? 'Answer not found' : 'Needs confirmation'}</span><h3>${esc(topic.title)}</h3><p>${esc(reason)}</p><p class="next-step"><strong>What to do:</strong> ${esc(topic.action)}</p><details><summary>${quotes ? 'See the source evidence' : 'What we checked'}</summary>${pair ? `<p class="helper"><strong>Why this pair was flagged:</strong> ${esc(pair.reason)}</p>` : ''}${quotes || `<p>No usable answer was found for “${esc(c.itemLabel)}” in the ${readable} sources we could read.</p><ul>${res.sources.filter(s => s.text.trim()).map(s => `<li>${/^https?:\/\//i.test(s.url || '') ? `<a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.title)}</a>` : esc(s.title)}</li>`).join('')}</ul>`}<div class="issue-actions"><button class="btn-muted" data-inspect="${esc(c.itemId)}">View full comparison</button><button class="btn-muted" data-add-evidence="${esc(c.itemId)}">Add information you found</button></div></details>${officialUrl ? `<a class="official-action" href="${esc(officialUrl)}" target="_blank" rel="noopener">${document.getElementById('templateSelect').value === 'passport' ? 'Open official Passport Seva website' : 'Open official source'} ↗</a>` : ''}</li>`;
   }).join('') || (readable ? '<li class="empty">No further checks were flagged. This does not mean the information is complete or correct; review the sources before applying.</li>' : '');
   const more = document.getElementById('showMoreChecks');
   more.classList.toggle('hidden', openChecklist.length <= 3);
@@ -214,6 +219,20 @@ function renderResult(res, changedKeys) {
     document.querySelector(`[data-prop="${b.dataset.reject}"]`).remove();
   }));
 
+  const sourceById = Object.fromEntries(res.sources.map(s => [s.id, s]));
+  const best = new Map();
+  res.findings.filter(f => f.quoteVerified && f.label === 'sourced' && f.status === 'stated').forEach(f => {
+    const previous = best.get(f.itemId);
+    if (!previous || (sourceById[f.sourceId].type === 'official' && sourceById[previous.sourceId].type !== 'official')) best.set(f.itemId, f);
+  });
+  document.getElementById('foundCount').textContent = `${best.size} questions with quoted evidence`;
+  document.getElementById('foundSummary').innerHTML = [...best.values()].map(f => {
+    const source = sourceById[f.sourceId];
+    const item = res.blueprint.items.find(it => it.id === f.itemId);
+    const freshness = {current:'Date found for this year', undated:'No date found', possibly_outdated:'Older date found'}[(res.sourceFreshness || {})[source.id]] || 'Check source date';
+    return `<article class="quote-source"><span class="badge">Source quote · ${source.type === 'official' ? 'Official label' : 'Third-party'}</span><h3>${esc(item.label)}</h3><blockquote>${esc(f.quote)}</blockquote><p>${esc(source.title)} · ${freshness}</p>${/^https?:\/\//i.test(source.url || '') ? `<a href="${esc(source.url)}" target="_blank" rel="noopener">Read this source ↗</a>` : '<p>No source link supplied.</p>'}</article>`;
+  }).join('') || '<p>No current, non-conflicting quotes were matched. Start with the checks above.</p>';
+  document.getElementById('exportReport').onclick = exportReport;
   renderGapSection(res);
 }
 
@@ -265,6 +284,44 @@ function showDrawer(itemId, sourceId) {
     ${src && src.url ? `<p><a class="underline" href="${esc(/^https?:\/\//i.test(src.url) ? src.url : "#")}" target="_blank" rel="noopener">Open source</a></p>` : ''}`;
 }
 
+function exportReport() {
+  if (!lastResult) return;
+  const res = lastResult;
+  const sourceById = Object.fromEntries(res.sources.map(s => [s.id, s]));
+  const lines = ['# GapScope verification checklist', '', res.question, '',
+    'Exported at: ' + new Date().toISOString(),
+    'Scope: reviewed sources only. Quotes are not guarantees of truth or applicability.', '',
+    '## What to verify next', ''];
+  openChecks(res).forEach((c, i) => {
+    const topic = checkTopic(c.itemLabel);
+    lines.push(`${i+1}. ${topic.title}`, `   Finding: ${c.action}`, `   Next step: ${topic.action}`, '');
+    const pair = (res.comparisons || []).find(p => p.itemId === c.itemId && p.verdict === (c.kind === 'conflicting' ? 'different' : 'unclear'));
+    if (pair) lines.push(`   Compare: ${sourceById[pair.sourceA].title} ↔ ${sourceById[pair.sourceB].title}`, `   Reason: ${pair.reason}`, '');
+  });
+  lines.push('', '## Source evidence', '');
+  res.blueprint.items.forEach(item => {
+    lines.push('### ' + item.label);
+    const findings = res.findings.filter(f => f.itemId === item.id && f.quoteVerified && f.quote);
+    findings.forEach(f => {
+      const source = sourceById[f.sourceId];
+      lines.push(`- [${source.id}] ${source.title}`, `  Type: ${source.type}; date label: ${(res.sourceFreshness || {})[source.id] || 'unknown'}`,
+        `  URL: ${source.url || 'Not supplied'}`, '', '> ' + f.quote.replace(/\n/g, '\n> '), '');
+    });
+    if (!findings.length) lines.push('No verified quote matched in the reviewed text.', '');
+  });
+  lines.push('## Sources and fetch status', '');
+  res.sources.forEach(s => lines.push(`- [${s.id}] ${s.title}: ${s.text.trim() ? 'Text reviewed' : 'Not fetched — no evidence reviewed'}; ${s.url || 'No URL supplied'}`));
+  lines.push('', '## Resolution notes', '');
+  Object.entries(manualClosed).forEach(([id,note]) => lines.push(`- ${res.blueprint.items.find(it => it.id === id)?.label || id}: ${note} (marked by user)`));
+  lastAutoClosed.forEach(note => lines.push('- ' + note));
+  if (!Object.keys(manualClosed).length && !lastAutoClosed.length) lines.push('No resolution notes recorded.');
+  const blob = new Blob([lines.join('\n')], {type:'text/markdown;charset=utf-8'});
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement('a');
+  link.href = url; link.download = 'gapscope-checklist.md'; link.click();
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+
 async function runAnalysis() {
   document.getElementById('status').textContent = 'Analyzing…';
   const req = {question: document.getElementById('question').value, blueprint: {id:'custom', title:'Custom', items: blueprint},
@@ -301,8 +358,9 @@ async function runAnalysis() {
     const it = res.blueprint.items.find(x => x.id === k.split('|')[0]);
     return it ? it.label : null;
   }).filter(Boolean))];
+  const awaitingOfficial = res.checklist.filter(c => c.kind === 'official_silence' && changedLabels.includes(c.itemLabel));
   document.getElementById('changedLine').textContent = changedLabels.length ?
-    `Changed in this re-run: ${changedLabels.join('; ')} (outlined in brown).` : '';
+    `Evidence updated: ${changedLabels.join('; ')}.${awaitingOfficial.length ? ' Official confirmation is still needed for the updated question.' : ' Review the checks that remain open.'}` : '';
   document.getElementById('status').textContent = 'Results ready. Start with the questions below.';
   document.getElementById('dashboard').scrollIntoView({behavior:'smooth',block:'start'});
 }
@@ -353,7 +411,7 @@ async function perform(task, needsQuestion = true) {
   controls.forEach(id => document.getElementById(id).disabled = true);
   document.getElementById('setup').setAttribute('aria-busy','true');
   document.getElementById('analyzeBtn').textContent = 'Checking sources…';
-  document.getElementById('status').textContent = 'Working on your question. Web searches can take up to a minute.';
+  document.getElementById('status').textContent = 'Working on your question. Web research may take a minute; unread pages will be marked.';
   document.getElementById('discoverStatus').textContent = '';
   try { await task(); } catch (e) { document.getElementById('status').textContent = 'We couldn’t finish the check. Try again, or add a source excerpt and retry.'; }
   finally {

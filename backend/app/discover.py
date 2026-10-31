@@ -12,18 +12,26 @@ Keys live in the environment only (TAVILY_API_KEY). Without a key,
 discovery is unavailable and the paste flow still works.
 """
 import html as html_lib
+import ipaddress
+import http.client
 import os
 import re
+import socket
+import ssl
+from types import SimpleNamespace
 from datetime import date
+from concurrent.futures import ThreadPoolExecutor
 from html.parser import HTMLParser
-from urllib.parse import urlparse
+from urllib.parse import urlparse, urljoin
 
 import httpx
+import certifi
 
 from .models import Source
 
 MAX_RESULTS = 5
 MAX_TEXT_CHARS = 12000
+MAX_PAGE_BYTES = 2_000_000
 TAVILY_URL = "https://api.tavily.com/search"
 USER_AGENT = "GapScope/1.0 (evidence research; +https://example.org)"
 
@@ -101,23 +109,76 @@ def extract_text(html_text: str) -> str:
 
 
 def _is_fetchable(url: str) -> bool:
-    """Only public http(s) pages. Never fetch loopback/private hosts
-    — a search result must not turn this server into a proxy into
-    its own network."""
+    """Reject private IP literals and local hostnames; recheck redirects."""
     try:
         parsed = urlparse(url or "")
     except Exception:
         return False
     if parsed.scheme not in ("http", "https"):
         return False
-    host = (parsed.hostname or "").lower()
-    if not host or host == "localhost":
+    host = (parsed.hostname or "").lower().rstrip('.')
+    if not host or host == "localhost" or host.endswith((".localhost", ".local")):
         return False
+    try:
+        address = ipaddress.ip_address(host)
+        return address.is_global and not address.is_multicast
+    except ValueError:
+        if re.fullmatch(r"[\d.]+", host) or host.startswith('0x'):
+            return False
     if host.startswith(("127.", "10.", "192.168.", "[::1]")):
         return False
     if re.match(r"172\.(1[6-9]|2[0-9]|3[0-1])\.", host):
         return False
     return True
+
+
+def _public_address(host: str, port: int) -> str:
+    addresses = socket.getaddrinfo(host, port, type=socket.SOCK_STREAM)
+    ips = [entry[4][0] for entry in addresses]
+    if not ips or any(not ipaddress.ip_address(ip).is_global or
+                      ipaddress.ip_address(ip).is_multicast for ip in ips):
+        raise ValueError("Source host does not resolve exclusively to public addresses")
+    return ips[0]
+
+
+def _request_public(url: str):
+    """Connect to a vetted IP while retaining the original Host and TLS SNI.
+
+    Pinning this connection prevents a second DNS lookup from rebinding
+    an approved hostname to a private address. Redirects are handled by
+    fetch_text and get the same validation on every hop.
+    """
+    parsed = urlparse(url)
+    if parsed.username or parsed.password:
+        raise ValueError("Source URLs must not contain credentials")
+    port = parsed.port or (443 if parsed.scheme == "https" else 80)
+    address = _public_address(parsed.hostname, port)
+    connection = http.client.HTTPConnection(parsed.hostname, port, timeout=20)
+    raw_socket = socket.create_connection((address, port), timeout=20)
+    try:
+        connection.sock = (ssl.create_default_context(cafile=certifi.where()).wrap_socket(
+            raw_socket, server_hostname=parsed.hostname)
+            if parsed.scheme == "https" else raw_socket)
+        path = parsed.path or "/"
+        if parsed.query:
+            path += "?" + parsed.query
+        connection.request("GET", path, headers={"User-Agent": USER_AGENT,
+                                                "Accept-Encoding": "identity"})
+        response = connection.getresponse()
+        data = response.read(MAX_PAGE_BYTES + 1)
+        if len(data) > MAX_PAGE_BYTES:
+            raise ValueError("Source page exceeds the download limit")
+        encoding = response.headers.get_content_charset() or "utf-8"
+        try:
+            text = data.decode(encoding, errors="replace")
+        except LookupError:
+            text = data.decode("utf-8", errors="replace")
+        return SimpleNamespace(status_code=response.status,
+                               headers={k.lower(): v for k, v in response.getheaders()},
+                               text=text)
+    finally:
+        connection.close()
+        raw_socket.close()
 
 
 def tavily_search(query: str, api_key: str,
@@ -148,8 +209,18 @@ def fetch_text(url: str) -> str:
     if not _is_fetchable(url):
         return ""
     try:
-        resp = httpx.get(url, headers={"User-Agent": USER_AGENT},
-                         timeout=20.0, follow_redirects=True)
+        for _ in range(4):
+            if not _is_fetchable(url):
+                return ""
+            resp = _request_public(url)
+            if resp.status_code not in (301, 302, 303, 307, 308):
+                break
+            location = resp.headers.get("location")
+            if not location:
+                return ""
+            url = urljoin(url, location)
+        else:
+            return ""
         if resp.status_code != 200:
             return ""
         content_type = resp.headers.get("content-type", "")
@@ -172,8 +243,10 @@ def discover(question: str, api_key: str = None,
     results = tavily_search(question, key, max_results)
     sources, fetched = [], 0
     today = date.today().isoformat()
-    for i, item in enumerate(results, start=1):
-        text = fetch_text(item["url"])
+    # Fetch independently with a small fixed bound, keeping search order.
+    with ThreadPoolExecutor(max_workers=MAX_RESULTS) as pool:
+        texts = list(pool.map(fetch_text, [item["url"] for item in results]))
+    for i, (item, text) in enumerate(zip(results, texts), start=1):
         if text:
             fetched += 1
         sources.append(Source(
