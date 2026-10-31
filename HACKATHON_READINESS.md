@@ -25,7 +25,7 @@ The PDF calls the platform Unista. The organizer-linked live listing identifies 
 
 Event: https://unstop.com/p/shinchan-online-hackathon-24-hour-hackathon-devengers-1771802
 
-- Required name: **GapScope**.
+- Required name: **Advise Buddy**.
 - Required description: use `SUBMISSION_DESCRIPTION.md`.
 - Required public code: https://github.com/amruthak-bot/gapscope
 - Optional live app: https://gapscope-qdmr.onrender.com/

@@ -1,4 +1,4 @@
-# GapScope — a 2 to 3 minute walkthrough
+# Advise Buddy — a 2 to 3 minute walkthrough
 
 Use the deployed app. Keep the source excerpts unchanged and the **illustrative** label visible. Do not claim the example establishes the correct fee or proves a policy change.
 
@@ -6,13 +6,13 @@ Use the deployed app. Keep the source excerpts unchanged and the **illustrative*
 
 [Home screen.]
 
-“Before applying for something important, we open several websites. We find information, but still don't know which questions remain unanswered. GapScope turns that uncertainty into a short list of things to verify.”
+“Before applying for something important, we open several websites. We find information, but still don't know which questions remain unanswered. Advise Buddy turns that uncertainty into a short list of things to verify.”
 
 ## 0:20–0:40 — Start simply
 
 [Show the question, briefly open **Customize this check** to reveal the editable questions, then select **See an example**.]
 
-“First, I define what I need to know: documents, fees and timing. That lets GapScope find unanswered questions instead of only summarizing. This passport example is cached so the walkthrough is reproducible. It includes supplied source excerpts and one clearly labelled illustrative older source. For a fresh question, GapScope can search and fetch pages automatically.”
+“First, I define what I need to know: documents, fees and timing. That lets Advise Buddy find unanswered questions instead of only summarizing. This passport example is cached so the walkthrough is reproducible. It includes supplied source excerpts and one clearly labelled illustrative older source. For a fresh question, Advise Buddy can search and fetch pages automatically.”
 
 ## 0:40–1:10 — Inspect a specific concern
 
@@ -44,7 +44,7 @@ Use the deployed app. Keep the source excerpts unchanged and the **illustrative*
 
 [Select **Save my checklist**. Show the downloaded report's question, next actions, quotes and source references.]
 
-“I can take this checklist away with the evidence and unresolved questions intact. GapScope helps me see what I still need to verify, why, and where to check.”
+“I can take this checklist away with the evidence and unresolved questions intact. Advise Buddy helps me see what I still need to verify, why, and where to check.”
 
 ## Recording and honesty checks
 

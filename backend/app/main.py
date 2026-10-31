@@ -1,4 +1,4 @@
-"""GapScope API (FastAPI). Serves the static frontend from the same
+"""Advise Buddy API (FastAPI). Serves the static frontend from the same
 service, so one repo = one deploy (Render, single web service).
 
 Endpoints:
@@ -30,7 +30,7 @@ from .templates import TEMPLATES
 BASE = Path(__file__).resolve().parents[2]
 FRONTEND_DIR = BASE / "frontend"
 
-app = FastAPI(title="GapScope")
+app = FastAPI(title="Advise Buddy")
 
 
 @app.get("/api/templates")

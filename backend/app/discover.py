@@ -33,7 +33,7 @@ MAX_RESULTS = 5
 MAX_TEXT_CHARS = 12000
 MAX_PAGE_BYTES = 2_000_000
 TAVILY_URL = "https://api.tavily.com/search"
-USER_AGENT = "GapScope/1.0 (evidence research; +https://example.org)"
+USER_AGENT = "AdviseBuddy/1.0 (evidence research; +https://example.org)"
 
 # Host suffixes treated as official. This is a SUGGESTION only
 # (typeSetBy="heuristic"): the user can change any type in the

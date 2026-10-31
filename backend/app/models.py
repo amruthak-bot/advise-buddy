@@ -1,4 +1,4 @@
-"""GapScope data model (mirrors MVP Spec v1, section 3).
+"""Advise Buddy data model (mirrors MVP Spec v1, section 3).
 
 Stack decision: FastAPI + Pydantic (NOT Next.js). Reason: the builder's
 proven stack is FastAPI + vanilla JS (VALIDRIFT), Render is already

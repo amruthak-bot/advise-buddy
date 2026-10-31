@@ -1,4 +1,4 @@
-# GapScope — know what to verify next
+# Advise Buddy — know what to verify next
 
 ## Problem
 
@@ -6,7 +6,7 @@ When researching a passport application, scholarship or other important decision
 
 ## Solution and core workflow
 
-GapScope turns several sources into an evidence-backed verification checklist. The focused prototype demonstrates Indian passport research. Users enter a question and search the web, try a reproducible example, or paste source text. An editable checklist defines what a complete answer should address.
+Advise Buddy turns several sources into an evidence-backed verification checklist. The focused prototype demonstrates Indian passport research. Users enter a question and search the web, try a reproducible example, or paste source text. An editable checklist defines what a complete answer should address.
 
 The main result shows three prioritized checks in plain language. Each explains the concern, the next action and the supporting evidence. Additional checks and a detailed source-by-question heatmap remain available without overwhelming the first screen.
 
@@ -39,4 +39,4 @@ The cached example preserves cached source excerpts and one clearly marked illus
 
 Real-user usability testing, stronger jurisdiction/category matching, broader document formats and multilingual research. No completed user study, fabricated impact metric or guaranteed accuracy is claimed.
 
-**GapScope helps users leave research with a clearer next step, not just another answer.**
+**Advise Buddy helps users leave research with a clearer next step, not just another answer.**

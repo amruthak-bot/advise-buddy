@@ -1,6 +1,6 @@
-# GapScope — know what to verify next
+# Advise Buddy — know what to verify next
 
-**Search gives you information. GapScope shows the questions that information still doesn't answer.**
+**Search gives you information. Advise Buddy shows the questions that information still doesn't answer.**
 
 [Open the live app](https://gapscope-qdmr.onrender.com/) · [Demo script](DEMO_SCRIPT.md) · [Submission description](SUBMISSION_DESCRIPTION.md) · [Hackathon readiness](HACKATHON_READINESS.md)
 

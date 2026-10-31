@@ -1,7 +1,7 @@
 """Deterministic rules (MVP Spec v1, sections 4 steps 6-7, 10).
 
 No LLM here: freshness, Official Silence, Evidence Debt, checklist
-ranking. Every rule is inspectable, which is the point of GapScope.
+ranking. Every rule is inspectable, which is the point of Advise Buddy.
 """
 import re
 from typing import Dict, List, Tuple
