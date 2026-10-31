@@ -1,0 +1,129 @@
+{
+  "question": "What should I verify before applying for an Indian passport?",
+  "blueprint": {
+    "id": "passport",
+    "items": [
+      {
+        "id": "i1",
+        "label": "Who is eligible to apply?",
+        "origin": "template",
+        "priority": "critical",
+        "anchor": "eligible"
+      },
+      {
+        "id": "i2",
+        "label": "What documents are required?",
+        "origin": "template",
+        "priority": "critical",
+        "anchor": "documents"
+      },
+      {
+        "id": "i3",
+        "label": "What is the application fee?",
+        "origin": "template",
+        "priority": "critical",
+        "anchor": "fee"
+      },
+      {
+        "id": "i4",
+        "label": "What is the official application link or portal?",
+        "origin": "template",
+        "priority": "critical",
+        "anchor": "portal"
+      },
+      {
+        "id": "i5",
+        "label": "How do I book an appointment?",
+        "origin": "template",
+        "priority": "important",
+        "anchor": "appointment"
+      },
+      {
+        "id": "i6",
+        "label": "How long does processing take?",
+        "origin": "template",
+        "priority": "important",
+        "anchor": "processing"
+      },
+      {
+        "id": "i7",
+        "label": "Is police verification required, and what does it involve?",
+        "origin": "template",
+        "priority": "important",
+        "anchor": "police verification"
+      },
+      {
+        "id": "i8",
+        "label": "What are the renewal conditions?",
+        "origin": "template",
+        "priority": "important",
+        "anchor": "renewal"
+      },
+      {
+        "id": "i9",
+        "label": "What is the contact or help channel?",
+        "origin": "template",
+        "priority": "optional",
+        "anchor": "contact"
+      }
+    ],
+    "title": "Passport / Visa application"
+  },
+  "sources": [
+    {
+      "id": "sA",
+      "title": "Passport Seva — Official portal (passportindia.gov.in)",
+      "url": "https://passportindia.gov.in",
+      "type": "official",
+      "typeSetBy": "user",
+      "retrievedAt": "2026-10-31",
+      "text": "For obtaining Passport under Tatkaal scheme, along with the address, birth and non-ECR proofs (as applicable) applicants have to submit additional documents.\n\nNormal/Tatkaal Appointment Opening Time\n\nAppointments opening time corresponding to each Passport Office.\n\nWe are available 24/7 to help you with your Passport journey.\n\nWrite to our Helpdesk"
+    },
+    {
+      "id": "sB",
+      "title": "Bharat Seva Guide — How to Apply for Passport Online 2026",
+      "url": "https://www.bharatseva.online/services/passport.html",
+      "type": "third_party",
+      "typeSetBy": "user",
+      "retrievedAt": "2026-10-31",
+      "text": "Processing Time: 7-15 days Fee: ₹1,500 - ₹3,500 Updated: February 2026\n\nDocuments Required for Passport\n\nSchedule an appointment at your nearest Passport Seva Kendra (PSK) or Regional Passport Office (RPO).\n\nAfter PSK visit, police verification will be conducted at your residential address.\n\nTatkal has additional ₹2,000."
+    },
+    {
+      "id": "sC",
+      "title": "TripFactory — How to Apply for a Passport in India (Online Guide 2026)",
+      "url": "https://holidays.tripfactory.com/blogs/apply-passport-in-india/",
+      "type": "third_party",
+      "typeSetBy": "user",
+      "retrievedAt": "2026-10-31",
+      "text": "This is the only valid portal through which you can apply for an Indian passport online.\n\nFees (Standard): ₹1,500 for 36 pages (Normal), ₹2,000 for 60 pages (Normal).\n\nProcessing Time: 7–14 working days (Normal), 1–3 days (Tatkal)."
+    },
+    {
+      "id": "sD",
+      "title": "Daily Jagran — Indian Passport Application guide (19 Sep 2026)",
+      "url": "https://www.thedailyjagran.com/lite/india/news/indian-passport-application-how-to-apply-for-passport-online-check-eligibility-fees-10329716",
+      "type": "third_party",
+      "typeSetBy": "user",
+      "retrievedAt": "2026-10-31",
+      "text": "Sat, 19 Sep 2026 10:38 AM (IST)\n\nEarlier in July, the government hiked the application fee for fresh passports and reissues to Rs 2,500.\n\nWho Can Apply For An Indian Passport?\n\nWhat Documents are required for passport application?"
+    },
+    {
+      "id": "sE",
+      "title": "InfoBits — Online Passport Application in India 2026: Complete Guide",
+      "url": "https://www.infobits.in/online-passport-application/",
+      "type": "third_party",
+      "typeSetBy": "user",
+      "retrievedAt": "2026-10-31",
+      "text": "Fees are the same as a fresh application; ₹2,500 (36 pages) or ₹3,500 (60 pages) under Normal processing.\n\nPassport fees increased on 1 July 2026."
+    },
+    {
+      "id": "sF",
+      "title": "Sample source (illustrative) — Older-cycle guide",
+      "url": "",
+      "type": "third_party",
+      "typeSetBy": "user",
+      "retrievedAt": "2026-10-31",
+      "text": "Batch of 2024.\n\n## Tatkaal urgent service\n\nThe documents required are proof of address and proof of date of birth.\n\nThe application fee is Rs 1000.\n\nPolice verification is required and involves a visit to your home address.\n\nProcessing takes 10 working days."
+    }
+  ],
+  "currentCycle": "2026"
+}
