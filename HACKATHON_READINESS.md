@@ -27,7 +27,7 @@ Event: https://unstop.com/p/shinchan-online-hackathon-24-hour-hackathon-devenger
 
 - Required name: **Advise Buddy**.
 - Required description: use `SUBMISSION_DESCRIPTION.md`.
-- Required public code: https://github.com/amruthak-bot/gapscope
+- Required public code: https://github.com/amruthak-bot/advise-buddy
 - Optional live app: https://gapscope-qdmr.onrender.com/
 - Optional video: record `DEMO_SCRIPT.md`, upload it and verify access.
 - Slides are optional. Prioritize a working app and clear walkthrough.
