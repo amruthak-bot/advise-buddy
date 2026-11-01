@@ -210,7 +210,8 @@ def rule_compare(claim_a: str, claim_b: str, question: str = "") -> str:
 # --- Rule-based fallback extractor (no key needed) -------------------------
 
 _STOP = set("what is the are and or of to a an for how do does you your "
-            "in on with by be is it its this that".split())
+            "in on with by be is it its this that who which where when why "
+            "should would could please verify before after about".split())
 
 
 def _keywords(label: str) -> List[str]:
@@ -219,7 +220,20 @@ def _keywords(label: str) -> List[str]:
 
 
 def _sentences(text: str) -> List[str]:
-    return [s.strip() for s in re.split(r"\n+|(?<=[.!?])\s+", text) if s.strip()]
+    return [s.strip() for s in re.split(r"\n+|(?<=[!?])\s+|(?<!Rs\.)(?<!Dr\.)(?<!Mr\.)(?<=\.)\s+", text) if s.strip()]
+
+
+def _intent_match(text: str, label: str) -> bool:
+    """Match a small set of explicit answer concepts without entity-only hits."""
+    intents = [
+        (r"eligible|eligibility", r"\beligib\w*\b|\bopen to\b|\bstudents?\b.{0,80}\bclass\b|\bapplicants?\b.{0,60}\bmust\b"),
+        (r"affiliated|affiliation", r"\baffiliat\w*\b"),
+        (r"renewal", r"\brenew(?:al|ed|ing)\b"),
+        (r"deadline", r"\bdeadline\b|\blast date\b|\bapply by\b|\bapplications? close"),
+        (r"scholarship amount", r"\bscholarship\b.{0,70}(?:₹|Rs\.?|INR|\$)\s*\d"),
+    ]
+    return any(re.search(question, label, re.I) and re.search(answer, text, re.I)
+               for question, answer in intents)
 
 
 def is_answer_text(text: str, label: str = "") -> bool:
@@ -240,10 +254,12 @@ def is_answer_text(text: str, label: str = "") -> bool:
         return False
     # Mentioning a fee, portal or contact topic is not an answer to
     # a question asking for the amount, address or contact channel.
+    if re.search(r"\baffiliat\w*\b", label, re.I) and not re.search(r"\baffiliat\w*\b", text, re.I):
+        return False
     if re.search(r"\bopening hours\b", label, re.I):
         if not re.search(r"\d{1,2}(?::\d{2})?\s*(?:a\.?m\.?|p\.?m\.?)|\d{1,2}:\d{2}", text, re.I):
             return False
-    if re.search(r"\b(?:fee|fees|cost)\b", label, re.I):
+    if re.search(r"\b(?:fee|fees|cost|scholarship amount)\b", label, re.I):
         if not re.search(r"(?:₹|\bRs\.?|\bINR|\$)\s*\d|\d[\d,]*\s*rupees", text, re.I):
             return False
     if re.search(r"\b(?:processing|how long)\b", label, re.I):
@@ -258,9 +274,9 @@ def is_answer_text(text: str, label: str = "") -> bool:
     statement = re.search(
         r"\b(?:is|are|must|shall|requires?|involves?|takes?|costs?|"
         r"submit|provide|carry|visit|apply|book|schedule|pay|contact|call|email|"
-        r"has|have|can|will|may|should)\b", text, re.I)
+        r"has|have|can|will|may|should|awarded|receives?|renewed)\b", text, re.I)
     labelled_value = re.search(
-        r"(?:\b(?:fee|fees|cost|processing time|duration)\b[^.!?]{0,40}"
+        r"(?:\b(?:fee|fees|cost|scholarship|processing time|duration)\b[^!?]{0,40}"
         r"(?:₹|\bRs\.?|\bINR|\d+\s*(?:working\s+)?(?:days?|weeks?|months?)))",
         text, re.I)
     return bool(statement or labelled_value)
@@ -286,7 +302,7 @@ def rule_extract(source_text: str, passages, blueprint_items) -> dict:
                     continue
                 low = sent.lower()
                 hits = sum(1 for k in set(kws) if re.search(r"\b" + re.escape(k) + r"\b", low))
-                if (anchor and re.search(r"\b" + re.escape(anchor) + r"s?\b", low)) or hits >= 2:
+                if (anchor and re.search(r"\b" + re.escape(anchor) + r"s?\b", low)) or hits >= 2 or _intent_match(sent, label):
                     found = (p.id, sent)
                     break
             if found:

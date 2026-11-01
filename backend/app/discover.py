@@ -246,6 +246,28 @@ def discover(question: str, api_key: str = None,
     # Fetch independently with a small fixed bound, keeping search order.
     with ThreadPoolExecutor(max_workers=MAX_RESULTS) as pool:
         texts = list(pool.map(fetch_text, [item["url"] for item in results]))
+    # One bounded retry seeks official material when the initial batch is thin.
+    if (sum(bool(text) for text in texts) < min(3, max_results)
+            or not any(text and suggest_type(item["url"]) == "official"
+                       for item, text in zip(results, texts))):
+        try:
+            retry = tavily_search(question + " official", key, max_results)
+        except SearchFailed:
+            retry = []
+        seen = {item["url"] for item in results}
+        extra = []
+        for item in retry:
+            if item["url"] not in seen:
+                extra.append(item)
+                seen.add(item["url"])
+        with ThreadPoolExecutor(max_workers=MAX_RESULTS) as pool:
+            extra_texts = list(pool.map(fetch_text, [item["url"] for item in extra]))
+        if extra:
+            candidates = list(zip(results + extra, texts + extra_texts))
+            candidates.sort(key=lambda pair: (not bool(pair[1]),
+                                              suggest_type(pair[0]["url"]) != "official"))
+            selected = candidates[:max_results]
+            results, texts = map(list, zip(*selected))
     for i, (item, text) in enumerate(zip(results, texts), start=1):
         if text:
             fetched += 1

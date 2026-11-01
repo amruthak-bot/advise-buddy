@@ -158,6 +158,8 @@ def research_plan(question: str) -> Blueprint:
     if key == "general" and re.search(r"ticket|entry price|admission price", topic):
         focused.append(BlueprintItem(id="ticket_fees", label="What are the entry ticket fees?",
                                      priority="critical", anchor="ticket"))
-    plan.items[0:0] = focused or [BlueprintItem(id="research_question", label=question,
-                                               priority="critical")]
+    if not focused and re.search(r"^(?:what|who|which|where|when|why|how|is|are|can|does|do|should|check|verify)\b|\?$", question, re.I):
+        focused = [BlueprintItem(id="research_question", label=question,
+                                 priority="critical")]
+    plan.items[0:0] = focused
     return plan
