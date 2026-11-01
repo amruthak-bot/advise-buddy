@@ -6,11 +6,11 @@
 <div class="hero"><p class="eyebrow">Information gap checker</p><h1>Find what’s missing.<br>Know what to verify next.</h1><p>Researching a scholarship, a job offer, a public service or another decision? Compare sources, spot unanswered questions and inspect the evidence behind your next steps.</p></div>
 <div id="sampleBanner" class="hidden notice">Example investigation: cached source excerpts supplied with the project, including one clearly marked illustrative older source. These are not current passport instructions.</div>
 <section id="setup" class="panel"><label for="question" class="question-label">What do you want to check?</label><input id="question" placeholder="For example: What should I verify before applying for the National Means-cum-Merit Scholarship in India?">
-<div class="actions"><button id="analyzeBtn" class="btn-primary" disabled>Check information →</button><button id="loadDemo" class="btn-muted" disabled>Try the passport example</button></div><p class="helper">We’ll search the web. You’ll get a short list of what to verify and links to the sources.</p>
+<div class="actions"><button id="analyzeBtn" class="btn-primary" disabled>Check information →</button><button id="loadDemo" class="btn-muted" disabled>Try the passport example</button></div><p class="helper">We’ll search and read available web pages automatically. No upload is needed. You’ll get findings, gaps and source links; pages we cannot read are marked.</p>
 <p id="status" class="status" role="status" aria-live="polite">Getting ready…</p><p id="discoverStatus" class="status" role="status" aria-live="polite"></p>
-<div class="settings"><label for="templateSelect">Choose a checklist</label><select id="templateSelect" aria-label="Research checklist"></select><button id="loadTemplate" class="btn-muted hidden">Use this checklist</button></div><p class="helper">Choose a starting checklist, then tailor its questions to your topic. Passport is one worked example.</p><details id="checkSettings"><summary>Edit checklist questions <small>Optional</small></summary><p class="section-sub">Only keep questions relevant to your research. Broad checklists are a starting point, not a guarantee that every important question is covered.</p><label>Year <input id="currentCycle" size="5" value="2026"></label><div id="blueprintEditor"></div><button id="addItem" class="btn-muted">+ Add a question</button></details>
+<div class="settings"><label for="templateSelect">Research topic</label><select id="templateSelect" aria-label="Research checklist"></select><button id="loadTemplate" class="btn-muted hidden">Use this checklist</button></div><p class="helper">Just enter your question. We’ll choose relevant checks and search the web automatically. You can also select a topic or use Other for a different question.</p><details id="checkSettings"><summary>Edit checklist questions <small>Optional</small></summary><p class="section-sub">Only keep questions relevant to your research. Broad checklists are a starting point, not a guarantee that every important question is covered.</p><label>Year <input id="currentCycle" size="5" value="2026"></label><div id="blueprintEditor"></div><button id="addItem" class="btn-muted">+ Add a question</button></details>
 <p id="activeChecklist" class="helper"></p></section>
-<details id="sources" class="panel"><summary>Review or add sources <small id="sourceCount">Optional</small></summary><p class="section-sub">Check the topic, location, relevant conditions and date. Remove sources that don’t fit. Web labels are suggestions you can change. A URL alone isn’t reviewed evidence.</p><div id="sourceEditor"></div><div class="actions mt-4"><button id="addSource" class="btn-muted">+ Paste a source</button><button id="discoverBtn" class="btn-muted">Search for more sources</button></div></details>
+<details id="sources" class="panel"><summary>Web sources / optional additions <small id="sourceCount">Optional</small></summary><p class="section-sub">Check the topic, location, relevant conditions and date. Remove sources that don’t fit. Web labels are suggestions you can change. A URL alone isn’t reviewed evidence.</p><div id="sourceEditor"></div><div class="actions mt-4"><button id="addSource" class="btn-muted">+ Paste a source</button><button id="discoverBtn" class="btn-muted">Search for more sources</button></div></details>
 <section id="dashboard" class="hidden"><div class="panel"><div class="result-heading"><div><p class="eyebrow">Your research check</p><h2 id="resultTitle">Here’s what to check next</h2></div><div class="result-tools"><button id="exportReport" class="btn-muted">Save my checklist ↓</button><a href="#setup">Edit question ↑</a></div></div><p id="resultQuestion" class="muted"></p><div class="stats hidden"><div class="stat"><strong id="conflictNumber">—</strong><span>questions with conflicting information</span></div><div class="stat"><strong id="debtNumber">—</strong><span>questions with no matched evidence</span></div><div class="stat"><strong id="officialNumber">—</strong><span>questions with an official text match</span></div></div><p id="debtLine" class="hidden"></p><p id="reviewScope" class="helper"></p><ol id="checklist"></ol><button id="showMoreChecks" class="btn-muted hidden" aria-expanded="false">Show more checks</button><p id="changedLine" role="status"></p></div>
 <details id="foundFacts" class="panel"><summary>What we found <small id="foundCount">Source quotes</small></summary><p class="helper">These are original quotes from reviewed text. A quoted statement can still be wrong, old or inapplicable to your situation.</p><div id="foundSummary"></div></details><details id="evidenceDetails" class="panel"><summary>Detailed comparison <small>Optional</small></summary><p class="section-sub">Each row is a question; each column is a source. Select a cell to read its evidence.</p><div class="matrix-scroll"><table id="heatmap"></table></div><p class="legend">✓ Text found · ⚠ Possible conflict · — Not found · ◷ Check the date</p><div id="drawer" class="hidden" aria-live="polite" tabindex="-1"></div><details><summary>Coverage and source notes</summary><p id="scoreLine"></p><p id="officialLine"></p><p class="helper">Coverage measures matched text across the checklist. It does not measure truth, relevance, or readiness to act.</p><div id="flagsBox"></div><h3>Matched passages</h3><ul id="summaryList"></ul></details></details>
 <details class="panel" id="suggestions"><summary>Suggested questions <small>Require your approval</small></summary><p class="section-sub">These are proposed additions to your checklist, not verified facts. Nothing is added without your approval.</p><div id="proposals"></div></details>
@@ -379,12 +379,14 @@ async function runDiscovery() {
   if (!q) { st.textContent = 'Type your question first, then search the web for sources.'; return; }
   st.textContent = 'Searching the web…';
   try {
+    await prepareResearch(q);
     const res = await api('/api/discover', {question: q});
     const found = res.sources || [];
     if (!found.length) {
       st.textContent = 'No sources found for that question. Try different words, or paste source text.';
       return;
     }
+    sources = sources.filter(s => !s.id.startsWith('web-'));
     found.forEach((s, i) => sources.push({...s, id: 'web-' + Date.now() + '-' + i}));
     renderSources();
     st.textContent = `Found ${found.length} sources (${res.fetched} fetched, ${res.failed} could not be fetched). Check their relevance under “Review or add sources”.`;
@@ -400,7 +402,16 @@ document.getElementById('discoverBtn').addEventListener('click', () => perform(r
 // AI-first flow: the user never has to add a source by hand. If
 // Analyze is clicked with no sources at all, research the web first
 // instead of analyzing nothing.
-let busy = false;
+let busy = false, plannedQuestion = '';
+async function prepareResearch(question) {
+  const mode = document.getElementById('templateSelect').value;
+  if (!['auto', 'other'].includes(mode) || plannedQuestion === question) return;
+  const plan = await api('/api/research-plan', {question});
+  blueprint = plan.items;
+  plannedQuestion = question;
+  renderBlueprint();
+  document.getElementById('activeChecklist').textContent = `Research checks: ${plan.title}. You can review or edit these below.`;
+}
 async function perform(task, needsQuestion = true) {
   if (busy) return;
   const question = document.getElementById('question');
@@ -425,8 +436,8 @@ document.getElementById('analyzeBtn').addEventListener('click', () => perform(as
   const question = document.getElementById('question').value.trim();
   // A different question starts a fresh search rather than reusing old evidence.
   if (lastResult && lastResult.question !== question) { document.getElementById('sampleBanner').classList.add('hidden'); sources = []; lastResult = null; manualClosed = {}; lastAutoClosed = []; renderSources(); document.getElementById('dashboard').classList.add('hidden'); }
-  const hasAny = sources.some(s => (s.text || '').trim() || (s.url || '').trim());
-  if (!hasAny) await runDiscovery(); else await runAnalysis();
+  if (lastResult && lastResult.question === question && !document.getElementById('sampleBanner').classList.contains('hidden')) { await runAnalysis(); return; }
+  await runDiscovery();
 }));
 document.getElementById('question').addEventListener('keydown', e => { if (e.key === 'Enter') document.getElementById('analyzeBtn').click(); });
 
@@ -455,19 +466,20 @@ document.getElementById('addEvidenceBtn').addEventListener('click', () => perfor
   try {
   const templates = await api('/api/templates');
   const sel = document.getElementById('templateSelect');
-  sel.innerHTML = Object.entries(templates).map(([k, v]) => `<option value="${k}">${v.title}</option>`).join('');
+  sel.innerHTML = '<option value="auto">Automatic — use my question</option><option value="other">Other — research my question</option>' + Object.entries(templates).filter(([k]) => k !== 'general').map(([k, v]) => `<option value="${k}">${v.title}</option>`).join('');
   document.getElementById('loadTemplate').addEventListener('click', () => {
-    const t = templates[sel.value];
+    const t = templates[sel.value] || templates.general;
+    plannedQuestion = '';
     manualClosed = {}; lastAutoClosed = [];
     blueprint = t.items.map(it => ({...it}));
     renderBlueprint();
     document.getElementById('activeChecklist').textContent = `Checking ${blueprint.length} questions using: ${t.title}. Change this above if needed.`;
   });
   sel.addEventListener('change', () => document.getElementById('loadTemplate').click());
-  sel.value = 'general';
+  sel.value = 'auto';
   blueprint = templates.general.items.map(it => ({...it}));
   renderBlueprint(); renderSources();
-  document.getElementById('activeChecklist').textContent = `Checking ${blueprint.length} questions using: ${templates.general.title}. Change this above if needed.`;
+  document.getElementById('activeChecklist').textContent = 'Enter your question. Relevant research checks will be prepared automatically.';
   document.getElementById('status').textContent = '';
   document.getElementById('analyzeBtn').disabled = false; document.getElementById('loadDemo').disabled = false;
   } catch (e) { document.getElementById('status').textContent = 'Couldn’t load the checklists. Refresh the page to try again.'; }

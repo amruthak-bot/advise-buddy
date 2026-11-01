@@ -25,7 +25,7 @@ from .discover import DiscoverNotConfigured, SearchFailed
 from .engine import analyze
 from .models import (AnalysisRequest, AnalysisResult, DiscoverRequest,
                      DiscoverResponse)
-from .templates import TEMPLATES
+from .templates import TEMPLATES, research_plan
 
 BASE = Path(__file__).resolve().parents[2]
 FRONTEND_DIR = BASE / "frontend"
@@ -36,6 +36,11 @@ app = FastAPI(title="Advise Buddy")
 @app.get("/api/templates")
 def list_templates():
     return {k: v.model_dump() for k, v in TEMPLATES.items()}
+
+
+@app.post("/api/research-plan")
+def research_plan_endpoint(req: DiscoverRequest):
+    return research_plan(req.question)
 
 
 @app.post("/api/analyze", response_model=AnalysisResult)
