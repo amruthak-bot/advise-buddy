@@ -36,6 +36,15 @@ def test_bare_topic_is_not_a_missing_answer_question():
     assert all(item.id != "research_question" for item in plan.items)
 
 
+def test_application_steps_are_not_a_deadline():
+    item = BlueprintItem(id="deadline", label="What is the application deadline?")
+    text = "Eligible applicants can apply by following these steps:-"
+    assert not is_answer_text(text, item.label)
+    assert rule_extract(text, split_passages(text, "s"), [item])["items"][0]["status"] == "silent"
+    answer = "Applicants must apply by 31 October 2026."
+    assert rule_extract(answer, split_passages(answer, "s"), [item])["items"][0]["status"] == "stated"
+
+
 def test_thin_search_retries_once_and_prefers_readable_official_source(monkeypatch):
     queries = []
     def search(query, key, count):

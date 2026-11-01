@@ -256,6 +256,11 @@ def is_answer_text(text: str, label: str = "") -> bool:
     # a question asking for the amount, address or contact channel.
     if re.search(r"\baffiliat\w*\b", label, re.I) and not re.search(r"\baffiliat\w*\b", text, re.I):
         return False
+    if re.search(r"\bdeadline\b", label, re.I):
+        month = r"(?:jan(?:uary)?|feb(?:ruary)?|mar(?:ch)?|apr(?:il)?|may|jun(?:e)?|jul(?:y)?|aug(?:ust)?|sep(?:tember)?|oct(?:ober)?|nov(?:ember)?|dec(?:ember)?)"
+        date_pattern = rf"\b\d{{1,2}}(?:st|nd|rd|th)?[\s/-]+{month}\b|\b{month}[\s/-]+\d{{1,2}}\b|\b\d{{1,2}}[/-]\d{{1,2}}[/-]\d{{2,4}}\b|\b20\d{{2}}-\d{{1,2}}-\d{{1,2}}\b"
+        if not re.search(date_pattern, text, re.I):
+            return False
     if re.search(r"\bopening hours\b", label, re.I):
         if not re.search(r"\d{1,2}(?::\d{2})?\s*(?:a\.?m\.?|p\.?m\.?)|\d{1,2}:\d{2}", text, re.I):
             return False
