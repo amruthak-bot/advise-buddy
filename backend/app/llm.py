@@ -240,6 +240,9 @@ def is_answer_text(text: str, label: str = "") -> bool:
         return False
     # Mentioning a fee, portal or contact topic is not an answer to
     # a question asking for the amount, address or contact channel.
+    if re.search(r"\bopening hours\b", label, re.I):
+        if not re.search(r"\d{1,2}(?::\d{2})?\s*(?:a\.?m\.?|p\.?m\.?)|\d{1,2}:\d{2}", text, re.I):
+            return False
     if re.search(r"\b(?:fee|fees|cost)\b", label, re.I):
         if not re.search(r"(?:₹|\bRs\.?|\bINR|\$)\s*\d|\d[\d,]*\s*rupees", text, re.I):
             return False

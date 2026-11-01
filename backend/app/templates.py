@@ -151,6 +151,13 @@ def research_plan(question: str) -> Blueprint:
         key = next((key for key, pattern in categories
                     if re.search(r"\b(?:" + pattern + r")\b", topic)), "general")
     plan = TEMPLATES[key].model_copy(deep=True)
-    plan.items.insert(0, BlueprintItem(id="research_question", label=question,
-                                      priority="critical"))
+    focused = []
+    if key == "general" and re.search(r"opening|opening hours|visiting hours|timings", topic):
+        focused.append(BlueprintItem(id="opening_hours", label="What are the opening hours?",
+                                     priority="critical", anchor="opening hours"))
+    if key == "general" and re.search(r"ticket|entry price|admission price", topic):
+        focused.append(BlueprintItem(id="ticket_fees", label="What are the entry ticket fees?",
+                                     priority="critical", anchor="ticket"))
+    plan.items[0:0] = focused or [BlueprintItem(id="research_question", label=question,
+                                               priority="critical")]
     return plan
