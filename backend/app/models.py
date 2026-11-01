@@ -99,15 +99,6 @@ class ChecklistEntry(BaseModel):
     sourceIds: List[str] = Field(default_factory=list)
 
 
-class Comparison(BaseModel):
-    itemId: str
-    sourceA: str
-    sourceB: str
-    verdict: Literal["same", "different", "unclear"]
-    reasonCode: str
-    reason: str
-
-
 class AnalysisRequest(BaseModel):
     question: str
     blueprint: Blueprint
@@ -116,8 +107,8 @@ class AnalysisRequest(BaseModel):
 
 
 class DiscoverRequest(BaseModel):
-    question: str = Field(min_length=3, max_length=500)
-    max_results: int = Field(default=5, ge=1, le=5)
+    question: str
+    max_results: int = 5
 
 
 class DiscoverResponse(BaseModel):
@@ -146,4 +137,3 @@ class AnalysisResult(BaseModel):
     # Items with a verified, currently-stated finding from an
     # Official source. The companion number to the score.
     officialConfirmedCount: int = 0
-    comparisons: List[Comparison] = Field(default_factory=list)

@@ -1,35 +1,75 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Advise Buddy — Evidence Investigation Studio</title><style>
-:root{--ink:#26232d;--muted:#706b78;--accent:#7b4335;--line:#e5dfd8;--paper:#f7f5f1}*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:15px/1.6 system-ui,sans-serif}button,input,textarea,select{font:inherit}button,summary,a{ -webkit-tap-highlight-color:transparent}button,summary{cursor:pointer}button{border:0;border-radius:10px;padding:11px 18px;font-weight:650}.btn-primary{background:var(--accent);color:white}.btn-dark{background:#332b3e;color:white}.btn-muted{background:#ede8e2;color:var(--ink)}button:disabled{opacity:.55;cursor:wait}button:hover:not(:disabled){filter:brightness(.94)}:focus-visible{outline:3px solid #ae694c;outline-offset:3px}input,textarea,select{border:1px solid #cfc7c0;border-radius:9px;padding:10px;background:white;color:var(--ink);max-width:100%}input{min-width:0}textarea{width:100%}a{color:var(--accent)}h1,h2,h3,p{margin-top:0}h1{font-size:clamp(32px,5vw,52px);line-height:1.1;letter-spacing:-.045em;margin-bottom:16px}h2{font-size:23px;letter-spacing:-.025em;margin-bottom:8px}h3{font-size:17px;margin-bottom:8px}header{max-width:1120px;margin:auto;padding:23px 24px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line)}.brand{font-weight:800;font-size:23px;letter-spacing:-.04em}.brand span{color:var(--accent)}header small,.muted,.section-sub{color:var(--muted)}main{max-width:1050px;margin:auto;padding:44px 24px 60px}.hero{max-width:700px;margin-bottom:26px}.eyebrow{font-size:12px;text-transform:uppercase;letter-spacing:.13em;color:var(--accent);font-weight:750}.hero p{font-size:17px;color:var(--muted)}.panel{background:#fff;border:1px solid var(--line);border-radius:17px;padding:26px;margin-bottom:20px;box-shadow:0 5px 20px #30252b04}.question-label{display:block;font-weight:700;margin-bottom:9px}#question{width:100%;font-size:18px;padding:16px;margin-bottom:15px}.actions{display:flex;flex-wrap:wrap;gap:10px;align-items:center}.helper{font-size:13px;color:var(--muted);margin:12px 0 0}details{border:1px solid var(--line);border-radius:12px;padding:16px;margin:16px 0}details.panel{padding:22px}summary{font-weight:700}details[open]>summary{margin-bottom:18px}summary small{font-weight:400;color:var(--muted);margin-left:8px}.settings{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:14px 0}.settings label{font-size:13px}.source-card{margin-top:12px}.source-card summary{overflow-wrap:anywhere}.source-meta{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}.source-meta input{flex:1;min-width:160px}.notice{border-radius:10px;padding:13px 16px;background:#fff3d9;color:#705028;margin-bottom:18px;font-size:13px}.status:empty{display:none}.status{padding:12px 0 0;margin:0;color:var(--accent);font-size:14px}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:20px 0}.stat{background:#f7f4ef;padding:17px;border-radius:12px}.stat strong{display:block;font-size:29px;line-height:1.3}.stat span{font-size:13px;color:var(--muted)}.result-heading{display:flex;justify-content:space-between;gap:12px;align-items:center}.result-heading .eyebrow{margin-bottom:4px}.issue{border:1px solid var(--line);border-radius:12px;padding:18px;margin:12px 0}.issue h3{margin:8px 0}.issue p{color:var(--muted);font-size:14px}.badge{font-size:11px;font-weight:750;text-transform:uppercase;letter-spacing:.06em;color:#9b443a}.issue-actions{display:flex;gap:15px;align-items:center;flex-wrap:wrap}.issue-actions button{font-size:13px;padding:8px 12px}.matrix-scroll{overflow:auto}#heatmap{border-spacing:4px;width:100%;min-width:700px;font-size:12px}#heatmap th{max-width:190px;text-align:left;padding:10px;background:#f4f0eb}#heatmap td{padding:12px}#heatmap td:first-child{min-width:180px;font-weight:650}.cell{border:0;border-radius:7px;text-align:center;cursor:pointer}.cell.changed{outline:3px solid var(--accent)}.bg-emerald-100{background:#dceee3;color:#246448}.bg-stone-200{background:#ece9e5;color:#68646b}.bg-red-100{background:#f8dfdc;color:#9a3934}.bg-amber-100,.bg-yellow-100{background:#fff0ce;color:#805b16}.bg-orange-100{background:#f7e2d0;color:#8c5120}#drawer{background:#f8f4ed;padding:20px;border-radius:12px;margin:15px 0;overflow-wrap:anywhere}blockquote{border-left:3px solid var(--accent);padding:8px 16px;margin:15px 0}#checklist{padding:0;list-style:none}#flagsBox p{background:#fff4dd;padding:12px;border-radius:8px;font-size:13px}#gapQuestions>div,#proposals>div{padding:16px;border:1px solid var(--line);border-radius:10px;margin:12px 0}#blueprintEditor>div{display:flex;gap:8px;margin:8px 0}#blueprintEditor input{flex:1}.flex{display:flex;gap:8px;flex-wrap:wrap}.flex-1{flex:1}.w-full{width:100%}.mt-3,.mt-4{margin-top:14px}.mb-4{margin-bottom:16px}.hidden,[hidden]{display:none!important}.trust{font-size:12px;color:var(--muted);padding:14px 0;border-top:1px solid var(--line)}section,details,#newEvidence{scroll-margin-top:25px}#newEvidence{min-height:130px}.legend{font-size:12px;color:var(--muted);margin:12px 0}.empty{padding:18px;background:#f5f8f3;border-radius:10px}footer{font-size:12px;color:var(--muted);text-align:center}@media(max-width:600px){main{padding:28px 15px}.panel{padding:19px}header{padding:18px 16px}header small{display:none}.stats{grid-template-columns:1fr}.stat{display:flex;gap:12px;align-items:center}.stat strong{font-size:24px}.actions>*{width:100%}#blueprintEditor>div{flex-wrap:wrap}#blueprintEditor input{flex-basis:100%}.result-heading{align-items:start}.source-meta input{width:100%}}@media(prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
-.quote-source{background:#faf8f4;padding:15px;border-radius:10px;margin:12px 0}.quote-source p{font-size:12px}.quote-source blockquote{font-size:14px;line-height:1.7}.next-step{color:var(--ink)!important}.official-action{display:inline-block;font-size:14px;font-weight:650;margin-top:5px}.issue>details{margin:14px 0;font-size:14px}.issue h3{font-size:21px}.issue>p{max-width:780px}#reviewScope{margin:0 0 18px}.issue{padding:22px}.hero{max-width:720px}@media(max-width:600px){.issue{padding:16px}.issue h3{font-size:19px}} .result-tools{display:flex;align-items:center;gap:14px;flex-wrap:wrap}.result-tools button{font-size:13px;padding:8px 12px}.result-tools a{font-size:13px}#foundSummary h3{margin-top:8px}@media(max-width:600px){.result-heading{flex-direction:column}.result-tools{margin-bottom:12px}}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Advise Buddy — Blueprint-First Information Gap Investigator</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
 :root{--ink:#1d1822;--plum:#211c29;--plum2:#322739;--paper:#f5f0e7;--surface:#fffcf6;--line:#e4dbcf;--muted:#776c75;--copper:#c86c49;--jade:#387f6a;--gold:#a67832}
 *{box-sizing:border-box}html{scroll-behavior:smooth}body{background:var(--paper)!important;color:var(--ink)!important;font-family:'DM Sans',sans-serif!important;min-height:100vh}h1,h2,h3,.display{font-family:'Manrope',sans-serif;letter-spacing:-.045em}button,input,textarea,select{font:inherit}button{transition:transform .16s ease,box-shadow .16s ease,filter .16s ease}button:hover{filter:brightness(1.06);transform:translateY(-1px)}button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,.cell:focus-visible{outline:3px solid #c86c49!important;outline-offset:2px}input,textarea,select{background:#fffdf8!important;color:var(--ink)!important;border:1px solid #d8cfc5!important;border-radius:11px!important;min-height:39px}textarea{line-height:1.5}input:focus,textarea:focus,select:focus{border-color:var(--copper)!important;box-shadow:0 0 0 3px #c86c491c;outline:0}input::placeholder,textarea::placeholder{color:#998f96}#question{font-size:1.04rem;font-weight:600;padding:15px!important}#question:focus{outline:0}a{color:var(--copper)!important}.shell{max-width:1480px;margin:auto;display:grid;grid-template-columns:235px minmax(0,1fr);min-height:100vh}.rail{background:var(--plum);color:#f9eee0;padding:28px 20px;position:sticky;top:0;height:100vh;display:flex;flex-direction:column;gap:28px;border-right:1px solid #45354a}.brand{display:flex;gap:12px;align-items:center;font-weight:800;font-family:Manrope;font-size:1.25rem;letter-spacing:-.06em}.brand-mark{display:grid;place-items:center;width:40px;height:40px;background:#c86c49;color:#261a26;border-radius:13px;font-size:26px;box-shadow:0 6px 20px #c86c4930}.rail-kicker{font-size:10px;letter-spacing:.19em;color:#c4a8ae;font-weight:800;margin-bottom:12px}.rail a{display:flex;gap:12px;align-items:center;padding:12px 13px;color:#d4c7d0!important;text-decoration:none;border-radius:12px;font-size:13px;font-weight:600}.rail a:hover,.rail a.active{background:#3c3042;color:#fff7eb!important}.rail .num{font-size:10px;color:#bd9c9f;min-width:18px}.rail-bottom{margin-top:auto;padding:17px;background:#352b3a;border:1px solid #4a394c;border-radius:16px}.rail-bottom p{font-size:11px;line-height:1.7;color:#d6c4c9}.workspace{min-width:0;padding:34px clamp(18px,4vw,64px) 65px}.eyebrow{font-size:11px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:#aa5f47}.hero{display:grid;grid-template-columns:1fr auto;gap:24px;align-items:center;margin-bottom:26px}.hero h1{font-size:clamp(34px,4vw,55px);font-weight:800;line-height:1.05;margin:8px 0 13px}.hero p{max-width:670px;color:#766c74;font-size:14px;line-height:1.75}.hero-orbit{width:125px;height:125px;border:1px solid #cdbbb1;border-radius:50%;position:relative;display:grid;place-items:center}.hero-orbit:before{content:'';position:absolute;inset:17px;border:1px dashed #c86c49;border-radius:50%}.hero-orbit:after{content:'';width:24px;height:24px;background:#c86c49;border-radius:50%;box-shadow:38px -34px 0 -7px #387f6a,-33px 29px 0 -7px #a67832}.microbar{display:flex;flex-wrap:wrap;gap:8px;margin-top:15px}.microbar span{background:#eae0d5;color:#6e5c5e;padding:6px 11px;border-radius:50px;font-size:11px;font-weight:700}.panel{background:var(--surface)!important;border:1px solid var(--line)!important;border-radius:19px!important;box-shadow:0 10px 34px #34262c08!important;padding:25px!important;margin-bottom:18px!important}.panel h2{font-size:19px;font-weight:800;margin-bottom:14px;color:#27202b}.panel h2:before{content:'';display:inline-block;width:7px;height:7px;border-radius:2px;background:var(--copper);margin-right:10px;vertical-align:3px}.section-sub{font-size:12px;color:#8a7b81;margin:-8px 0 19px 18px}.btn-primary{background:var(--copper)!important;color:white!important;border:0!important;border-radius:11px!important;box-shadow:0 5px 14px #c86c4928}.btn-dark{background:#302638!important;color:#fff!important;border-radius:11px!important}.btn-muted{background:#ece4d9!important;color:#3a2c33!important;border-radius:11px!important}.top-actions{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.top-actions button{min-height:43px;font-weight:700}.summary-hero{background:#2b2232;border-radius:16px;color:#fff8ef;padding:24px;display:grid;grid-template-columns:auto 1fr;align-items:center;gap:18px;margin-bottom:17px}.summary-hero .metric{font-size:45px;font-weight:800;color:#f4bb87;line-height:1}.summary-hero .metric-label{font-size:11px;color:#d8c6d0;letter-spacing:.07em;text-transform:uppercase}.summary-hero p{font-size:13px;color:#f1e5e6;line-height:1.6}.cell{cursor:pointer;transition:box-shadow .18s ease,transform .18s ease;min-width:115px;text-align:center!important;font-size:11px;font-weight:700;border:5px solid #fffcf6!important;border-radius:11px!important;line-height:1.5}.cell:hover{transform:translateY(-2px);box-shadow:0 5px 15px #2d222b18}.cell.changed{outline:3px solid var(--copper);outline-offset:-3px}.bg-emerald-100{background:#d8eee2!important;color:#246e55!important}.bg-stone-200{background:#ede7e0!important;color:#756e70!important}.bg-red-100{background:#f7ded9!important;color:#a24b42!important}.bg-amber-100{background:#f5e7c8!important;color:#966c2b!important}.bg-orange-100{background:#f5dfd1!important;color:#a35837!important}#heatmap{border-collapse:separate!important;border-spacing:0 7px;width:100%;min-width:650px}#heatmap th{background:#f0e9e1;color:#65565e;font-size:11px;text-transform:uppercase;letter-spacing:.04em}#heatmap th,#heatmap td{border:0!important;padding:13px!important}#heatmap tr td:first-child{font-weight:700;color:#443742;border-radius:9px 0 0 9px;background:#f6f1eb}#heatmap tr th:first-child{border-radius:10px 0 0 10px}#heatmap tr th:last-child{border-radius:0 10px 10px 0}#drawer{border-left:5px solid var(--copper)!important}#drawer blockquote{border-color:var(--copper)!important;background:#f6efe5;padding:15px 18px;border-radius:0 10px 10px 0;font-size:14px;line-height:1.7}#flagsBox p{padding:11px 14px;margin-top:8px;border-radius:10px;background:#f8edda;color:#805c35}#checklist li{padding:12px 14px;margin:8px 0;background:#f6f0e8;border-radius:11px}#checklist li::marker{color:var(--copper);font-weight:800}#proposals>div,#gapQuestions>div,#sourceEditor>div{border:1px solid #e8ddd0!important;border-radius:14px!important;padding:17px!important;background:#fdfaf5}#proposals>div p,#gapQuestions>div p{margin-bottom:8px}#sampleBanner{background:#f8e9ce!important;color:#78512d!important;border-color:#ebcf99!important;border-radius:12px!important;padding:13px!important}#status{font-size:12px!important;color:#7b6c74!important}.trust{margin:22px 0;padding:14px 16px;border:1px solid #e2d7cb;border-radius:12px;color:#81727b;font-size:11px;line-height:1.7;background:#f1e9df}.footnote{font-size:11px;color:#8d7d84;text-align:center;padding:10px}#dashboard{animation:reveal .4s ease}@keyframes reveal{from{opacity:.3;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}@media(max-width:920px){.shell{grid-template-columns:1fr}.rail{position:static;height:auto;padding:16px 20px;gap:8px}.rail nav{display:flex;overflow:auto;gap:5px}.rail .rail-kicker,.rail-bottom{display:none}.rail a{white-space:nowrap;padding:9px}.workspace{padding:24px 16px}.hero-orbit{width:78px;height:78px}.hero-orbit:before{inset:10px}.hero h1{font-size:35px}}@media(max-width:580px){.hero{grid-template-columns:1fr}.hero-orbit{display:none}.panel{padding:17px!important}.summary-hero{grid-template-columns:1fr}.top-actions{flex-direction:column;align-items:stretch}.top-actions button{width:100%}#sourceEditor .flex,#gapQuestions .flex{flex-wrap:wrap}#sourceEditor input{min-width:100%}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
-
-body{margin:0}.workspace{max-width:none;margin:0;width:100%}header.hero{max-width:none;padding:0;border:0;margin:0 0 28px}.brand-mark{font-family:system-ui}.rail .brand{font-size:23px;letter-spacing:-.04em}.rail nav{display:block}.rail a{line-height:1.5}.rail a .num{font-size:11px}.rail-bottom p{margin:0}.hero p{font-size:15px}.hero .microbar span{font-size:11px}.phase-head{display:flex;justify-content:space-between;gap:14px;align-items:start}.phase-badge{border:1px solid #d8c8ba;border-radius:30px;padding:5px 10px;color:#74666c;font-size:11px;white-space:nowrap}.phase-title{margin-bottom:7px}.section-intro{color:#776c75;font-size:14px;max-width:740px}.research-controls{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin:14px 0}.research-controls select{flex:1;max-width:420px}.metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:20px 0}.metric-card{padding:20px;background:#f2eae0;border:1px solid #e6dacd;border-radius:13px}.metric-card strong{display:block;font-size:31px;font-weight:800;line-height:1.2;color:#453447}.metric-card span{font-size:12px;color:#766a73}.metric-card.dark{background:#2b2232}.metric-card.dark strong{color:#efad84}.metric-card.dark span{color:#e0cdd9}.atlas-empty{display:grid;grid-template-columns:1fr 180px;gap:28px;align-items:center;background:#f8f3ec;border:1px dashed #cfbdae;border-radius:13px;padding:24px;margin-top:18px}.atlas-empty p{font-size:13px;color:#80727c;margin-bottom:0}.atlas-shape{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;opacity:.65}.atlas-shape i{height:24px;background:#dcd2c8;border-radius:5px}.atlas-shape i:nth-child(3n){background:#9ebfaf}.atlas-shape i:nth-child(5n){background:#d6a392}.atlas-shape i:nth-child(7n){background:#dcc593}.empty-label{font-size:11px;color:#8b7d85;text-align:center;margin-top:7px}.matrix-scroll{overflow:auto;border-radius:12px}#heatmap th[scope=row]{min-width:185px;max-width:235px;text-transform:none;letter-spacing:0;background:#f4ede5;font-size:12px}#heatmap th[scope=col]{min-width:150px}#heatmap td.cell{border:3px solid #fffcf6!important}.legend{display:flex;gap:8px;flex-wrap:wrap}.legend span{padding:5px 9px;border-radius:6px;font-size:11px}#checklist{list-style:none}#checklist li{padding:20px;margin:12px 0}#foundFacts summary,#evidenceDetails summary{font-size:19px;letter-spacing:-.025em}#evidenceDetails{margin-top:22px}.phase-anchor{scroll-margin-top:24px}.helper{font-size:12px}.source-card summary{font-size:13px}.trust b{color:#584550}.flex{display:flex;gap:8px;flex-wrap:wrap}.flex-1{flex:1}.w-full{width:100%}.text-sm{font-size:13px}.text-xs{font-size:11px}.mb-2{margin-bottom:8px}.mb-3{margin-bottom:12px}.mb-4{margin-bottom:16px}.mt-1{margin-top:4px}.mt-2{margin-top:8px}.mt-3{margin-top:12px}.mt-4{margin-top:16px}.sr-only{position:absolute;width:1px;height:1px;padding:0;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}.result-tools{display:flex;gap:12px;align-items:center;flex-wrap:wrap}#sourceEditor:empty:before{content:'Sources will appear here after your web search.';color:#847780;font-size:13px}.rail a.active{box-shadow:inset 3px 0 #ce815e}.source-card{background:#fffdf8}.result-tools a{font-size:12px}#verifyEmpty{padding:17px;border-radius:11px;background:#f4eee7;color:#81717b;font-size:13px}.panel h2{line-height:1.25}.workspace>section{margin-bottom:26px}.rail-bottom{font-size:12px}.board-top{display:flex;justify-content:space-between;align-items:center;gap:15px}.board-top h3{margin:0}.source-card summary small{font-size:11px}.issue h3{font-size:20px}.source-meta input{font-size:12px}.source-meta select{font-size:12px}.hero-orbit{flex-shrink:0}#analysisEmpty h3{margin:0 0 8px}.phase-divider{border:0;border-top:1px solid #e3d8ca;margin:24px 0}.footnote{margin-top:20px}
-@media(max-width:920px){.rail nav{display:flex}.rail .brand{font-size:21px}.metrics{grid-template-columns:repeat(2,1fr)}}@media(max-width:580px){.atlas-empty{grid-template-columns:1fr}.atlas-illustration{display:none}.metrics{gap:8px}.metric-card{padding:14px}.metric-card strong{font-size:25px}.phase-head,.board-top{flex-direction:column}.hero h1{font-size:38px}.research-controls>*{width:100%}.research-controls select{max-width:none}.result-tools{width:100%}.rail nav a{font-size:11px;padding:9px 7px}.rail a .num{display:none}.rail{padding:15px}.workspace{padding:24px 13px}.phase-badge{font-size:10px}.cell{min-width:110px}#blueprintEditor>div{flex-wrap:wrap}#blueprintEditor input{min-width:100%}}
-.rail .brand{font-family:system-ui,sans-serif}.rail .brand>span{color:#f9eee0}.rail nav .num{display:none}#setup .phase-badge{display:none}#loadDemo{background:transparent!important;color:var(--copper)!important;box-shadow:none!important}#foundFacts{background:#f7f2eb}#foundFacts .quote-source{background:#fffcf6;border:1px solid #e5d9cd;border-radius:10px;padding:14px}#foundFacts .quote-source h3{font-size:15px;margin:7px 0}#foundFacts blockquote{margin:8px 0;padding:5px 12px;font-size:13px}.board-top{margin-top:22px}#analysisEmpty .atlas-empty{padding:18px}#checkSettings{margin-top:18px}#setup .question-label{margin-top:12px}.hero h1{font-size:clamp(32px,3.6vw,47px)}.hero p{max-width:650px}.hero{margin-bottom:20px!important}#setup .section-intro{margin-bottom:14px}#coverageNotes{font-size:13px;background:#f7f1e9}#coverageNotes p{margin:8px 0}.metrics{margin:15px 0;gap:9px}.metric-card{padding:15px}.metric-card strong{font-size:27px}#resolutionNotes{background:#f8f3ec}#verification .section-intro{margin-bottom:12px}.rail-bottom{padding:14px}.hero .microbar span{font-weight:700}.section-intro{margin-bottom:14px}.hero-orbit{width:100px;height:100px}@media(max-width:580px){.hero h1{font-size:34px}.hero .microbar{gap:5px}.hero .microbar span{font-size:10px;padding:6px 8px}.metric-card strong{font-size:23px}.metric-card{padding:12px}}#status,#discoverStatus,#changedLine,#exportStatus,#resultQuestion,.cell{white-space:normal;overflow-wrap:anywhere;word-break:normal;max-height:none;height:auto;overflow:visible;text-overflow:clip}#question{resize:vertical;line-height:1.5}#heatmap td.cell{min-width:140px}
-</style></head><body>
+</style>
+</head>
+<body>
 <div class="shell">
-<aside class="rail"><div class="brand"><div class="brand-mark">◈</div><span>Advise <span style="color:#d18b68">Buddy</span></span></div>
-<nav aria-label="Research navigation"><div class="rail-kicker">RESEARCH WORKSPACE</div>
-<a class="active" href="#setup"><span class="num">01</span>Start</a><a href="#sources"><span class="num">02</span>Sources</a><a href="#dashboard"><span class="num">03</span>Results</a><a href="#verification"><span class="num">04</span>Follow-up</a></nav>
-<div class="rail-bottom"><div class="rail-kicker">HOW IT HELPS</div><p>See what the sources answer—and the questions you still need to check.</p><div style="margin-top:12px;color:#e5a17c;font-size:11px;font-weight:700">Every finding links back to evidence.</div></div></aside>
-<main class="workspace"><header class="hero"><div><div class="eyebrow">Your research helper</div><h1>Research a topic.<br><span style="color:var(--copper)">Know what to check.</span></h1><p>Enter a topic. We’ll search the web and show what we found, what’s unclear and what to check next.</p><div class="microbar"><span>1. Enter a topic</span><span>2. We search for you</span><span>3. Review your results</span></div></div><div class="hero-orbit" aria-hidden="true"></div></header>
-<div id="sampleBanner" class="hidden notice">Worked passport example: cached source excerpts, including one clearly labelled illustrative older source. This demonstrates the workflow, not current passport instructions.</div>
-<section id="setup" class="panel phase-anchor"><div class="phase-head"><div><div class="eyebrow">Start here</div><h2>Start your research</h2></div><span class="phase-badge">Start with one question</span></div><p class="section-intro">Try a college, scholarship, job offer—or any question.</p>
-<label for="question" class="question-label">Your topic or question</label><textarea id="question" class="w-full" rows="2" placeholder="e.g. a college name, scholarship or job offer" maxlength="500"></textarea>
-
-<div class="top-actions"><button id="analyzeBtn" class="btn-primary" disabled>Research →</button><button id="loadDemo" class="btn-dark" disabled>Try the passport example</button></div><p class="helper">No uploads needed. Include a name and country for a more focused search.</p><p id="status" class="status" role="status" aria-live="polite">Getting ready…</p><p id="discoverStatus" class="status" role="status" aria-live="polite"></p>
-<details id="checkSettings"><summary>Choose a checklist or edit questions <small>Optional · automatic by default</small></summary><div class="research-controls"><label for="templateSelect">Type of research</label><select id="templateSelect" aria-label="Research checklist"></select><button id="loadTemplate" class="hidden btn-muted">Use this checklist</button></div><p class="helper">We choose these checks automatically. Edit them only if you want to.</p><label>Year <input id="currentCycle" size="5" value="2026"></label><p id="activeChecklist" class="helper"></p><div id="blueprintEditor"></div><button id="addItem" class="btn-muted">+ Add a question</button></details></section>
-<section id="sources" class="panel phase-anchor"><div class="phase-head"><div><div class="eyebrow">Collected automatically</div><h2>Web sources</h2></div><span class="phase-badge" id="sourceCount">0 added</span></div><p class="section-intro">We collect these for you. Open the list to review a page or add your own source.</p><details><summary>View sources or add your own <small>Optional</small></summary><div id="sourceEditor"></div><div class="top-actions mt-4"><button id="addSource" class="btn-muted">+ Paste a source</button><button id="discoverBtn" class="btn-muted">Search for more sources</button></div></details></section>
-<section id="dashboard" class="phase-anchor"><div class="panel"><div class="phase-head"><div><div class="eyebrow">Results &amp; evidence</div><h2>Your results</h2></div><span class="phase-badge">Findings + next steps</span></div>
-<div id="analysisEmpty" class="atlas-empty"><div><h3>Your results will appear here</h3><p>Start a search above. You’ll get findings, next steps and an interactive map of the sources.</p></div><div class="atlas-illustration" aria-hidden="true"><div class="atlas-shape"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="empty-label">Illustration · no research results yet</div></div></div>
-<div id="analysisContent" class="hidden"><p id="resultQuestion" class="muted"></p><div class="metrics"><div class="metric-card dark"><strong id="boardCoverage">—</strong><span>Checklist text coverage</span></div><div class="metric-card"><strong id="debtNumber">—</strong><span>Questions without evidence</span></div><div class="metric-card"><strong id="boardConflicts">—</strong><span>Different figures to review</span></div><div class="metric-card"><strong id="boardSources">—</strong><span>Readable / collected sources</span></div></div><details id="coverageNotes"><summary>Research coverage &amp; source notes <small>Details</small></summary><p id="debtLine" class="helper"></p><p id="scoreLine" class="helper"></p><p id="officialLine" class="helper"></p><p class="helper">Coverage measures matched text, not truth, relevance or readiness to act. Source labels and applicability still need review.</p><div id="flagsBox"></div>
-</details>
-<details id="foundFacts" open><summary>What we found <small id="foundCount">Source quotes</small></summary><p class="helper">These quotes come from the sources we read. Check whether they apply to your situation.</p><div id="foundSummary"></div><details><summary>All matched passages</summary><ul id="summaryList"></ul></details></details><hr class="phase-divider"><div class="board-top"><h3 id="resultTitle">What to check next</h3><div class="result-tools"><button id="exportReport" class="btn-muted">Save checklist ↓</button><a href="#setup">Edit question ↑</a></div></div><p id="exportStatus" role="status" aria-live="polite"></p><p id="reviewScope" class="helper"></p><ol id="checklist"></ol><button id="showMoreChecks" class="btn-muted hidden" aria-expanded="false">Show more checks</button><p id="changedLine" role="status"></p><details id="evidenceDetails" open><summary>Compare the sources <small>Heatmap · click a cell to see evidence</small></summary><p class="section-intro">Each row is a question; each column is a source. Click a coloured cell to see its original text.</p><div class="matrix-scroll"><table id="heatmap"></table></div><div class="legend" id="heatmapLegend"></div><div id="drawer" class="hidden" aria-live="polite" tabindex="-1"></div></details>
-<details id="suggestions"><summary>More questions to consider <small>Add only the ones you need</small></summary><div id="proposals"></div></details></div></div></section>
-<section id="verification" class="panel phase-anchor"><div class="phase-head"><div><div class="eyebrow">Optional follow-up</div><h2>Follow-up</h2></div><span class="phase-badge">Optional</span></div><p class="section-intro">Keep a note of what you verified, or add evidence to update your results.</p><div id="verifyEmpty">After your search, you can save verification notes here. You can skip this step.</div><div id="verifyContent" class="hidden"><details id="resolutionNotes"><summary>Record what you verified <small>Optional</small></summary><div id="gapQuestions"></div></details><details id="evidenceEntry"><summary>Add new evidence <small>Optional</small></summary><label for="newEvidence" class="question-label">Source excerpt or official reply</label><textarea id="newEvidence" placeholder="Paste the exact excerpt…"></textarea><div class="research-controls"><input id="newEvidenceTitle" placeholder="Source title" aria-label="New source title"><select id="newEvidenceType" aria-label="New source type"><option value="official">Official</option><option value="third_party" selected>Third-party</option></select><button id="addEvidenceBtn" class="btn-primary">Add evidence &amp; update results</button></div></details><div id="closedBox"></div></div></section>
-<div class="trust"><b>Evidence integrity:</b> A verified quote confirms that text occurs in a reviewed source, not that the claim is true. “Not found” means no usable answer was found in the sources read. Official silence is not falsity. Always confirm important details with relevant primary sources.</div><div class="footnote">ADVISE BUDDY · KNOW WHAT TO CHECK NEXT</div></main></div>
+  <aside class="rail">
+    <div class="brand"><div class="brand-mark">◈</div><span>gap<span style="color:#d18b68">scope</span><span style="color:#8b7e8e;font-size:10px;vertical-align:top;margin-left:3px">/ LAB</span></span></div>
+    <nav aria-label="Research navigation"><div class="rail-kicker">RESEARCH WORKSPACE</div>
+      <a class="active" href="#setup"><span class="num">01</span> ◫ &nbsp; Blueprint</a>
+      <a href="#sources"><span class="num">02</span> ◉ &nbsp; Evidence sources</a>
+      <a href="#dashboard"><span class="num">03</span> ▦ &nbsp; Analysis board</a>
+      <a href="#verification"><span class="num">04</span> ◇ &nbsp; Verify & close</a>
+    </nav>
+    <div class="rail-bottom"><div class="rail-kicker" style="margin-bottom:8px">THE GAP PRINCIPLE</div><p>"You can't find what's missing until you define what complete looks like."</p><div style="margin-top:12px;color:#e5a17c;font-size:11px;font-weight:700">EVIDENCE FIRST. ALWAYS.</div></div>
+  </aside>
+  <main class="workspace">
+    <header class="hero"><div><div class="eyebrow">The intelligence of what's missing / Research studio 01</div><h1>See beyond<br><span style="color:var(--copper)">the answer.</span></h1><p>Build a blueprint of what matters. Compare what sources actually say. Reveal the missing pieces — with evidence you can inspect, not claims you have to trust.</p><div class="microbar"><span>◈ Blueprint-first</span><span>◎ Source-grounded</span><span>◇ Human-verified</span></div></div><div class="hero-orbit" aria-hidden="true"></div></header>
+    <div id="sampleBanner" class="hidden mb-4">Demo investigation loaded: genuine excerpts retrieved 2026-10-31, plus one clearly-marked illustrative 2024 source. Review each source label before presenting findings as factual.</div>
+    <section id="setup" class="panel">
+      <div class="eyebrow mb-2">Phase 01 / Define the investigation</div>
+      <h2>Build your expectation blueprint</h2>
+      <p class="section-sub">Define completeness before evaluating evidence. You control the requirements.</p>
+      <label for="question" class="block text-xs font-bold mb-2" style="color:#75646e">YOUR RESEARCH QUESTION</label>
+      <input id="question" class="w-full p-3 mb-4" value="What should I verify before applying for an Indian passport?">
+      <div class="flex flex-wrap gap-3 mb-4 items-center">
+        <select id="templateSelect" class="p-2"></select>
+        <button id="loadTemplate" class="btn-dark px-4 py-2">↻ &nbsp; Load blueprint</button>
+        <label class="flex items-center gap-2 text-sm" style="color:#71636d">Current cycle/year <input id="currentCycle" class="p-2 w-24" value="2026"></label>
+      </div>
+      <div class="text-xs font-bold mb-3" style="color:#75646e;letter-spacing:.08em">WHAT A COMPLETE ANSWER SHOULD COVER</div>
+      <div id="blueprintEditor" class="space-y-2"></div>
+      <button id="addItem" class="mt-4 text-sm font-bold" style="color:var(--copper)">＋ Add a requirement</button>
+    </section>
+    <section id="sources" class="panel">
+      <div class="eyebrow mb-2">Phase 02 / Bring the evidence</div>
+      <h2>Source library</h2>
+      <p class="section-sub">Type your question and Advise Buddy researches the web for you — no uploads needed. You can also paste excerpts. Fetched text is checked, not trusted: remove any source that looks wrong and re-analyze.</p>
+      <div id="sourceEditor" class="space-y-3"></div>
+      <div class="top-actions mt-4">
+        <button id="addSource" class="btn-muted px-4 py-2">＋ Add source</button>
+        <button id="discoverBtn" class="btn-muted px-4 py-2">⌖ &nbsp; Find sources on the web</button>
+        <button id="loadDemo" class="btn-dark px-4 py-2">◈ &nbsp; Load demo investigation</button>
+        <button id="analyzeBtn" class="btn-primary px-6 py-2 font-bold">Analyze evidence &nbsp; ↗</button>
+      </div>
+      <p id="status" role="status" aria-live="polite" class="mt-3"></p>
+      <p id="discoverStatus" class="mt-2 text-sm"></p>
+    </section>
+    <section id="dashboard" class="hidden">
+      <div class="panel"><div class="eyebrow mb-2">Phase 03 / Research intelligence</div><h2>Investigation overview</h2><div class="summary-hero"><div><div id="debtNumber" class="metric">—</div><div class="metric-label">Evidence debt</div></div><p id="debtLine"></p></div><p id="scoreLine" class="font-semibold text-sm" style="margin-bottom:6px"></p><p id="officialLine" class="text-sm" style="margin-bottom:14px"></p><div class="text-xs font-bold mb-2" style="color:#786c73">WHAT THE EVIDENCE SAYS</div><ul id="summaryList" class="list-disc ml-5 text-sm space-y-2" style="line-height:1.65"></ul><div id="flagsBox" class="mt-4 text-sm"></div><p id="changedLine" class="text-sm mt-2"></p></div>
+      <div class="panel overflow-x-auto"><div class="eyebrow mb-2">The evidence atlas</div><h2>Coverage heatmap</h2><p class="section-sub">Requirements × sources. Select any cell to inspect the original evidence. Multiple warnings can coexist.</p><table id="heatmap" class="text-sm"></table><div class="microbar"><span style="background:#d8eee2;color:#246e55">✓ Stated</span><span style="background:#f7ded9;color:#a24b42">⚠ Possible conflict</span><span style="background:#ede7e0">— Silent</span><span style="background:#f5e7c8;color:#966c2b">◷ Freshness warning</span></div></div>
+      <div id="drawer" class="hidden panel" aria-live="polite"></div>
+      <div class="panel"><div class="eyebrow mb-2">Priority intelligence</div><h2>What to verify next</h2><p class="section-sub">Potential gaps, ranked by importance and evidence risk.</p><ol id="checklist" class="list-decimal ml-5 space-y-1 text-sm"></ol></div>
+      <div class="panel"><div class="eyebrow mb-2">Blueprint challenge mode</div><h2>Did we overlook a requirement?</h2><p class="section-sub">Suggested additions never modify your blueprint without your approval.</p><div id="proposals" class="space-y-3 text-sm"></div></div>
+      <div id="verification" class="panel"><div class="eyebrow mb-2">Phase 04 / Close the loop</div><h2>Verification studio</h2><p class="section-sub">Ask a better question, add new evidence, and watch the coverage change.</p><div id="gapQuestions" class="space-y-3 text-sm mb-4"></div><label for="newEvidence" class="block text-xs font-bold mb-2" style="color:#75646e">NEW EVIDENCE / OFFICIAL RESPONSE</label><textarea id="newEvidence" class="w-full p-3" rows="4" placeholder="Paste an official reply or a new source excerpt..."></textarea><div class="flex flex-wrap gap-2 mt-3"><input id="newEvidenceTitle" class="p-2 flex-1" placeholder="New source title"><select id="newEvidenceType" class="p-2"><option value="official">Official</option><option value="third_party" selected>Third-party</option></select><button id="addEvidenceBtn" class="btn-primary px-4 py-2 font-bold">＋ Add & re-analyze</button></div><div id="closedBox" class="mt-4 text-sm"></div></div>
+    </section>
+    <div class="trust">◈ <b>Evidence integrity:</b> Sourced = exact original quote verified in reviewed text. Uncertain = evidence could not be fully confirmed. AI-suggested = proposal requiring approval. A potential gap is not proof of absence; official silence is not falsity.</div>
+    <div class="footnote">ADVISE BUDDY / THE EVIDENCE INVESTIGATION STUDIO &nbsp; • &nbsp; BUILT FOR CLARITY, NOT CONFIDENCE THEATER</div>
+  </main>
+</div>
 <script>
 let blueprint = [];
 let sources = [{id:'s1', title:'', url:'', text:'', type:'third_party'}];
@@ -45,7 +85,7 @@ const CELL = {
 };
 let manualClosed = {};   // itemId -> user note
 let lastAutoClosed = []; // itemLabels with official evidence found (applicability still needs the user's eye)
-const esc = s => String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;');
+const esc = s => (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;');
 
 async function api(path, body) {
   const r = await fetch(path, {method: body ? 'POST' : 'GET',
@@ -58,82 +98,49 @@ async function api(path, body) {
 function renderBlueprint() {
   document.getElementById('blueprintEditor').innerHTML = blueprint.map((it, i) => `
     <div class="flex gap-2">
-      <input data-i="${i}" data-f="label" class="border rounded p-1 flex-1" aria-label="Checklist question ${i+1}" value="${esc(it.label)}">
-      <select data-i="${i}" data-f="priority" aria-label="Question priority" class="border rounded p-1">
+      <input data-i="${i}" data-f="label" class="border rounded p-1 flex-1" value="${esc(it.label)}">
+      <select data-i="${i}" data-f="priority" class="border rounded p-1">
         ${['critical','important','optional'].map(p => `<option ${p===it.priority?'selected':''}>${p}</option>`).join('')}
       </select>
-      <button aria-label="Remove question ${i+1}" data-del="${i}" class="text-red-600">✕</button>
+      <button data-del="${i}" class="text-red-600">✕</button>
     </div>`).join('');
   document.querySelectorAll('#blueprintEditor [data-i]').forEach(el =>
     el.addEventListener('change', e => {
       blueprint[+el.dataset.i][el.dataset.f] = el.value;
-      if (el.dataset.f === 'label') blueprint[+el.dataset.i].anchor = null;
     }));
   document.querySelectorAll('#blueprintEditor [data-del]').forEach(el =>
     el.addEventListener('click', () => { blueprint.splice(+el.dataset.del, 1); renderBlueprint(); }));
 }
 
 function renderSources() {
-  document.getElementById('sourceCount').textContent = `${sources.filter(s => s.text.trim() || s.url.trim()).length} added`;
   document.getElementById('sourceEditor').innerHTML = sources.map((s, i) => `
-    <details class="source-card" ${!s.text && !s.url ? 'open' : ''}><summary>${esc(s.title || 'New source')} <small>${s.type === 'official' ? 'Official' : 'Third-party'}</small></summary>
-      <div class="source-meta">
-        <input data-i="${i}" data-f="title" class="border rounded p-1 flex-1" aria-label="Source title" placeholder="Source title" value="${esc(s.title)}">
-        <input data-i="${i}" data-f="url" class="border rounded p-1 flex-1" aria-label="Source URL" placeholder="URL (optional)" value="${esc(s.url||'')}">
-        <select data-i="${i}" data-f="type" aria-label="Source type" class="border rounded p-1">
+    <div class="border rounded p-2">
+      <div class="flex gap-2 mb-1">
+        <input data-i="${i}" data-f="title" class="border rounded p-1 flex-1" placeholder="Source title" value="${esc(s.title)}">
+        <input data-i="${i}" data-f="url" class="border rounded p-1 flex-1" placeholder="URL (optional)" value="${esc(s.url||'')}">
+        <select data-i="${i}" data-f="type" class="border rounded p-1">
           <option value="official" ${s.type==='official'?'selected':''}>Official</option>
           <option value="third_party" ${s.type==='third_party'?'selected':''}>Third-party</option>
         </select>
       </div>
-      <textarea data-i="${i}" data-f="text" aria-label="Source excerpt" class="w-full border rounded p-1" rows="4" placeholder="Paste the information you want Advise Buddy to check. You can also add its URL for reference.">${esc(s.text)}</textarea>
-      <button class="btn-muted mt-3" data-remove-source="${i}">Remove this source</button></details>`).join('');
-  document.querySelectorAll('[data-remove-source]').forEach(b => b.addEventListener('click', () => {
-    sources.splice(+b.dataset.removeSource, 1); renderSources();
-    document.getElementById('status').textContent = 'Source removed. Run the check again to update the results.';
-  }));
+      <textarea data-i="${i}" data-f="text" class="w-full border rounded p-1" rows="4" placeholder="Paste the information you want Advise Buddy to check. You can also add its URL for reference.">${esc(s.text)}</textarea>
+    </div>`).join('');
   document.querySelectorAll('#sourceEditor [data-i]').forEach(el =>
     el.addEventListener('change', e => { sources[+el.dataset.i][el.dataset.f] = el.value; }));
 }
 
 function findingKey(f) { return f.itemId + '|' + f.sourceId; }
 
-function checkTopic(label) {
-  if (document.getElementById('templateSelect').value !== 'passport') return {title:label, action:'Confirm this detail with the official source for your situation.'};
-  const low = label.toLowerCase();
-  if (/fee|cost|amount/.test(low)) return {title:'Confirm the fee before you pay', action:'Use the official fee calculator for your application type, age, booklet size and service speed.'};
-  if (/processing|how long/.test(low)) return {title:'Check how long your application could take', action:'Check the current processing guidance for your service type and allow for police-verification delays.'};
-  if (/documents/.test(low)) return {title:'Confirm which documents you need', action:'Use the official document checklist for your application and personal circumstances.'};
-  if (/renewal/.test(low)) return {title:'Check renewal rules if you’re renewing', action:'Confirm when you can apply and which documents your reason for reissue requires.'};
-  if (/contact|help channel/.test(low)) return {title:'Find an official contact for help', action:'Use the contact or help section on the official website before sharing personal information.'};
-  if (/eligible/.test(low)) return {title:'Check that you meet the eligibility rules', action:'Confirm the rules for your age, citizenship and application category on the official website.'};
-  if (/portal|link/.test(low)) return {title:'Make sure you use the official application website', action:'Start from the official website rather than a link in a third-party guide.'};
-  if (/appointment/.test(low)) return {title:'Check how to book an appointment', action:'Confirm the booking steps and availability through your official application account.'};
-  if (/police/.test(low)) return {title:'Check what police verification involves', action:'Confirm whether verification happens before or after issue for your application type.'};
-  return {title:label, action:'Confirm this detail with the official source for your situation.'};
-}
-
-function openChecks(res) {
-  const order = {conflicting:0, context:1, silent:2, official_silence:3, uncertain:4, possibly_outdated:5, undated:6};
-  return res.checklist.filter(c => !(c.itemId in manualClosed)).sort((a,b) => (order[a.kind] ?? 6) - (order[b.kind] ?? 6));
-}
-
 function renderResult(res, changedKeys) {
   lastResult = res;
-  document.getElementById('drawer').classList.add('hidden');
-  document.getElementById('analysisContent').classList.remove('hidden');
-  document.getElementById('analysisEmpty').classList.add('hidden');
-  document.getElementById('verifyEmpty').classList.add('hidden');
-  document.getElementById('verifyContent').classList.remove('hidden');
-  document.getElementById('boardCoverage').textContent = res.completenessScore + '%';
-  document.getElementById('boardSources').textContent = res.sources.filter(s => s.text.trim()).length + '/' + res.sources.length;
-  document.getElementById('boardConflicts').textContent = new Set(res.comparisons.filter(c => c.verdict === 'different').map(c => c.itemId)).size;
+  document.getElementById('dashboard').classList.remove('hidden');
   document.getElementById('debtNumber').textContent = res.evidenceDebtCount;
   document.getElementById('debtLine').textContent =
-    `Missing evidence: ${res.evidenceDebtCount} of ${res.blueprint.items.length} items have no sourced confirmation.`;
+    `Evidence Debt: ${res.evidenceDebtCount} of ${res.blueprint.items.length} items have no sourced confirmation.`;
   document.getElementById('scoreLine').textContent =
-    `Text coverage: ${res.completenessScore}% of the checklist has matched evidence.`;
+    `Completeness: ${res.completenessScore}% of your blueprint is covered by evidence in the sources reviewed.`;
   document.getElementById('officialLine').textContent =
-    `Official text matches: ${res.officialConfirmedCount} of ${res.blueprint.items.length}.`;
+    `Confirmed by an official source: ${res.officialConfirmedCount} of ${res.blueprint.items.length}.`;
   document.getElementById('summaryList').innerHTML =
     res.summary.map(s => `<li>${esc(s)}</li>`).join('') || '<li>No sourced findings yet.</li>';
   let flags = '';
@@ -146,10 +153,10 @@ function renderResult(res, changedKeys) {
 
   const fmap = {};
   res.findings.forEach(f => fmap[findingKey(f)] = f);
-  let html = '<caption class="sr-only">Evidence coverage: each row is a research question and each column is a reviewed source. Activate a cell to inspect its evidence.</caption><tr><th scope="col" class="border p-2 text-left">Question to check</th>' +
-    res.sources.map(s => `<th scope="col" class="border p-2 text-left">${esc(s.title)}<br><span class="font-normal text-xs">${s.type==='official'?'Official':'Third-party'} &middot; ${(res.sourceFreshness||{})[s.id]||''}</span></th>`).join('') + '</tr>';
+  let html = '<tr><th class="border p-2 text-left">Blueprint item</th>' +
+    res.sources.map(s => `<th class="border p-2 text-left">${esc(s.title)}<br><span class="font-normal text-xs">${s.type==='official'?'Official':'Third-party'} &middot; ${(res.sourceFreshness||{})[s.id]||''}</span></th>`).join('') + '</tr>';
   res.blueprint.items.forEach(it => {
-    html += `<tr><th scope="row" class="border p-2 font-medium">${esc(it.label)}</th>`;
+    html += `<tr><td class="border p-2 font-medium">${esc(it.label)}</td>`;
     res.sources.forEach(s => {
       const f = fmap[it.id + '|' + s.id];
       const [cls, label] = f ? CELL[f.status] : CELL.silent;
@@ -160,103 +167,34 @@ function renderResult(res, changedKeys) {
       if (f && fresh === 'possibly_outdated' && f.status === 'conflicting') extra = ' 🕐 Outdated';
       if (f && fresh === 'undated' && (f.status === 'stated' || f.status === 'conflicting')) extra = ' (undated)';
       const changed = changedKeys && changedKeys.has(it.id + '|' + s.id) ? ' changed' : '';
-      html += `<td role="button" tabindex="0" aria-label="${esc(it.label)} — ${esc(s.title)}: ${label}${extra}" class="border p-2 cell ${cls}${changed}" data-item="${it.id}" data-source="${s.id}">${label}${extra}</td>`;
+      html += `<td class="border p-2 cell ${cls}${changed}" data-item="${it.id}" data-source="${s.id}">${label}${extra}</td>`;
     });
     html += '</tr>';
   });
   document.getElementById('heatmap').innerHTML = html;
-  document.getElementById('heatmapLegend').innerHTML = Object.values(CELL).map(([cls,label]) => `<span class="${cls}">${label}</span>`).join('') + '<span>Undated / Outdated: source date context</span>';
   document.querySelectorAll('#heatmap .cell').forEach(td =>
-    { td.addEventListener('click', () => showDrawer(td.dataset.item, td.dataset.source)); td.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); showDrawer(td.dataset.item, td.dataset.source); } }); });
+    td.addEventListener('click', () => showDrawer(td.dataset.item, td.dataset.source)));
 
-  const openChecklist = openChecks(res);
-  const readable = res.sources.filter(s => s.text.trim()).length;
-  document.getElementById('resultTitle').textContent = readable ? 'What to check next' : 'We couldn’t read the sources';
-  document.getElementById('resultQuestion').textContent = res.question;
-  document.getElementById('reviewScope').textContent = readable
-    ? `Based on ${readable} readable ${readable === 1 ? 'source' : 'sources'}. ${openChecklist.length > 3 ? 'Showing the first 3 checks below.' : 'Start with these checks.'} These are leads to verify, not confirmed instructions.`
-    : 'Try searching again, or paste an excerpt under “View sources or add your own”. Unread pages are not evidence of missing information.';
-  document.getElementById('checklist').innerHTML = openChecklist.map((c, i) => {
-    const topic = checkTopic(c.itemLabel);
-    const pair = (res.comparisons || []).find(p => p.itemId === c.itemId && p.verdict === (c.kind === 'conflicting' ? 'different' : 'unclear'));
-    const reason = c.kind === 'context' && pair ? pair.reason : c.kind === 'conflicting'
-      ? 'These sources give different figures. They may cover different categories, conditions or dates.'
-      : c.kind === 'official_silence'
-      ? 'We found information in other guides, but not an answer in the official text we reviewed.'
-      : c.kind === 'silent'
-      ? 'We didn’t find a usable answer in the sources we could read.'
-      : c.kind === 'possibly_outdated' || c.kind === 'undated'
-      ? 'The supporting information is old or has no clear date. Check whether it still applies.'
-      : 'We couldn’t confirm the supporting quote. Don’t rely on it yet.';
-    const findings = res.findings.filter(f => f.itemId === c.itemId && f.quote && f.quoteVerified &&
-      (pair ? [pair.sourceA, pair.sourceB].includes(f.sourceId) : (c.kind !== 'conflicting' || f.status === 'conflicting')));
-    const freshnessOrder = {current:0, undated:1, possibly_outdated:2};
-    if (!pair) findings.sort((a,b) => (freshnessOrder[res.sourceFreshness[a.sourceId]] ?? 2) - (freshnessOrder[res.sourceFreshness[b.sourceId]] ?? 2));
-    const quotes = findings.slice(0, 2).map(f => {
-      const source = res.sources.find(s => s.id === f.sourceId);
-      return `<div class="quote-source"><p><strong>${esc(source.title)}</strong></p><blockquote>${esc(f.quote)}</blockquote>${source.url && /^https?:\/\//i.test(source.url) ? `<a href="${esc(source.url)}" target="_blank" rel="noopener">Read this source ↗</a>` : '<span class="helper">No source link supplied.</span>'}</div>`;
-    }).join('');
-    const official = res.sources.find(s => s.type === 'official' && s.url && /^https?:\/\//i.test(s.url));
-    const officialUrl = document.getElementById('templateSelect').value === 'passport'
-      ? 'https://passportindia.gov.in/' : (official ? official.url : '');
-    return `<li class="issue${i >= 3 ? ' hidden extra-check' : ''}"><span class="badge">${c.kind === 'conflicting' ? 'Different figures to verify' : c.kind === 'context' ? 'Compare the same case' : c.kind === 'silent' ? 'Answer not found' : 'Needs confirmation'}</span><h3>${esc(topic.title)}</h3><p>${esc(reason)}</p><p class="next-step"><strong>What to do:</strong> ${esc(topic.action)}</p><details><summary>${quotes ? 'See the source evidence' : 'What we checked'}</summary>${pair ? `<p class="helper"><strong>Why this pair was flagged:</strong> ${esc(pair.reason)}</p>` : ''}${quotes || `<p>No usable answer was found for “${esc(c.itemLabel)}” in the ${readable} sources we could read.</p><ul>${res.sources.filter(s => s.text.trim()).map(s => `<li>${/^https?:\/\//i.test(s.url || '') ? `<a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.title)}</a>` : esc(s.title)}</li>`).join('')}</ul>`}<div class="issue-actions"><button class="btn-muted" data-inspect="${esc(c.itemId)}">View full comparison</button><button class="btn-muted" data-add-evidence="${esc(c.itemId)}">Add information you found</button></div></details>${officialUrl ? `<a class="official-action" href="${esc(officialUrl)}" target="_blank" rel="noopener">${document.getElementById('templateSelect').value === 'passport' ? 'Open official Passport Seva website' : 'Open official source'} ↗</a>` : ''}</li>`;
-  }).join('') || (readable ? '<li class="empty">No further checks were flagged. This does not mean the information is complete or correct; review the sources before applying.</li>' : '');
-  const more = document.getElementById('showMoreChecks');
-  more.classList.toggle('hidden', openChecklist.length <= 3);
-  more.setAttribute('aria-expanded','false');
-  more.textContent = `Show ${Math.max(0, openChecklist.length - 3)} more checks`;
-  more.onclick = () => {
-    const expanded = more.getAttribute('aria-expanded') !== 'true';
-    document.querySelectorAll('.extra-check').forEach(el => el.classList.toggle('hidden', !expanded));
-    more.setAttribute('aria-expanded', String(expanded));
-    more.textContent = expanded ? 'Show fewer checks' : `Show ${openChecklist.length - 3} more checks`;
-  };
-  document.querySelectorAll('[data-inspect]').forEach(b => b.addEventListener('click', () => {
-    document.getElementById('evidenceDetails').open = true;
-    const finding = res.findings.find(f => f.itemId === b.dataset.inspect && f.status === 'conflicting' && f.quote) || res.findings.find(f => f.itemId === b.dataset.inspect && f.quote) || res.findings.find(f => f.itemId === b.dataset.inspect);
-    if (finding) showDrawer(finding.itemId, finding.sourceId);
-    else document.getElementById('evidenceDetails').scrollIntoView();
-  }));
-  document.querySelectorAll('[data-add-evidence]').forEach(b => b.addEventListener('click', () => {
-    document.getElementById('evidenceEntry').open = true;
-    const item = res.blueprint.items.find(it => it.id === b.dataset.addEvidence);
-    document.getElementById('newEvidence').placeholder = `Paste evidence for: ${item.label}`;
-    document.getElementById('newEvidence').focus();
-    document.getElementById('newEvidence').scrollIntoView({block:'center'});
-  }));
+  document.getElementById('checklist').innerHTML = res.checklist.map(c =>
+    `<li>${esc(c.action)}</li>`).join('') || '<li>Nothing to verify — every item has sourced confirmation.</li>';
 
   document.getElementById('proposals').innerHTML = res.proposals.map(p => `
     <div class="border rounded p-2" data-prop="${p.id}">
-      <p>Source mentions <b>${esc(p.label)}</b>. Add to your checklist?</p>
+      <p>Source mentions <b>${esc(p.label)}</b>. Add to blueprint?</p>
       <p class="text-stone-600">Reason: ${esc(p.reason)}</p>
       <p class="italic">"${esc(p.quote)}"</p>
       <button class="btn-primary px-3 py-2 mr-2" data-accept="${p.id}">Accept</button>
       <button class="btn-muted px-3 py-2" data-reject="${p.id}">Dismiss</button>
-    </div>`).join('') || '<p class="text-stone-500">No extra questions suggested.</p>';
+    </div>`).join('') || '<p class="text-stone-500">No new requirements suggested.</p>';
   document.querySelectorAll('[data-accept]').forEach(b => b.addEventListener('click', async () => {
     const p = res.proposals.find(x => x.id === b.dataset.accept);
     blueprint.push({id: 'i' + Date.now(), label: p.label, priority: 'important', origin: 'challenge_accepted'});
-    renderBlueprint(); await perform(runAnalysis);
+    renderBlueprint(); await runAnalysis();
   }));
   document.querySelectorAll('[data-reject]').forEach(b => b.addEventListener('click', () => {
     document.querySelector(`[data-prop="${b.dataset.reject}"]`).remove();
   }));
 
-  const sourceById = Object.fromEntries(res.sources.map(s => [s.id, s]));
-  const best = new Map();
-  res.findings.filter(f => f.quoteVerified && f.label === 'sourced' && f.status === 'stated').forEach(f => {
-    const previous = best.get(f.itemId);
-    if (!previous || (sourceById[f.sourceId].type === 'official' && sourceById[previous.sourceId].type !== 'official')) best.set(f.itemId, f);
-  });
-  document.getElementById('foundCount').textContent = `${best.size} questions with quoted evidence`;
-  const quoteCards = [...best.values()].map(f => {
-    const source = sourceById[f.sourceId];
-    const item = res.blueprint.items.find(it => it.id === f.itemId);
-    const freshness = {current:'Date found for this year', undated:'No date found', possibly_outdated:'Older date found'}[(res.sourceFreshness || {})[source.id]] || 'Check source date';
-    return `<article class="quote-source"><span class="badge">Source quote · ${source.type === 'official' ? 'Official label' : 'Third-party'}</span><h3>${esc(item.label)}</h3><blockquote>${esc(f.quote)}</blockquote><p>${esc(source.title)} · ${freshness}</p>${/^https?:\/\//i.test(source.url || '') ? `<a href="${esc(source.url)}" target="_blank" rel="noopener">Read this source ↗</a>` : '<p>No source link supplied.</p>'}</article>`;
-  });
-  document.getElementById('foundSummary').innerHTML = quoteCards.slice(0, 3).join('') + (quoteCards.length > 3 ? `<details><summary>Show ${quoteCards.length - 3} more quoted findings</summary>${quoteCards.slice(3).join('')}</details>` : '') || '<p>No usable quoted answers were matched. Review the missing information and unread pages below.</p>';
-  document.getElementById('exportReport').onclick = exportReport;
   renderGapSection(res);
 }
 
@@ -275,7 +213,7 @@ function renderGapSection(res) {
     const note = document.querySelector(`[data-note="${b.dataset.close}"]`).value.trim();
     if (!note) { alert('Add a short note saying how it was resolved.'); return; }
     manualClosed[b.dataset.close] = note;
-    renderResult(res, new Set());
+    renderGapSection(res);
   }));
   const manualLines = Object.entries(manualClosed).map(([id, note]) => {
     const it = res.blueprint.items.find(x => x.id === id);
@@ -289,75 +227,24 @@ function renderGapSection(res) {
 function showDrawer(itemId, sourceId) {
   const f = lastResult.findings.find(x => x.itemId === itemId && x.sourceId === sourceId);
   const src = lastResult.sources.find(x => x.id === sourceId);
-  const item = lastResult.blueprint.items.find(x => x.id === itemId);
   const box = document.getElementById('drawer');
   box.classList.remove('hidden');
-  const reveal = () => { box.scrollIntoView({block:'center', behavior:'instant'}); box.focus({preventScroll:true}); };
-  const heading = `<h3>${esc(item.label)}</h3><p>${esc(src.title)}</p>`;
   if (f && f.status === 'error') {
-    box.innerHTML = heading + `<p><b>Not fetched:</b> this source could not be retrieved, so no evidence was reviewed. This is <b>not</b> counted as silent — unreviewed evidence must not be reported as a gap.</p>`;
-    reveal(); return;
+    box.innerHTML = `<p><b>Not fetched:</b> this source could not be retrieved, so no evidence was reviewed. This is <b>not</b> counted as silent — unreviewed evidence must not be reported as a gap.</p>`;
+    return;
   }
   if (!f || f.status === 'silent') {
-    box.innerHTML = heading + `<p><b>Silent:</b> we read this source but found no usable answer to this question. This does not mean the information is false or unavailable elsewhere.</p><p>Next step: check the original page or add a relevant excerpt under Sources.</p>`;
-    reveal(); return;
+    box.innerHTML = `<p><b>Silent:</b> this source does not cover this blueprint item. That silence itself is the finding — a potential gap.</p>`;
+    return;
   }
-  box.innerHTML = `<h3>${esc(item.label)}</h3><p>${esc(src.title)}</p><p><b>Finding:</b> ${CELL[f.status][1]} &middot; <b>Quote checked:</b> ${f.quoteVerified ? 'yes (exact substring)' : (f.quote ? 'no — evidence located, exact quote not confirmed' : 'no — no matching passage found, treat as unconfirmed')}</p>
+  box.innerHTML = `<p><b>Status:</b> ${f.status} &middot; <b>Label:</b> ${f.label} &middot; <b>Quote verified:</b> ${f.quoteVerified ? 'yes (exact substring)' : (f.quote ? 'no — evidence located, exact quote not confirmed' : 'no — no matching passage found, treat as unconfirmed')}</p>
     ${f.quote ? `<blockquote class="border-l-4 pl-3 my-2 italic">"${esc(f.quote)}"</blockquote>` : ''}
     ${f.claimSummary ? `<p>${esc(f.claimSummary)}</p>` : ''}
-    ${src && src.url ? `<p><a class="underline" href="${esc(/^https?:\/\//i.test(src.url) ? src.url : "#")}" target="_blank" rel="noopener">Open source</a></p>` : ''}`;
-  reveal();
-}
-
-function exportReport() {
-  if (!lastResult) return;
-  const res = lastResult;
-  const sourceById = Object.fromEntries(res.sources.map(s => [s.id, s]));
-  const lines = ['# Advise Buddy verification checklist', '', res.question, '',
-    'Exported at: ' + new Date().toISOString(),
-    'Scope: reviewed sources only. Quotes are not guarantees of truth or applicability.', '',
-    '## What to verify next', ''];
-  openChecks(res).forEach((c, i) => {
-    const topic = checkTopic(c.itemLabel);
-    lines.push(`${i+1}. ${topic.title}`, `   Finding: ${c.action}`, `   Next step: ${topic.action}`, '');
-    const pair = (res.comparisons || []).find(p => p.itemId === c.itemId && p.verdict === (c.kind === 'conflicting' ? 'different' : 'unclear'));
-    if (pair) lines.push(`   Compare: ${sourceById[pair.sourceA].title} ↔ ${sourceById[pair.sourceB].title}`, `   Reason: ${pair.reason}`, '');
-  });
-  lines.push('', '## Source evidence', '');
-  res.blueprint.items.forEach(item => {
-    lines.push('### ' + item.label);
-    const findings = res.findings.filter(f => f.itemId === item.id && f.quoteVerified && f.quote);
-    findings.forEach(f => {
-      const source = sourceById[f.sourceId];
-      lines.push(`- [${source.id}] ${source.title}`, `  Type: ${source.type}; date label: ${(res.sourceFreshness || {})[source.id] || 'unknown'}`,
-        `  URL: ${source.url || 'Not supplied'}`, '', '> ' + f.quote.replace(/\n/g, '\n> '), '');
-    });
-    if (!findings.length) lines.push('No verified quote matched in the reviewed text.', '');
-  });
-  lines.push('## Sources and fetch status', '');
-  res.sources.forEach(s => lines.push(`- [${s.id}] ${s.title}: ${s.text.trim() ? 'Text reviewed' : 'Not fetched — no evidence reviewed'}; ${s.url || 'No URL supplied'}`));
-  lines.push('', '## Resolution notes', '');
-  Object.entries(manualClosed).forEach(([id,note]) => lines.push(`- ${res.blueprint.items.find(it => it.id === id)?.label || id}: ${note} (marked by user)`));
-  lastAutoClosed.forEach(note => lines.push('- ' + note));
-  if (!Object.keys(manualClosed).length && !lastAutoClosed.length) lines.push('No resolution notes recorded.');
-  const blob = new Blob([lines.join('\n')], {type:'text/markdown;charset=utf-8'});
-  const url = URL.createObjectURL(blob);
-  const link = document.createElement('a');
-  link.href = url; link.download = 'advise-buddy-checklist.md';
-  document.body.appendChild(link);
-  link.click(); link.remove();
-  const feedback = document.getElementById('exportStatus');
-  feedback.innerHTML = 'Checklist prepared. If the download did not start, ';
-  const retry = document.createElement('a'); retry.href = url; retry.download = link.download; retry.textContent = 'download the Markdown checklist here';
-  feedback.appendChild(retry);
-  feedback.scrollIntoView({block:'center', behavior:'instant'});
-  // Keep the fallback link usable until the next export.
-  if (exportReport.previousUrl) URL.revokeObjectURL(exportReport.previousUrl);
-  exportReport.previousUrl = url;
+    ${src && src.url ? `<p><a class="underline" href="${esc(src.url)}" target="_blank" rel="noopener">Open source</a></p>` : ''}`;
 }
 
 async function runAnalysis() {
-  document.getElementById('status').textContent = 'Analyzing… Checklist selection is paused until this finishes.';
+  document.getElementById('status').textContent = 'Analyzing…';
   const req = {question: document.getElementById('question').value, blueprint: {id:'custom', title:'Custom', items: blueprint},
     // Keep URL-only sources: they must show as "Not fetched", not
     // vanish. Only drop rows with neither URL nor text.
@@ -367,7 +254,7 @@ async function runAnalysis() {
   if (lastResult) lastResult.findings.forEach(f => prev[findingKey(f)] = f.status);
   const res = await api('/api/analyze', req);
   const changed = new Set();
-  res.findings.forEach(f => { if (lastResult && (prev[findingKey(f)] !== undefined ? prev[findingKey(f)] !== f.status : !['silent','error'].includes(f.status))) changed.add(findingKey(f)); });
+  res.findings.forEach(f => { if (prev[findingKey(f)] !== undefined && prev[findingKey(f)] !== f.status) changed.add(findingKey(f)); });
   // Gap-closing rule, tightened: a gap closes automatically ONLY on
   // evidence that is (1) a verified exact quote for that item
   // (label "sourced"), (2) from a source the user labelled Official,
@@ -392,12 +279,9 @@ async function runAnalysis() {
     const it = res.blueprint.items.find(x => x.id === k.split('|')[0]);
     return it ? it.label : null;
   }).filter(Boolean))];
-  const awaitingOfficial = res.checklist.filter(c => c.kind === 'official_silence' && changedLabels.includes(c.itemLabel));
-  if (changedLabels.length) document.getElementById('changedLine').textContent =
-    `Evidence updated: ${changedLabels.join('; ')}.${awaitingOfficial.length ? ' Official confirmation is still needed for the updated question.' : ' Review the checks that remain open.'}`;
-  else if (!Object.keys(prev).length) document.getElementById('changedLine').textContent = '';
-  document.getElementById('status').textContent = res.completenessScore === 0 ? 'No answers matched. Add a specific name and location, or open Sources to add a relevant excerpt, then research again.' : 'Your results are ready. Start with what we found and what to check next.';
-  if (res.completenessScore === 0) document.querySelector('#sources details').open = true;
+  document.getElementById('changedLine').textContent = changedLabels.length ?
+    `Changed in this re-run: ${changedLabels.join('; ')} (outlined in purple).` : '';
+  document.getElementById('status').textContent = 'Analysis complete. Open the evidence atlas below.';
   document.getElementById('dashboard').scrollIntoView({behavior:'smooth',block:'start'});
 }
 
@@ -415,116 +299,60 @@ async function runDiscovery() {
   if (!q) { st.textContent = 'Type your question first, then search the web for sources.'; return; }
   st.textContent = 'Searching the web…';
   try {
-    await prepareResearch(q);
     const res = await api('/api/discover', {question: q});
     const found = res.sources || [];
     if (!found.length) {
       st.textContent = 'No sources found for that question. Try different words, or paste source text.';
       return;
     }
-    sources = sources.filter(s => !s.id.startsWith('web-'));
     found.forEach((s, i) => sources.push({...s, id: 'web-' + Date.now() + '-' + i}));
     renderSources();
-    st.textContent = `Found ${found.length} ${found.length === 1 ? 'source' : 'sources'} (${res.fetched} fetched, ${res.failed} could not be fetched). Check their relevance under “View sources or add your own”.`;
+    st.textContent = `Found ${found.length} sources (${res.fetched} fetched, ${res.failed} could not be fetched). Review them, remove any that look wrong — analysis runs next.`;
     await runAnalysis();
-    document.getElementById('dashboard').scrollIntoView({block:'start'});
   } catch (e) {
     let msg = e.message || '';
     try { msg = JSON.parse(msg).detail || msg; } catch (_) {}
-    document.getElementById('status').textContent = 'Search could not finish. You can try again or paste a source.';
     st.textContent = 'Web search failed: ' + msg + ' You can still paste source text.';
   }
 }
-document.getElementById('discoverBtn').addEventListener('click', () => perform(runDiscovery));
+document.getElementById('discoverBtn').addEventListener('click', runDiscovery);
 // AI-first flow: the user never has to add a source by hand. If
 // Analyze is clicked with no sources at all, research the web first
 // instead of analyzing nothing.
-let busy = false, plannedQuestion = '';
-async function prepareResearch(question) {
-  const mode = document.getElementById('templateSelect').value;
-  if (!['auto', 'other'].includes(mode) || plannedQuestion === question) return;
-  const plan = await api('/api/research-plan', {question});
-  blueprint = plan.items;
-  plannedQuestion = question;
-  renderBlueprint();
-  document.getElementById('activeChecklist').textContent = `Research checks: ${plan.title}. You can review or edit these below.`;
-}
-async function perform(task, needsQuestion = true) {
-  if (busy) return;
-  const question = document.getElementById('question');
-  if (needsQuestion && !question.value.trim()) { document.getElementById('status').textContent = 'Enter a question to get started, or try the demo.'; question.focus(); return; }
-  if (needsQuestion && !blueprint.length) { document.getElementById('status').textContent = 'Add at least one checklist question first.'; document.getElementById('checkSettings').open = true; return; }
-  busy = true;
-  const controls = ['analyzeBtn','loadDemo','discoverBtn','addEvidenceBtn','addItem','loadTemplate','templateSelect','addSource'];
-  controls.forEach(id => document.getElementById(id).disabled = true);
-  document.getElementById('setup').setAttribute('aria-busy','true');
-  document.getElementById('analyzeBtn').textContent = 'Checking sources…';
-  document.getElementById('status').textContent = 'Searching and checking sources… This may take about a minute. Checklist selection is paused until the search finishes.';
-  document.getElementById('discoverStatus').textContent = '';
-  try { await task(); } catch (e) { document.getElementById('status').textContent = 'We couldn’t finish the check. Try again, or add a source excerpt and retry.'; }
-  finally {
-    busy = false;
-    controls.forEach(id => document.getElementById(id).disabled = false);
-    document.getElementById('setup').removeAttribute('aria-busy');
-    document.getElementById('analyzeBtn').textContent = 'Research →';
-  }
-}
-document.getElementById('analyzeBtn').addEventListener('click', () => perform(async () => {
-  const question = document.getElementById('question').value.trim();
-  // A different question starts a fresh search rather than reusing old evidence.
-  if (lastResult && lastResult.question !== question) { document.getElementById('sampleBanner').classList.add('hidden'); sources = []; lastResult = null; manualClosed = {}; lastAutoClosed = []; renderSources(); document.getElementById('analysisContent').classList.add('hidden'); document.getElementById('analysisEmpty').classList.remove('hidden'); document.getElementById('verifyContent').classList.add('hidden'); document.getElementById('verifyEmpty').classList.remove('hidden'); }
-  if (lastResult && lastResult.question === question && !document.getElementById('sampleBanner').classList.contains('hidden')) { await runAnalysis(); return; }
-  await runDiscovery();
-}));
-document.getElementById('question').addEventListener('keydown', e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); document.getElementById('analyzeBtn').click(); } });
-
-document.getElementById('loadDemo').addEventListener('click', () => perform(async () => {
-  lastResult = null; manualClosed = {}; lastAutoClosed = [];
+document.getElementById('analyzeBtn').addEventListener('click', () => {
+  const hasAny = sources.some(s => (s.text || '').trim() || (s.url || '').trim());
+  if (!hasAny) { runDiscovery(); return; }
+  runAnalysis();
+});
+document.getElementById('loadDemo').addEventListener('click', async () => {
   const demo = await api('/api/demo-session');
   document.getElementById('question').value = demo.question;
   document.getElementById('currentCycle').value = demo.currentCycle || '2026';
   blueprint = demo.blueprint.items;
   sources = demo.sources;
-  document.getElementById('templateSelect').value = 'passport';
-  document.getElementById('activeChecklist').textContent = `Checking ${blueprint.length} questions using the passport checklist.`;
   document.getElementById('sampleBanner').classList.remove('hidden');
   renderBlueprint(); renderSources();
   await runAnalysis();
-  document.getElementById('dashboard').scrollIntoView({block:'start'});
-}, false));
-document.getElementById('addEvidenceBtn').addEventListener('click', () => perform(async () => {
+});
+document.getElementById('addEvidenceBtn').addEventListener('click', async () => {
   const text = document.getElementById('newEvidence').value.trim();
-  if (!text) { document.getElementById('status').textContent = 'Paste an excerpt before adding evidence.'; document.getElementById('newEvidence').focus(); return; }
+  if (!text) return;
   sources.push({id: 's' + Date.now(), title: document.getElementById('newEvidenceTitle').value || 'New evidence',
     url: '', text, type: document.getElementById('newEvidenceType').value});
   renderSources(); await runAnalysis();
-  document.getElementById('newEvidence').value = '';
-}));
+});
 (async () => {
-  try {
   const templates = await api('/api/templates');
   const sel = document.getElementById('templateSelect');
-  sel.innerHTML = '<option value="auto">Automatic — use my question</option><option value="other">Other — research my question</option>' + Object.entries(templates).filter(([k]) => k !== 'general').map(([k, v]) => `<option value="${k}">${v.title}</option>`).join('');
+  sel.innerHTML = Object.entries(templates).map(([k, v]) => `<option value="${k}">${v.title}</option>`).join('');
   document.getElementById('loadTemplate').addEventListener('click', () => {
-    const t = templates[sel.value] || templates.general;
-    plannedQuestion = '';
-    manualClosed = {}; lastAutoClosed = [];
+    const t = templates[sel.value];
     blueprint = t.items.map(it => ({...it}));
     renderBlueprint();
-    document.getElementById('activeChecklist').textContent = `Checking ${blueprint.length} questions using: ${t.title}. Change this above if needed.`;
   });
-  sel.addEventListener('change', () => document.getElementById('loadTemplate').click());
-  sel.value = 'auto';
-  blueprint = templates.general.items.map(it => ({...it}));
+  blueprint = templates.passport.items.map(it => ({...it}));
   renderBlueprint(); renderSources();
-  document.getElementById('activeChecklist').textContent = 'Enter your question. Relevant research checks will be prepared automatically.';
-  document.getElementById('status').textContent = '';
-  document.getElementById('analyzeBtn').disabled = false; document.getElementById('loadDemo').disabled = false;
-  } catch (e) { document.getElementById('status').textContent = 'Couldn’t load the checklists. Refresh the page to try again.'; }
 })();
-
-document.querySelectorAll('.rail nav a').forEach(link => link.addEventListener('click', () => {
-  document.querySelectorAll('.rail nav a').forEach(a => a.classList.remove('active'));
-  link.classList.add('active');
-}));
-</script></body></html>
+</script>
+</body>
+</html>

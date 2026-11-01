@@ -127,91 +127,34 @@ def llm_compare(claim_a: str, claim_b: str, question: str) -> str:
         v = str(out.get("verdict", "unclear")).lower()
         return v if v in ("same", "different", "unclear") else "unclear"
     except Exception:
-        return rule_compare(claim_a, claim_b, question)
+        return rule_compare(claim_a, claim_b)
 
 
 def _norm_value(s: str) -> str:
     return re.sub(r"[^a-z0-9]", "", (s or "").lower())
 
 
-def _comparison_values(text: str, kind: str):
-    """Extract explicit ranges with their units; never compare bare dates."""
-    from decimal import Decimal
-    if kind == "fee":
-        pattern = (r"(?P<unit>₹|\bRs\.?|\bINR|\bUSD|\$)\s*"
-                   r"(?P<low>\d[\d,]*(?:\.\d+)?)"
-                   r"(?:\s*(?:[-–—]|to)\s*(?P<high_unit>₹|Rs\.?|INR|USD|\$)?\s*"
-                   r"(?P<high>\d[\d,]*(?:\.\d+)?))?")
-    else:
-        pattern = (r"(?P<low>\d+)(?:\s*(?:[-–—]|to)\s*(?P<high>\d+))?"
-                   r"\s*(?P<unit>(?:working\s+|business\s+)?(?:days?|weeks?|months?))\b")
-    values = []
-    for match in re.finditer(pattern, text, re.I):
-        low = Decimal(match['low'].replace(',', ''))
-        high = Decimal((match['high'] or match['low']).replace(',', ''))
-        unit = match['unit'].lower().replace('business', 'working')
-        if kind == "fee":
-            unit = "USD" if unit in ("$", "usd") else "INR"
-            high_unit = (match['high_unit'] or match['unit']).lower()
-            high_unit = "USD" if high_unit in ("$", "usd") else "INR"
-            if high_unit != unit:
-                return []
-        else:
-            unit = re.sub(r"\s+", " ", unit).rstrip('s')
-        if high >= low:
-            values.append((unit, low, high))
-    return values
-
-
-def compare_evidence(claim_a: str, claim_b: str, question: str):
-    """Return a verdict, reason code and inspectable explanation.
-
-    Only single explicit figures/ranges with matching units and explicit
-    category labels can be contrasted. Multiple prices, different cases,
-    and overlapping ranges require context rather than a conflict badge.
-    """
-    if re.search(r"\b(?:fee|fees|cost)\b", question, re.I):
-        kind = "fee"
-    elif re.search(r"\b(?:processing|long|duration)\b", question, re.I):
-        kind = "duration"
-    else:
-        return "unclear", "not_numeric", "These statements need human review; numbers alone cannot compare their requirements."
-    a, b = _comparison_values(claim_a, kind), _comparison_values(claim_b, kind)
+def rule_compare(claim_a: str, claim_b: str) -> str:
+    """Conservative fallback: equal after normalisation -> same;
+    both claims carry numbers and the number sets differ -> different
+    (e.g. two different fees); else unclear. Never upgrades 'unclear'
+    to 'different' on a wording guess."""
+    a, b = _norm_value(claim_a), _norm_value(claim_b)
     if not a or not b:
-        return "unclear", "no_value", "At least one quote has no explicit comparable amount or duration."
-    if len(a) != 1 or len(b) != 1:
-        return "unclear", "multiple_values", "A quote lists several amounts or timelines. Match the application type before comparing them."
-    unit_a, low_a, high_a = a[0]
-    unit_b, low_b, high_b = b[0]
-    if unit_a != unit_b:
-        return "unclear", "different_units", "The quotes use different currencies or time units, such as calendar days and working days."
-    labels = {
-        "age": r"\b(adult|minor|child|children)\b",
-        "service": r"\b(normal|tatkaal|tatkal)\b",
-        "booklet": r"\b(36|60)\s*pages?\b",
-        "location": r"\b(india|usa|united states|uk|united kingdom|canada|australia)\b",
-    }
-    for pattern in labels.values():
-        scope_a = {x.lower().replace('tatkaal','tatkal').replace('children','child') for x in re.findall(pattern, claim_a, re.I)}
-        scope_b = {x.lower().replace('tatkaal','tatkal').replace('children','child') for x in re.findall(pattern, claim_b, re.I)}
-        if scope_a != scope_b:
-            return "unclear", "different_scope", "The quotes name different application categories or only one specifies a category. Confirm they apply to the same case."
-    if low_a == low_b and high_a == high_b:
-        return "same", "same_value", "The explicit figures match. This does not confirm that either source is current or correct."
-    if max(low_a, low_b) <= min(high_a, high_b):
-        return "unclear", "overlapping_range", "The quoted ranges overlap. Different wording or figures alone do not establish a contradiction."
-    return "different", "different_values", "The quotes give non-overlapping figures in the same units. Confirm the applicant category, dates and official guidance."
-
-
-def rule_compare(claim_a: str, claim_b: str, question: str = "") -> str:
-    return compare_evidence(claim_a, claim_b, question)[0]
+        return "unclear"
+    if a == b:
+        return "same"
+    nums_a = set(re.findall(r"\d[\d,]*", claim_a or ""))
+    nums_b = set(re.findall(r"\d[\d,]*", claim_b or ""))
+    if nums_a and nums_b and nums_a != nums_b:
+        return "different"
+    return "unclear"
 
 
 # --- Rule-based fallback extractor (no key needed) -------------------------
 
 _STOP = set("what is the are and or of to a an for how do does you your "
-            "in on with by be is it its this that who which where when why "
-            "should would could please verify before after about".split())
+            "in on with by be is it its this that".split())
 
 
 def _keywords(label: str) -> List[str]:
@@ -220,92 +163,7 @@ def _keywords(label: str) -> List[str]:
 
 
 def _sentences(text: str) -> List[str]:
-    return [s.strip() for s in re.split(r"\n+|(?<=[!?])\s+|(?<!Rs\.)(?<!Dr\.)(?<!Mr\.)(?<=\.)\s+", text) if s.strip()]
-
-
-def _intent_match(text: str, label: str) -> bool:
-    """Match a small set of explicit answer concepts without entity-only hits."""
-    intents = [
-        (r"eligible|eligibility", r"\beligib\w*\b|\bopen to\b|\bstudents?\b.{0,80}\bclass\b|\bapplicants?\b.{0,60}\bmust\b"),
-        (r"affiliated|affiliation", r"\baffiliat\w*\b"),
-        (r"renewal", r"\brenew(?:al|ed|ing)\b"),
-        (r"deadline", r"\bdeadline\b|\blast date\b|\bapply by\b|\bapplications? close"),
-        (r"scholarship amount", r"\bscholarship\b.{0,70}(?:₹|Rs\.?|INR|\$)\s*\d"),
-        (r"\bfees?\b", r"\bfees?\b"),
-    ]
-    return any(re.search(question, label, re.I) and re.search(answer, text, re.I)
-               for question, answer in intents)
-
-
-def matches_question_scope(text: str, label: str) -> bool:
-    """Require explicit category wording when a question names that category.
-
-    shortcut: a small vocabulary covers common applicant/service scopes;
-    unknown qualifications still need human review, not a relevance guarantee.
-    """
-    scopes = [
-        r"\b(?:minor(?:s)?|child(?:ren)?|under[ -]?18)\b",
-        r"\b(?:adult(?:s)?|over[ -]?18)\b",
-        r"\b(?:tatkaal|tatkal)\b",
-        r"\b(?:normal|standard)\b",
-        r"\b(?:india|indian)\b",
-        r"\b(?:usa|us|u\.s\.|united states|american)\b",
-    ]
-    return all(not re.search(scope, label, re.I) or re.search(scope, text, re.I)
-               for scope in scopes)
-
-
-def is_answer_text(text: str, label: str = "") -> bool:
-    """Reject questions, headings and navigation lists, even if verbatim.
-
-    This is a conservative quality floor, not proof of relevance or truth.
-    A short statement or a labelled amount/duration can pass; a bare topic
-    cannot. Keep the original text untouched for quote verification.
-    """
-    text = (text or "").strip()
-    if not matches_question_scope(text, label):
-        return False
-    if len(text) < 12 or len(text) > 450 or text.endswith("?"):
-        return False
-    if re.match(r"^(?:#+\s*|(?:q[:.]\s*)?(?:what|who|how|when|where|why)\b)",
-                text, re.I):
-        return False
-    if re.search(r"\b(?:skip to|sitemap|privacy policy|all rights reserved|"
-                 r"cookie settings|table of contents)\b", text, re.I):
-        return False
-    # Mentioning a fee, portal or contact topic is not an answer to
-    # a question asking for the amount, address or contact channel.
-    if re.search(r"\baffiliat\w*\b", label, re.I) and not re.search(r"\baffiliat\w*\b", text, re.I):
-        return False
-    if re.search(r"\bdeadline\b", label, re.I):
-        month = r"(?:jan(?:uary)?|feb(?:ruary)?|mar(?:ch)?|apr(?:il)?|may|jun(?:e)?|jul(?:y)?|aug(?:ust)?|sep(?:tember)?|oct(?:ober)?|nov(?:ember)?|dec(?:ember)?)"
-        date_pattern = rf"\b\d{{1,2}}(?:st|nd|rd|th)?[\s/-]+{month}\b|\b{month}[\s/-]+\d{{1,2}}\b|\b\d{{1,2}}[/-]\d{{1,2}}[/-]\d{{2,4}}\b|\b20\d{{2}}-\d{{1,2}}-\d{{1,2}}\b"
-        if not re.search(date_pattern, text, re.I):
-            return False
-    if re.search(r"\bopening hours\b", label, re.I):
-        if not re.search(r"\d{1,2}(?::\d{2})?\s*(?:a\.?m\.?|p\.?m\.?)|\d{1,2}:\d{2}", text, re.I):
-            return False
-    if re.search(r"\b(?:fee|fees|cost|scholarship amount)\b", label, re.I):
-        if not re.search(r"(?:₹|\bRs\.?|\bINR|\$)\s*\d|\d[\d,]*\s*rupees", text, re.I):
-            return False
-    if re.search(r"\b(?:processing|how long)\b", label, re.I):
-        if not re.search(r"\d+(?:\s*[-–—]\s*\d+)?\s*(?:working\s+|business\s+)?(?:days?|weeks?|months?)\b", text, re.I):
-            return False
-    if re.search(r"\b(?:portal|application link)\b", label, re.I):
-        if not re.search(r"https?://|\b[a-z0-9-]+\.(?:gov|in|com|org|edu)\b", text, re.I):
-            return False
-    if re.search(r"\b(?:contact|help channel)\b", label, re.I):
-        if not re.search(r"https?://|[\w.+-]+@[\w.-]+\.[a-z]+|\b\d[\d ()-]{6,}\d\b", text, re.I):
-            return False
-    statement = re.search(
-        r"\b(?:is|are|must|shall|requires?|involves?|takes?|costs?|"
-        r"submit|provide|carry|visit|apply|book|schedule|pay|contact|call|email|"
-        r"has|have|can|will|may|should|awarded|receives?|renewed)\b", text, re.I)
-    labelled_value = re.search(
-        r"(?:\b(?:fee|fees|cost|scholarship|processing time|duration)\b[^!?]{0,40}"
-        r"(?:₹|\bRs\.?|\bINR|\d+\s*(?:working\s+)?(?:days?|weeks?|months?)))",
-        text, re.I)
-    return bool(statement or labelled_value)
+    return [s.strip() for s in re.split(r"(?<=[.!?])\s+", text) if s.strip()]
 
 
 def rule_extract(source_text: str, passages, blueprint_items) -> dict:
@@ -324,11 +182,9 @@ def rule_extract(source_text: str, passages, blueprint_items) -> dict:
         found = None
         for p in passages:
             for sent in _sentences(p.text):
-                if not is_answer_text(sent, label):
-                    continue
                 low = sent.lower()
-                hits = sum(1 for k in set(kws) if re.search(r"\b" + re.escape(k) + r"\b", low))
-                if (anchor and re.search(r"\b" + re.escape(anchor) + r"s?\b", low)) or hits >= 2 or _intent_match(sent, label):
+                hits = sum(1 for k in kws if k in low)
+                if (anchor and anchor in low) or hits >= 2:
                     found = (p.id, sent)
                     break
             if found:
@@ -337,7 +193,7 @@ def rule_extract(source_text: str, passages, blueprint_items) -> dict:
             items_out.append({"itemId": it.id, "status": "stated",
                               "passageId": found[0],
                               "exactQuote": found[1],
-                              "claimSummary": found[1]})
+                              "claimSummary": found[1][:200]})
         else:
             items_out.append({"itemId": it.id, "status": "silent",
                               "passageId": None, "exactQuote": None,

@@ -43,7 +43,6 @@ def _fake_http(monkeypatch, get_map):
 
     monkeypatch.setattr(disc, "httpx",
                         SimpleNamespace(post=fake_post, get=fake_get))
-    monkeypatch.setattr(disc, "_request_public", fake_get)
 
 
 def test_suggest_type():

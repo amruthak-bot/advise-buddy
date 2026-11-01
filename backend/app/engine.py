@@ -6,10 +6,9 @@ The LLM never produces a displayed quote without passing the
 substring check, never invents dates, and silence is never falsity.
 """
 from typing import Dict, List
-from itertools import combinations
 
 from . import llm, rules
-from .models import (AnalysisRequest, AnalysisResult, ChecklistEntry, Comparison,
+from .models import (AnalysisRequest, AnalysisResult, ChecklistEntry,
                      Finding, GapQuestion, Proposal)
 from .verify import locate_passage, split_passages, verify_quote
 
@@ -26,7 +25,6 @@ def _extract_for_source(source, blueprint_items):
 def analyze(req: AnalysisRequest) -> AnalysisResult:
     findings: List[Finding] = []
     proposals: List[Proposal] = []
-    comparisons: List[Comparison] = []
     passages_by_source: Dict[str, list] = {}
 
     # 1-2. Ingest + extract + verify, per source.
@@ -50,9 +48,6 @@ def analyze(req: AnalysisRequest) -> AnalysisResult:
         by_id = {p.id: p for p in passages}
         for entry in raw.get("items", []):
             item_id = entry.get("itemId")
-            item = next((it for it in req.blueprint.items if it.id == item_id), None)
-            if item is None:
-                continue
             if entry.get("status") != "stated":
                 findings.append(Finding(itemId=item_id, sourceId=src.id,
                                         status="silent", label="uncertain"))
@@ -60,18 +55,14 @@ def analyze(req: AnalysisRequest) -> AnalysisResult:
             quote = entry.get("exactQuote")
             passage = by_id.get(entry.get("passageId") or "")
             if quote and passage and verify_quote(quote, passage.text):
-                if not llm.is_answer_text(quote, item.label):
-                    findings.append(Finding(itemId=item_id, sourceId=src.id,
-                                            status="silent", label="uncertain"))
-                    continue
                 findings.append(Finding(
                     itemId=item_id, sourceId=src.id, status="stated",
-                    claimSummary=quote,
+                    claimSummary=entry.get("claimSummary"),
                     passageId=passage.id, quote=quote,
                     quoteVerified=True, label="sourced"))
             elif quote:
                 located = locate_passage(quote, passages)
-                if located and llm.matches_question_scope(located[0].text, item.label):
+                if located:
                     p, _ = located
                     # Show the PASSAGE's original text, never the quote.
                     findings.append(Finding(
@@ -100,22 +91,24 @@ def analyze(req: AnalysisRequest) -> AnalysisResult:
                     reason=req_item.get("reason", ""), quote=q,
                     sourceId=src.id, state="pending"))
 
-    # Compare original verified quotes, never a model's paraphrased numbers.
-    # Every pair is considered; the first source must not hide a later pair.
+    # 3. Compare per item across stating sources -> possible conflicts.
     for item in req.blueprint.items:
         stated = [f for f in findings
                   if f.itemId == item.id and f.status == "stated"
-                  and f.quoteVerified and f.quote and f.label == "sourced"]
-        for base, other in combinations(stated, 2):
-            verdict, code, reason = llm.compare_evidence(base.quote, other.quote, item.label)
-            if code in ("not_numeric", "no_value"):
-                continue
-            comparisons.append(Comparison(itemId=item.id, sourceA=base.sourceId,
-                                          sourceB=other.sourceId, verdict=verdict,
-                                          reasonCode=code, reason=reason))
-            if verdict == "different":
-                base.status = "conflicting"
-                other.status = "conflicting"
+                  and f.claimSummary]
+        if len(stated) >= 2:
+            base = stated[0]
+            for other in stated[1:]:
+                try:
+                    verdict = llm.llm_compare(base.claimSummary or "",
+                                               other.claimSummary or "",
+                                               item.label)
+                except Exception:
+                    verdict = llm.rule_compare(base.claimSummary or "",
+                                                other.claimSummary or "")
+                if verdict == "different":
+                    base.status = "conflicting"
+                    other.status = "conflicting"
 
     # 4. Freshness: stating sources that are outdated -> possibly_outdated.
     freshness = {s.id: rules.source_freshness(s.detectedDates,
@@ -169,10 +162,6 @@ def analyze(req: AnalysisRequest) -> AnalysisResult:
                            "this may reflect a change over time rather "
                            "than an error — compare the source dates.")
             kind, action = "conflicting", action
-        elif any(c.itemId == item.id and c.verdict == "unclear" for c in comparisons):
-            kind, action = "context", (
-                f"The figures for '{item.label}' need context: check the "
-                "application category, currency and time units before comparing sources.")
         elif item.id in silence_flags:
             kind, action = "official_silence", (
                 f"'{item.label}' was not found in the official excerpts "
@@ -225,7 +214,7 @@ def analyze(req: AnalysisRequest) -> AnalysisResult:
             summary.append(f"{item_label}: {f.claimSummary}")
 
     return AnalysisResult(
-        question=req.question, blueprint=req.blueprint, comparisons=comparisons,
+        question=req.question, blueprint=req.blueprint,
         sources=req.sources, findings=findings, proposals=proposals,
         checklist=checklist, gapQuestions=gap_questions,
         evidenceDebtCount=debt_count, evidenceDebtItems=debt_items,

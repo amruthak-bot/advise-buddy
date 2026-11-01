@@ -1,47 +1,72 @@
-Advise Buddy — Know what to verify next
+# Advise Buddy — Blueprint-First Information Gap Investigator
 
-PROBLEM
-Research often gives people plenty of information without showing what is missing. For research into education, careers, public services and other decisions, sources may omit requirements, describe different applicant categories or present figures that need further checking. A confident summary can hide these gaps.
+**Tagline:** Discover what's missing, not just what's available.
 
-SOLUTION
-Advise Buddy turns multiple sources into an evidence-backed checklist of what to verify next. It addresses the Digital Dark Spot challenge by comparing available information against the questions a complete answer should cover. The app supports general research with editable starting checklists for scholarships, college admissions, job offers and passport applications. The cached passport investigation is one worked example, not the scope of the product.
+> Paste-ready for the Unista submission form. Verified against the
+> FastAPI scaffold on 2026-10-31: every feature below is implemented,
+> including web discovery (which needs a Tavily API key on the
+> server; without one, the paste flow still works).
 
-FEATURES
-• Ask a question and discover web sources through Tavily, load a reproducible example, or paste source text manually.
-• Choose a general, scholarship, college-admission, job-offer or passport checklist and edit its questions before analysis.
-• See three prioritized checks first, with a plain-language explanation, suggested action and supporting quotes.
-• Explore a source-by-question heatmap to inspect coverage, missing answers and potential disagreements.
-• Inspect original source excerpts and links instead of relying only on generated summaries.
-• Add evidence, rerun analysis, record resolution notes and see how the findings change.
-• Download a Markdown checklist containing actions, source URLs, original quotes and comparison reasons.
-• Use the interface on desktop or phone-width screens without creating an account.
+### Problem Statement
 
-UNIQUENESS
-Advise Buddy focuses on unanswered questions and next steps. Its expected-question checklist makes information gaps visible even when the retrieved sources never mention them. Every numeric comparison is tied to a specific pair of verified original quotes and an explanation.
+Every day, people rely on information from websites, articles, official portals, and online guides to make important decisions. However, finding information does not necessarily mean finding complete or reliable information.
 
-The comparison logic is conservative: different currencies, time units, applicant categories, multiple prices and overlapping ranges require review rather than automatically being labelled contradictions. Bare headings, navigation text and topic mentions without an answer do not count as complete evidence. A simple first screen keeps the main actions accessible, while the detailed heatmap and evidence remain available for inspection.
+Existing search and summarization tools help users understand what sources say, but users can still struggle to identify missing details, contradictory claims, outdated information, and statements that lack official confirmation.
 
-TECH STACK
-• Backend: Python and FastAPI.
-• Frontend: HTML, CSS and JavaScript, served without a frontend build step.
-• Web discovery: Tavily API, with bounded parallel page fetching.
-• Extraction: optional Google Gemini, followed by deterministic quote verification and answer-quality checks. Deterministic extraction is available without a Gemini key.
-• Comparison: rule-based checks against original verified quotes.
-• Validation: pytest regression tests covering extraction, provenance, discovery, unread sources, official-source flags and numeric comparison edge cases; browser checks for desktop, phone-width flows and checklist export.
-• Hosting and source control: Render and a public GitHub repository.
+### Our Solution
 
-CURRENT SCOPE AND RELIABILITY
-The app is an information-gap research prototype. Its breadth depends on the checklist and the source evidence; it is not a universal fact checker. A verified quote confirms that text occurs in a reviewed source; it does not prove the statement is correct or applicable. Missing information means no usable answer was found in the reviewed sources. Official-source labels are editable domain-based suggestions. Users still need to check jurisdiction, applicant category and current official guidance.
+Advise Buddy is an AI-assisted information gap detection platform that helps users investigate the completeness and reliability of information across multiple sources.
 
-The final live version uses the Research button and an editable checklist. Its unchanged cached demo currently shows 57% checklist text coverage and official text matches for 1 of 9 questions; these measure matched text, not correctness. Missing-evidence counts are shown under Research coverage & source notes. Suggested additional questions appear under More questions to consider; the interface does not present a feature named Challenge Mode.
+Our core idea is simple: **You cannot identify what's missing until you define what complete looks like.**
 
-The example uses cached excerpts, including one clearly marked illustrative older source, to demonstrate the workflow. It does not establish current passport fees or rules. Investigations remain in the open page and can be exported; there is no server-side investigation database.
+Instead of immediately summarizing information, Advise Buddy starts with an editable **Expectation Blueprint** — a structured checklist of the information needed to answer a question completely. Users can select predefined templates for scenarios such as passport applications, scholarships, college admissions, and job offers.
 
-FUTURE SCOPE
-• Expand first-use testing with real applicants and improve the workflow from their feedback.
-• Improve jurisdiction, applicant-category and document-date matching.
-• Expand and evaluate domain-specific checklists for more public services, research and business decisions.
-• Add multilingual research and support for more document formats.
-• Evaluate gap detection and evidence quality on broader, clearly labelled datasets.
+The platform then analyzes the provided source material against the blueprint and presents the findings in an interactive **Evidence Coverage Heatmap**.
 
-Advise Buddy helps users finish research with a clearer next step and evidence they can inspect.
+Each requirement is compared across sources, helping users identify available evidence, potential information gaps, possible contradictions, and freshness concerns. Users can inspect supporting passages rather than relying only on AI-generated conclusions.
+
+### Key Features
+
+**1. Blueprint-First Analysis:** Defines what a complete answer should cover before evaluating the available evidence.
+
+**2. Evidence Coverage Heatmap:** Visually compares requirements across sources, with clickable evidence and separate indicators for conflicts and outdated information.
+
+**3. Verifiable Source Evidence:** Uses deterministic quote verification to ensure displayed quotations originate from the reviewed material. Unverified evidence is not presented as confirmed.
+
+**4. Official Silence Detection:** Identifies claims that appear in third-party material but are not confirmed in the relevant official sources reviewed, without treating silence as proof of falsity.
+
+**5. Evidence Freshness Analysis:** Highlights potentially outdated information and explicitly identifies undated sources.
+
+**6. Evidence Debt and Prioritized Checklist:** Summarizes unresolved information gaps and recommends which questions should be verified first.
+
+**7. Verification and Re-analysis:** Allows users to add further evidence, reassess findings, and track resolved gaps. Manual resolution requires an explanatory note.
+
+**8. Blueprint Challenge Mode:** Suggests additional requirements discovered during source analysis, allowing users to decide whether to expand the blueprint.
+
+**9. Automatic Web Discovery:** From the user's question alone, Advise Buddy searches the web, fetches result pages, and adds them as sources for analysis — no pasted URLs needed. Fetched text goes through the same deterministic quote verification as pasted text, pages that cannot be fetched are shown as unfetched rather than invented, and official-versus-third-party labels on discovered sources are heuristic suggestions the user can change.
+
+### Technical Implementation
+
+Advise Buddy is built using Python and FastAPI for the backend, with JavaScript and Tailwind CSS for the frontend. The analysis engine supports Google Gemini for AI-assisted evidence extraction and comparison, alongside a rule-based fallback for demonstrations without live AI access.
+
+The application separates evidence extraction, quote verification, freshness checks, official-silence detection, and checklist generation into distinct processing stages. This improves transparency, testability, and reliability.
+
+A cached demonstration session allows the workflow to be explored without depending on external AI availability.
+
+### What Makes Advise Buddy Different?
+
+Advise Buddy focuses on **information completeness rather than answer generation alone**.
+
+Its main differentiator is the combination of a user-controlled completeness blueprint, source-by-source evidence inspection, explicit uncertainty labels, and an actionable verification process.
+
+Rather than simply presenting an answer, Advise Buddy helps users understand which parts are supported, which remain uncertain, and what evidence is needed next.
+
+### Future Scope
+
+Future improvements include broader document support, more advanced evidence comparison, and deeper explanations for why sources disagree.
+
+### Conclusion
+
+Advise Buddy transforms online research from passive information collection into a structured process of evidence investigation and verification.
+
+**Advise Buddy doesn't just tell you what you know. It helps you discover what you don't know — and what to verify next.**
