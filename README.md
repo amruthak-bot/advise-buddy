@@ -2,7 +2,7 @@
 
 **Search gives you information. Advise Buddy shows the questions that information still doesn't answer.**
 
-[Open the live app](https://gapscope-qdmr.onrender.com/) · [Demo script](DEMO_SCRIPT.md) · [Submission description](SUBMISSION_DESCRIPTION.md) · [Hackathon readiness](HACKATHON_READINESS.md)
+[Open the live app](https://advise-buddy-demo.onrender.com/) · [Demo script](DEMO_SCRIPT.md) · [Submission description](SUBMISSION_DESCRIPTION.md) · [Hackathon readiness](HACKATHON_READINESS.md)
 
 Built for **Digital Dark Spot**, the Shinchan Online Hackathon 2026 information-gap challenge. The focused demonstration is an Indian passport investigation. An editable checklist defines what the sources should cover.
 
