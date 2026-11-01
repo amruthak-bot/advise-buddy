@@ -8,9 +8,9 @@ Built for **Digital Dark Spot**, the Shinchan Online Hackathon 2026 information-
 
 ## Try it in a minute
 
-1. Enter a topic, name or question and select **Research**. The app chooses relevant checks and collects sources automatically; **Customize research** is optional. Or select **Try the passport example** for a cached walkthrough.
+1. Enter a topic, name or question and select **Research**. The app chooses relevant checks and collects sources automatically; **Adjust the search** is optional. Or select **Try the passport example** for a cached walkthrough.
 2. Read **What we found** and the first three checks, then inspect the clickable coverage heatmap. Each concern includes a next step and supporting sources.
-3. Add evidence, record a resolution note, or select **Save my checklist** to download the results and references.
+3. Add evidence, record a resolution note, or select **Save checklist** to download the results and references.
 
 The free Render service can take around a minute to wake up. Pages that cannot be fetched are shown as unread and contribute no evidence.
 
