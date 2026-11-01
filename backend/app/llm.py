@@ -231,9 +231,28 @@ def _intent_match(text: str, label: str) -> bool:
         (r"renewal", r"\brenew(?:al|ed|ing)\b"),
         (r"deadline", r"\bdeadline\b|\blast date\b|\bapply by\b|\bapplications? close"),
         (r"scholarship amount", r"\bscholarship\b.{0,70}(?:₹|Rs\.?|INR|\$)\s*\d"),
+        (r"\bfees?\b", r"\bfees?\b"),
     ]
     return any(re.search(question, label, re.I) and re.search(answer, text, re.I)
                for question, answer in intents)
+
+
+def matches_question_scope(text: str, label: str) -> bool:
+    """Require explicit category wording when a question names that category.
+
+    shortcut: a small vocabulary covers common applicant/service scopes;
+    unknown qualifications still need human review, not a relevance guarantee.
+    """
+    scopes = [
+        r"\b(?:minor(?:s)?|child(?:ren)?|under[ -]?18)\b",
+        r"\b(?:adult(?:s)?|over[ -]?18)\b",
+        r"\b(?:tatkaal|tatkal)\b",
+        r"\b(?:normal|standard)\b",
+        r"\b(?:india|indian)\b",
+        r"\b(?:usa|us|u\.s\.|united states|american)\b",
+    ]
+    return all(not re.search(scope, label, re.I) or re.search(scope, text, re.I)
+               for scope in scopes)
 
 
 def is_answer_text(text: str, label: str = "") -> bool:
@@ -244,6 +263,8 @@ def is_answer_text(text: str, label: str = "") -> bool:
     cannot. Keep the original text untouched for quote verification.
     """
     text = (text or "").strip()
+    if not matches_question_scope(text, label):
+        return False
     if len(text) < 12 or len(text) > 450 or text.endswith("?"):
         return False
     if re.match(r"^(?:#+\s*|(?:q[:.]\s*)?(?:what|who|how|when|where|why)\b)",

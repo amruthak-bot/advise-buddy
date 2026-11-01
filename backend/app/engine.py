@@ -71,7 +71,7 @@ def analyze(req: AnalysisRequest) -> AnalysisResult:
                     quoteVerified=True, label="sourced"))
             elif quote:
                 located = locate_passage(quote, passages)
-                if located:
+                if located and llm.matches_question_scope(located[0].text, item.label):
                     p, _ = located
                     # Show the PASSAGE's original text, never the quote.
                     findings.append(Finding(

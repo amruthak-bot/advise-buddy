@@ -86,3 +86,30 @@ def test_readable_third_party_batch_still_seeks_an_official_source(monkeypatch):
     assert len(queries) == 2
     assert len(result["sources"]) == 3
     assert result["sources"][0].type == "official"
+
+
+def test_edited_minor_fee_question_rejects_adult_fee_and_finds_child_answer():
+    item = BlueprintItem(id="fee", label="What is the fee for minors?", anchor="fee")
+    adult = "The standard adult fee is Rs 1500."
+    child = "The fee for children under 18 is Rs 1000."
+    assert not is_answer_text(adult, item.label)
+    out = rule_extract(adult + " " + child, split_passages(adult + " " + child, "s"), [item])
+    assert out["items"][0]["exactQuote"] == child
+    assert rule_extract(adult, split_passages(adult, "s"), [item])["items"][0]["status"] == "silent"
+
+
+def test_model_quote_also_respects_edited_question_category(monkeypatch):
+    from app import llm
+    from app.engine import analyze
+    from app.models import AnalysisRequest, Blueprint, Source
+    adult = "The standard adult fee is Rs 1500."
+    child = "The fee for minors is Rs 1000."
+    def extract(text, passages, items):
+        return {"items": [{"itemId": "fee", "status": "stated", "passageId": passages[0].id,
+                           "exactQuote": text, "claimSummary": text}], "additionalRequirements": []}
+    monkeypatch.setattr(llm, "llm_extract", extract)
+    result = analyze(AnalysisRequest(question="Passport fees", blueprint=Blueprint(id="p", title="Fees", items=[
+        BlueprintItem(id="fee", label="What is the minor fee?", anchor="fee")]), sources=[
+            Source(id="adult", title="Adult", text=adult), Source(id="child", title="Child", text=child)]))
+    assert next(f for f in result.findings if f.sourceId == "adult").status == "silent"
+    assert next(f for f in result.findings if f.sourceId == "child").quote == child

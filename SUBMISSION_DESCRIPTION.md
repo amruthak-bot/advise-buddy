@@ -33,10 +33,12 @@ TECH STACK
 CURRENT SCOPE AND RELIABILITY
 The app is an information-gap research prototype. Its breadth depends on the checklist and the source evidence; it is not a universal fact checker. A verified quote confirms that text occurs in a reviewed source; it does not prove the statement is correct or applicable. Missing information means no usable answer was found in the reviewed sources. Official-source labels are editable domain-based suggestions. Users still need to check jurisdiction, applicant category and current official guidance.
 
+The final live version uses the Research button and an editable checklist. Its unchanged cached demo currently shows 57% checklist text coverage and official text matches for 1 of 9 questions; these measure matched text, not correctness. Missing-evidence counts are shown under Research coverage & source notes. Suggested additional questions appear under More questions to consider; the interface does not present a feature named Challenge Mode.
+
 The example uses cached excerpts, including one clearly marked illustrative older source, to demonstrate the workflow. It does not establish current passport fees or rules. Investigations remain in the open page and can be exported; there is no server-side investigation database.
 
 FUTURE SCOPE
-• Conduct usability studies with real applicants and improve the workflow from their feedback.
+• Expand first-use testing with real applicants and improve the workflow from their feedback.
 • Improve jurisdiction, applicant-category and document-date matching.
 • Expand and evaluate domain-specific checklists for more public services, research and business decisions.
 • Add multilingual research and support for more document formats.
