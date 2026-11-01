@@ -249,7 +249,7 @@ def matches_question_scope(text: str, label: str) -> bool:
         r"\b(?:tatkaal|tatkal)\b",
         r"\b(?:normal|standard)\b",
         r"\b(?:india|indian)\b",
-        r"\b(?:usa|us|u\.s\.|united states|american)\b",
+        r"\b(?:usa|united states|american)\b",
     ]
     return all(not re.search(scope, label, re.I) or re.search(scope, text, re.I)
                for scope in scopes)
