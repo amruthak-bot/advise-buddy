@@ -4,11 +4,11 @@
 
 [Open the live app](https://advise-buddy-demo.onrender.com/) · [Demo script](DEMO_SCRIPT.md) · [Submission description](SUBMISSION_DESCRIPTION.md) · [Hackathon readiness](HACKATHON_READINESS.md)
 
-Built for **Digital Dark Spot**, the Shinchan Online Hackathon 2026 information-gap challenge. The focused demonstration is an Indian passport investigation. An editable checklist defines what the sources should cover.
+Built for **Digital Dark Spot**, the Shinchan Online Hackathon 2026 information-gap challenge. The tool supports general research and starting checklists for scholarships, college admissions, job offers and passport applications. The cached passport investigation is one worked example. An editable checklist defines what the sources should cover.
 
 ## Try it in a minute
 
-1. Select **See an example**, or edit the question and select **Check passport information** to research the web.
+1. Enter your research question, choose a relevant checklist and select **Check information** to research the web. Or select **Try the passport example** for a cached walkthrough.
 2. Read the first three checks. Each explains the concern, the next step and the sources behind it. Open **What we found** for original supporting quotes.
 3. Add evidence, record a resolution note, or select **Save my checklist** to download the results and references.
 

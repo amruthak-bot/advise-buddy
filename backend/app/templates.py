@@ -14,6 +14,18 @@ def _items(pairs):
 
 
 TEMPLATES = {
+    "general": Blueprint(
+        id="general",
+        title="General research — edit for your topic",
+        items=_items([
+            ("What requirements or conditions apply?", "critical", None),
+            ("What are the costs, fees or charges?", "important", None),
+            ("What deadlines or dates apply?", "critical", None),
+            ("What steps or process are required?", "important", None),
+            ("What restrictions or exceptions apply?", "important", None),
+            ("What is the official source or contact?", "important", None),
+        ]),
+    ),
     "passport": Blueprint(
         id="passport",
         title="Passport / Visa application",
