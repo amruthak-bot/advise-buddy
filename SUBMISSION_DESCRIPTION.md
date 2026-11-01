@@ -1,42 +1,45 @@
-# Advise Buddy — know what to verify next
+Advise Buddy — Know what to verify next
 
-## Problem
+PROBLEM
+Research often gives people plenty of information without showing what is missing. For research into education, careers, public services and other decisions, sources may omit requirements, describe different applicant categories or present figures that need further checking. A confident summary can hide these gaps.
 
-When researching a passport application, scholarship or other important decision, people find plenty of information but struggle to see what remains unanswered. Sources can use different categories, list different figures, omit important details or contain old information. A fluent summary can conceal those gaps.
+SOLUTION
+Advise Buddy turns multiple sources into an evidence-backed checklist of what to verify next. It addresses the Digital Dark Spot challenge by comparing available information against the questions a complete answer should cover. The app supports general research with editable starting checklists for scholarships, college admissions, job offers and passport applications. The cached passport investigation is one worked example, not the scope of the product.
 
-## Solution and core workflow
+FEATURES
+• Ask a question and discover web sources through Tavily, load a reproducible example, or paste source text manually.
+• Choose a general, scholarship, college-admission, job-offer or passport checklist and edit its questions before analysis.
+• See three prioritized checks first, with a plain-language explanation, suggested action and supporting quotes.
+• Explore a source-by-question heatmap to inspect coverage, missing answers and potential disagreements.
+• Inspect original source excerpts and links instead of relying only on generated summaries.
+• Add evidence, rerun analysis, record resolution notes and see how the findings change.
+• Download a Markdown checklist containing actions, source URLs, original quotes and comparison reasons.
+• Use the interface on desktop or phone-width screens without creating an account.
 
-Advise Buddy turns several sources into an evidence-backed verification checklist. The focused prototype demonstrates Indian passport research. Users enter a question and search the web, try a reproducible example, or paste source text. An editable checklist defines what a complete answer should address.
+UNIQUENESS
+Advise Buddy focuses on unanswered questions and next steps. Its expected-question checklist makes information gaps visible even when the retrieved sources never mention them. Every numeric comparison is tied to a specific pair of verified original quotes and an explanation.
 
-The main result shows three prioritized checks in plain language. Each explains the concern, the next action and the supporting evidence. Additional checks and a detailed source-by-question heatmap remain available without overwhelming the first screen.
+The comparison logic is conservative: different currencies, time units, applicant categories, multiple prices and overlapping ranges require review rather than automatically being labelled contradictions. Bare headings, navigation text and topic mentions without an answer do not count as complete evidence. A simple first screen keeps the main actions accessible, while the detailed heatmap and evidence remain available for inspection.
 
-The workflow is question → source collection → extracted information → potential gaps/comparisons → next-step checklist. Users can inspect original quotes, add evidence, see what changed, record a resolution note and download a checklist with references.
+TECH STACK
+• Backend: Python and FastAPI.
+• Frontend: HTML, CSS and JavaScript, served without a frontend build step.
+• Web discovery: Tavily API, with bounded parallel page fetching.
+• Extraction: optional Google Gemini, followed by deterministic quote verification and answer-quality checks. Deterministic extraction is available without a Gemini key.
+• Comparison: rule-based checks against original verified quotes.
+• Validation: pytest regression tests covering extraction, provenance, discovery, unread sources, official-source flags and numeric comparison edge cases; browser checks for desktop, phone-width flows and checklist export.
+• Hosting and source control: Render and a public GitHub repository.
 
-## Distinctive features
+CURRENT SCOPE AND RELIABILITY
+The app is an information-gap research prototype. Its breadth depends on the checklist and the source evidence; it is not a universal fact checker. A verified quote confirms that text occurs in a reviewed source; it does not prove the statement is correct or applicable. Missing information means no usable answer was found in the reviewed sources. Official-source labels are editable domain-based suggestions. Users still need to check jurisdiction, applicant category and current official guidance.
 
-- **Expected questions first:** detect unanswered requirements instead of summarizing only the text search returned.
-- **Traceable comparisons:** every numeric signal records a specific pair of original verified quotes and its reason. All pairs are considered.
-- **Context before contradiction:** different currencies, time units, explicit categories, multiple prices and overlapping ranges require review instead of automatically becoming conflicts.
-- **Evidence quality:** bare headings, common navigation and topic mentions without an answer do not count as complete evidence.
-- **Transparent dashboard:** source quotes, potential issues, freshness labels and suggested checklist additions are distinct. Suggestions require user acceptance.
-- **Practical output:** save the next-step checklist with source URLs, original quotes, comparison reasons, unread-page status and resolution notes.
+The example uses cached excerpts, including one clearly marked illustrative older source, to demonstrate the workflow. It does not establish current passport fees or rules. Investigations remain in the open page and can be exported; there is no server-side investigation database.
 
-## Technical implementation
+FUTURE SCOPE
+• Conduct usability studies with real applicants and improve the workflow from their feedback.
+• Improve jurisdiction, applicant-category and document-date matching.
+• Expand and evaluate domain-specific checklists for more public services, research and business decisions.
+• Add multilingual research and support for more document formats.
+• Evaluate gap detection and evidence quality on broader, clearly labelled datasets.
 
-Python/FastAPI serves a buildless HTML/CSS/JavaScript interface. Tavily provides web discovery; a bounded worker pool fetches independent pages while preserving search order. Optional Gemini extraction is followed by deterministic quote verification and answer-quality checks. Without a Gemini key, deterministic extraction runs. Numeric comparisons use original verified quotes, never a model's paraphrased figures.
-
-Regression tests cover extraction, provenance, missing/unread sources, dates, official-source flags, discovery and comparisons. Comparison cases include currencies, ranges, categories, source-order independence and misleading generated summaries. Browser checks cover desktop and phone-width flows and checklist export.
-
-## Accuracy, scope and uncertainty
-
-A verified quote proves textual provenance, not truth or applicability. A missing answer means no usable answer in the reviewed sources, not proof of absence. Official labels on web results are editable domain-based suggestions. Absence from official excerpts does not make a third-party statement false.
-
-This is a focused prototype, not a general fact checker or eligibility decision-maker. Deterministic matching can miss indirect answers; dates detected in page text may not be publication dates; jurisdiction and applicant applicability still need human review. Investigations remain in the open page; no account or server-side database is required, and users can export before leaving.
-
-The cached example preserves cached source excerpts and one clearly marked illustrative older source. It demonstrates the workflow and is not asserted to establish current passport fees or rules. The live application and accompanying walkthrough script make the core workflow inspectable; the final video is a separate recording step.
-
-## Future scope
-
-Real-user usability testing, stronger jurisdiction/category matching, broader document formats and multilingual research. No completed user study, fabricated impact metric or guaranteed accuracy is claimed.
-
-**Advise Buddy helps users leave research with a clearer next step, not just another answer.**
+Advise Buddy helps users finish research with a clearer next step and evidence they can inspect.

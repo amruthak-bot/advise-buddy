@@ -10,9 +10,9 @@ Use the deployed app. Keep the source excerpts unchanged and the **illustrative*
 
 ## 0:20–0:40 — Start simply
 
-[Show the question, briefly open **Customize this check** to reveal the editable questions, then select **See an example**.]
+[Show the question, briefly open **Edit checklist questions** to reveal the editable questions, then select **Try the passport example**.]
 
-“First, I define what I need to know: documents, fees and timing. That lets Advise Buddy find unanswered questions instead of only summarizing. This passport example is cached so the walkthrough is reproducible. It includes supplied source excerpts and one clearly labelled illustrative older source. For a fresh question, Advise Buddy can search and fetch pages automatically.”
+“Advise Buddy can check different research topics. I choose a checklist and tailor what I need to know. Here I use documents, fees and timing for one passport example. That lets Advise Buddy find unanswered questions instead of only summarizing. This passport example is cached so the walkthrough is reproducible. It includes supplied source excerpts and one clearly labelled illustrative older source. For a fresh question, Advise Buddy can search and fetch pages automatically.”
 
 ## 0:40–1:10 — Inspect a specific concern
 
